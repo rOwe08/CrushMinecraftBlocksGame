@@ -799,6 +799,8 @@ MonoBehaviour:
     type: 3}
   playerObject: {fileID: 7630628286807345382, guid: 47033615b3dd13e4ca9ad1d0d04a4d2c,
     type: 3}
+  projectilePrefab: {fileID: 5252752005369191408, guid: 0051aac641481f241b7b06db235d515e,
+    type: 3}
   camera: {fileID: 1694245656}
   groundSizeX: 50
   groundSizeY: 50

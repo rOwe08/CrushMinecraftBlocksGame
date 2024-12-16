@@ -10,7 +10,15 @@ public class Player : MonoBehaviour
     public float minYRotation = -90f;  // Минимальный угол поворота по Y
     public float maxYRotation = 90f;   // Максимальный угол поворота по Y
 
+    public Transform launchPoint;    // Позиция пушки или точки, откуда будет начинаться луч
+
     private float moveHorizontal = 0f;
+    public float launchSpeed = 10f;
+
+    [Header("****Trajectory display****")]
+    public LineRenderer lineRenderer; // Компонент LineRenderer
+    public int linePoints = 175;
+    public float timeIntervalPoints = 0.01f;
 
     void Update()
     {
@@ -24,6 +32,21 @@ public class Player : MonoBehaviour
         else if (Input.GetKey(KeyCode.D))
         {
             moveHorizontal = 1f;   // Движение вправо
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            GameObject projectileObject = SpawnManager.Instance.SpawnObject(SpawnManager.Instance.projectilePrefab);
+            projectileObject.transform.position = launchPoint.position;
+            projectileObject.GetComponent<Rigidbody>().velocity = launchSpeed * launchPoint.forward;
+        }
+        else if (Input.GetMouseButton(1)) 
+        {
+            DrawTrajectory();
+            lineRenderer.enabled = true;
+        }
+        else
+        {
+            lineRenderer.enabled = false;
         }
 
         // Рассчитываем движение только по оси X
@@ -57,6 +80,26 @@ public class Player : MonoBehaviour
             // Поворачиваем игрока в сторону курсора, но только по оси Y
             Quaternion lookRotation = Quaternion.Euler(0, targetAngle, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    public void DrawTrajectory()
+    {
+        Vector3 origin = launchPoint.position;
+        Vector3 startVelocity = launchSpeed * launchPoint.forward;
+        lineRenderer.positionCount = linePoints;
+        float time = 0;
+
+        for (int i = 0; i < linePoints; i++) 
+        { 
+
+            var x = (startVelocity.x * time) + (Physics.gravity.x / 2 * time * time);
+            var y = (startVelocity.y * time) + (Physics.gravity.y / 2 * time * time);
+
+            Vector3 point = new Vector3 (x, y, 0);
+            lineRenderer.SetPosition(i, origin + point);
+            time += timeIntervalPoints;
+
         }
     }
 }

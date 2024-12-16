@@ -5,12 +5,29 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    public static SpawnManager Instance { get; private set; }
+
     public GameObject groundTileObject;
     public GameObject playerObject;
+    public GameObject projectilePrefab;
+
     public GameObject camera;
 
     public int groundSizeX = 30;
     public int groundSizeY = 30;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +69,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    GameObject SpawnObject(GameObject gameObjectToSpawn, GameObject parentObject = null)
+    public GameObject SpawnObject(GameObject gameObjectToSpawn, GameObject parentObject = null)
     {
         GameObject gameObject;
 
