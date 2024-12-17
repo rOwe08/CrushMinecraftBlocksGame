@@ -20,9 +20,27 @@ public class Player : MonoBehaviour
     public int linePoints = 175;
     public float timeIntervalPoints = 0.01f;
 
+    private Rigidbody rb;
+    private bool isActive = false; // Для отслеживания, активна ли пушка
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true; // Отключаем физику при старте (замораживаем движение)
+
+        // Замораживаем ненужные оси, чтобы пушка не двигалась хаотично
+        rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+    }
+
     void Update()
     {
-        // Получаем входные данные от игрока
+        // Включаем физику при первом взаимодействии с объектом
+        if (!isActive && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || Input.GetMouseButtonDown(0)))
+        {
+            rb.isKinematic = false; // Включаем физику, пушка начинает поддаваться физическим силам
+            isActive = true;
+        }
+
         moveHorizontal = 0f;
 
         if (Input.GetKey(KeyCode.A))
@@ -39,7 +57,7 @@ public class Player : MonoBehaviour
             projectileObject.transform.position = launchPoint.position;
             projectileObject.GetComponent<Rigidbody>().velocity = launchSpeed * launchPoint.forward;
         }
-        else if (Input.GetMouseButton(1)) 
+        else if (Input.GetMouseButton(1))
         {
             DrawTrajectory();
             lineRenderer.enabled = true;
@@ -51,33 +69,23 @@ public class Player : MonoBehaviour
 
         // Рассчитываем движение только по оси X
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
-
-        // Применяем движение, изменяя позицию объекта
         transform.position += movement * speed * Time.deltaTime;
 
-        // Ограничиваем движение объекта в пределах границ по оси X
         Vector3 clampedPosition = transform.position;
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, leftBound, rightBound);
         transform.position = clampedPosition;
 
-        // Логика поворота к курсору мыши
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
-            // Получаем позицию точки столкновения луча
             Vector3 targetPosition = hitInfo.point;
-            targetPosition.y = transform.position.y;  // Оставляем высоту игрока неизменной
+            targetPosition.y = transform.position.y;
 
-            // Рассчитываем направление к курсору мыши
             Vector3 lookDirection = (targetPosition - transform.position).normalized;
-
-            // Рассчитываем угол поворота по Y
             float targetAngle = Mathf.Atan2(lookDirection.x, lookDirection.z) * Mathf.Rad2Deg;
 
-            // Ограничиваем угол поворота по оси Y
             targetAngle = Mathf.Clamp(targetAngle, minYRotation, maxYRotation);
 
-            // Поворачиваем игрока в сторону курсора, но только по оси Y
             Quaternion lookRotation = Quaternion.Euler(0, targetAngle, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
         }
@@ -90,16 +98,15 @@ public class Player : MonoBehaviour
         lineRenderer.positionCount = linePoints;
         float time = 0;
 
-        for (int i = 0; i < linePoints; i++) 
-        { 
-
+        for (int i = 0; i < linePoints; i++)
+        {
             var x = (startVelocity.x * time) + (Physics.gravity.x / 2 * time * time);
             var y = (startVelocity.y * time) + (Physics.gravity.y / 2 * time * time);
+            var z = (startVelocity.z * time) + (Physics.gravity.z / 2 * time * time); // Добавлен расчёт для оси Z
 
-            Vector3 point = new Vector3 (x, y, 0);
+            Vector3 point = new Vector3(x, y, z);
             lineRenderer.SetPosition(i, origin + point);
             time += timeIntervalPoints;
-
         }
     }
 }
