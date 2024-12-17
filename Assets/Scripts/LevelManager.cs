@@ -24,6 +24,11 @@ public class LevelManager : MonoBehaviour
         SpawnManager.Instance.SpawnBuilding(5, 5);
     }
 
+    public void EndLevel()
+    {
+
+    }
+
     public void AddBlock()
     {
         remainingBlocks++;
@@ -35,6 +40,7 @@ public class LevelManager : MonoBehaviour
         remainingBlocks--;
         if (remainingBlocks <= 0)
         {
+            GameManager.Instance.EndLevel();
             Debug.Log("Level completed!");
         }
     }

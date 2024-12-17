@@ -38,6 +38,12 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateUI();
     }
 
+    public void EndLevel()
+    {
+        LevelManager.Instance.EndLevel();
+        UIManager.Instance.ShowResults();
+    }
+
     public void AddCoins(int coins)
     {
         player.AddCoins(coins);
