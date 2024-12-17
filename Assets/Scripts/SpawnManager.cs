@@ -27,11 +27,7 @@ public class SpawnManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
         SpawnGround();
         SpawnPlayer();
     }
@@ -46,6 +42,8 @@ public class SpawnManager : MonoBehaviour
         // Camera settings
         camera.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
         camera.GetComponent<CinemachineVirtualCamera>().LookAt = player.transform;
+
+        GameManager.Instance.player = player.GetComponent<Player>();
     }
 
     void SpawnGround()
@@ -68,6 +66,20 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
+
+    public void SpawnBuilding(Vector3 position, int width, int height)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                GameObject block = SpawnObject(groundTileObject);
+                block.transform.position = new Vector3(position.x + x, position.y + y, position.z);
+                block.AddComponent<DestructibleBlock>();
+            }
+        }
+    }
+
 
     public GameObject SpawnObject(GameObject gameObjectToSpawn, GameObject parentObject = null)
     {

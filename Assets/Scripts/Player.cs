@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int totalCoins = 0;
+
     public float speed = 10f;  // Скорость движения
     public float rotationSpeed = 700.0f;  // Скорость поворота
     public float leftBound = 0f;  // Левая граница по оси X
@@ -104,7 +107,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
     // Метод для получения нормализованного направления на основе позиции курсора
     Vector3 GetLaunchDirection()
     {
@@ -141,5 +143,10 @@ public class Player : MonoBehaviour
             lineRenderer.SetPosition(i, origin + point);
             time += timeIntervalPoints;
         }
+    }
+
+    public void AddCoins(int coins)
+    {
+        totalCoins += coins;
     }
 }
