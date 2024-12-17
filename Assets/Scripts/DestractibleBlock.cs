@@ -12,9 +12,8 @@ public class DestructibleBlock : MonoBehaviour
             GameManager.Instance.AddCoins(rewardCoins);
             LevelManager.Instance.RemoveBlock();
 
-            UIManager.Instance.UpdateUI();
             // Разрушаем блок
-            Destroy(gameObject);
+            Destroy(gameObject, 0.01f);
         }
     }
 }

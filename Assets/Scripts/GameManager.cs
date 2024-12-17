@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.UpdateUI();
     }
 
+    [ContextMenu("EndLevel")]
     public void EndLevel()
     {
         LevelManager.Instance.EndLevel();
