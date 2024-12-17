@@ -1,16 +1,32 @@
 ﻿using DG.Tweening;  // Добавляем DOTween
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    private bool _IsUIActive = false;
+
     public TextMeshProUGUI coinsText;  // Ссылка на UI элемент для отображения количества монет
     public TextMeshProUGUI progressText;  // Ссылка на UI элемент для отображения процента уничтоженных блоков
     public GameObject resultsPanel;  // Панель с результатами
-    public TextMeshProUGUI resultText;  // Текст с результатом
     public TextMeshProUGUI levelText;  // Текст с уровнем
+    public TextMeshProUGUI attemptsText; // Текст с попытками
+    public TextMeshProUGUI percentageText; // Текст с процентами
+    public TextMeshProUGUI coinsEarnedText; // Текст с собранными монетами
+
+    [Header("Stars")]
+    public Image[] stars;  // Массив звёзд
+    public Sprite earnedStarSprite;  // Спрайт для полученной звезды
+    public Sprite unearnedStarSprite;  // Спрайт для неполученной звезды
+
+    [Header("Badges")]
+    public Image badge;
+    public Sprite bronzeBadge;
+    public Sprite silverBadge;
+    public Sprite goldBadge;
 
     [Header("Levels")]
     public GameObject levelsPanel;  // Панель для уровней
@@ -37,10 +53,19 @@ public class UIManager : MonoBehaviour
         UpdateUI();
     }
 
+    public void UpdateUI()
+    {
+        UpdateCoins();
+        UpdateProgress();
+        UpdateLevel();
+        UpdateAttempts();
+    }
+
     // Функция для появления панели уровней
     public void ShowLevelsPanel()
     {
         levelsPanel.SetActive(true);  // Делаем панель видимой
+        _IsUIActive = true;
 
         // Очищаем контейнер от предыдущих кнопок уровней (если они были)
         foreach (Transform child in levelsContainer)
@@ -89,6 +114,7 @@ public class UIManager : MonoBehaviour
     public void HideLevelsPanel()
     {
         levelsPanel.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() => levelsPanel.SetActive(false));
+        _IsUIActive = false;
     }
 
     // Функция, вызываемая при выборе уровня
@@ -100,11 +126,92 @@ public class UIManager : MonoBehaviour
         HideLevelsPanel();  // Закрываем панель после выбора уровня
     }
 
-    public void UpdateUI()
+    public void ShowResults()
     {
-        UpdateCoins();
-        UpdateProgress();
-        UpdateLevel();
+        badge.gameObject.SetActive(false);
+        _IsUIActive = true;
+
+        // Показываем панель результатов
+        resultsPanel.SetActive(true);
+
+        // Настраиваем звёзды в исходное состояние (все звёзды тёмные)
+        foreach (Image star in stars)
+        {
+            star.sprite = unearnedStarSprite;
+            star.transform.localScale = Vector3.one;  // Убираем возможные анимационные изменения
+        }
+
+        // Получаем текущий прогресс
+        float progress = (float)(LevelManager.Instance.totalBlocks - LevelManager.Instance.remainingBlocks) / LevelManager.Instance.totalBlocks * 100;
+
+        // Определяем количество звёзд на основе прогресса
+        int earnedStars = 0;
+        if (progress >= 100)
+        {
+            earnedStars = 3;
+        }
+        else if (progress >= 75)
+        {
+            earnedStars = 2;
+        }
+        else if (progress >= 50)
+        {
+            earnedStars = 1;
+        }
+
+        // Запускаем анимацию появления звёзд с задержкой
+        for (int i = 0; i < earnedStars; i++)
+        {
+            int starIndex = i;
+            stars[starIndex].transform.localScale = Vector3.zero;  // Начальное состояние для Transform
+            stars[starIndex].transform.DOScale(Vector3.one, 0.5f)
+                .SetEase(Ease.OutBack)
+                .SetDelay(starIndex * 0.5f)
+                .OnComplete(() =>
+                {
+                    stars[starIndex].sprite = earnedStarSprite;  // Меняем спрайт на полученную звезду
+                });
+        }
+
+
+        // Плавное появление панели
+        resultsPanel.transform.localScale = Vector3.zero;  // Начальное состояние (панель скрыта)
+        resultsPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления панели
+
+        percentageText.text = $"Percentage: {progress}%";
+        coinsEarnedText.text = $"Coins earned: {LevelManager.Instance.coinsEarnedOnLevel}%";
+
+        // Определяем медаль на основе количества звезд
+        if (earnedStars == 3)
+        {
+            badge.sprite = goldBadge;
+            badge.gameObject.SetActive(true);
+        }
+        else if (earnedStars == 2)
+        {
+            badge.sprite = silverBadge;
+            badge.gameObject.SetActive(true);
+        }
+        else if (earnedStars == 1)
+        {
+            badge.sprite = bronzeBadge;
+            badge.gameObject.SetActive(true);
+        }
+        else
+        {
+            badge.gameObject.SetActive(false);
+        }
+
+        // Анимация появления медали
+        badge.transform.localScale = Vector3.zero;  // Начальное состояние для Transform медали
+        badge.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(earnedStars * 0.5f);  // Анимация появления медали после звезд
+    }
+
+    // Закрытие панели результатов с анимацией
+    public void HideResults()
+    {
+        resultsPanel.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() => resultsPanel.SetActive(false));
+        _IsUIActive = false;
     }
 
     // Метод для обновления количества монет
@@ -128,21 +235,14 @@ public class UIManager : MonoBehaviour
         progressText.text = "Progress: " + progress.ToString("F0") + "%";
     }
 
-    // Показываем результаты с анимацией
-    public void ShowResults()
+    // Метод для обновления процента уничтоженных блоков
+    public void UpdateAttempts()
     {
-        // Показываем панель результатов
-        resultsPanel.SetActive(true);
-
-        // Настроим анимацию для панели с результатами (например, плавное появление)
-        resultsPanel.transform.localScale = Vector3.zero;  // Начальное состояние (панель скрыта)
-        resultsPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления
+        attemptsText.text = $"Attempts: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
     }
 
-
-    // Закрытие панели результатов с анимацией
-    public void HideResults()
+    public bool IsUIActive()
     {
-        resultsPanel.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() => resultsPanel.SetActive(false));
+        return _IsUIActive;
     }
 }

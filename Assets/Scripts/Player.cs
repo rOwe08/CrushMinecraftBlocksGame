@@ -37,72 +37,83 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Включаем физику при первом взаимодействии с объектом
-        if (!isActive && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || Input.GetMouseButtonDown(0)))
+        if (!UIManager.Instance.IsUIActive())
         {
-            rb.isKinematic = false; // Включаем физику, пушка начинает поддаваться физическим силам
-            isActive = true;
-        }
-
-        moveHorizontal = 0f;
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveHorizontal = -1f;  // Движение влево
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            moveHorizontal = 1f;   // Движение вправо
-        }
-
-        // Рассчитываем движение только по оси X
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
-        transform.position += movement * speed * Time.deltaTime;
-
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, leftBound, rightBound);
-        transform.position = clampedPosition;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo))
-        {
-            Vector3 targetPosition = hitInfo.point;
-
-            // Проверка: курсор должен быть перед пушкой по оси Z
-            if (targetPosition.z > transform.position.z)
+            // Включаем физику при первом взаимодействии с объектом
+            if (!isActive && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || Input.GetMouseButtonDown(0)))
             {
-                // Поворот пушки в сторону курсора
-                targetPosition.y = transform.position.y;
-                Vector3 lookDirection = (targetPosition - transform.position).normalized;
-                float targetAngle = Mathf.Atan2(lookDirection.x, lookDirection.z) * Mathf.Rad2Deg;
-                targetAngle = Mathf.Clamp(targetAngle, minYRotation, maxYRotation);
-                Quaternion lookRotation = Quaternion.Euler(0, targetAngle, 0);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+                rb.isKinematic = false; // Включаем физику, пушка начинает поддаваться физическим силам
+                isActive = true;
+            }
 
-                // Логика стрельбы
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Vector3 launchDirection = GetLaunchDirection();
-                    GameObject projectileObject = SpawnManager.Instance.SpawnObject(SpawnManager.Instance.projectilePrefab);
-                    projectileObject.transform.position = launchPoint.position;
-                    projectileObject.GetComponent<Rigidbody>().velocity = launchSpeed * launchDirection;
-                }
+            moveHorizontal = 0f;
 
-                // Логика отображения траектории
-                else if (Input.GetMouseButton(1))
+            if (Input.GetKey(KeyCode.A))
+            {
+                moveHorizontal = -1f;  // Движение влево
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                moveHorizontal = 1f;   // Движение вправо
+            }
+
+            // Рассчитываем движение только по оси X
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
+            transform.position += movement * speed * Time.deltaTime;
+
+            Vector3 clampedPosition = transform.position;
+            clampedPosition.x = Mathf.Clamp(clampedPosition.x, leftBound, rightBound);
+            transform.position = clampedPosition;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo))
+            {
+                Vector3 targetPosition = hitInfo.point;
+
+                // Проверка: курсор должен быть перед пушкой по оси Z
+                if (targetPosition.z > transform.position.z)
                 {
-                    DrawTrajectory();
-                    lineRenderer.enabled = true;
+                    // Поворот пушки в сторону курсора
+                    targetPosition.y = transform.position.y;
+                    Vector3 lookDirection = (targetPosition - transform.position).normalized;
+                    float targetAngle = Mathf.Atan2(lookDirection.x, lookDirection.z) * Mathf.Rad2Deg;
+                    targetAngle = Mathf.Clamp(targetAngle, minYRotation, maxYRotation);
+                    Quaternion lookRotation = Quaternion.Euler(0, targetAngle, 0);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+
+                    // Логика стрельбы
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if(LevelManager.Instance.attempts < LevelManager.Instance.maxAttempts)
+                        {
+                            LevelManager.Instance.AddAttempt();
+
+                            Vector3 launchDirection = GetLaunchDirection();
+                            GameObject projectileObject = SpawnManager.Instance.SpawnObject(SpawnManager.Instance.projectilePrefab);
+                            projectileObject.transform.position = launchPoint.position;
+                            projectileObject.GetComponent<Rigidbody>().velocity = launchSpeed * launchDirection;
+                        }
+                        else
+                        {
+                            GameManager.Instance.EndLevel();
+                        }
+                    }
+                    // Логика отображения траектории
+                    else if (Input.GetMouseButton(1))
+                    {
+                        DrawTrajectory();
+                        lineRenderer.enabled = true;
+                    }
+                    else
+                    {
+                        lineRenderer.enabled = false;
+                    }
                 }
                 else
                 {
+                    // Отключаем линию, если курсор за пушкой
                     lineRenderer.enabled = false;
                 }
-            }
-            else
-            {
-                // Отключаем линию, если курсор за пушкой
-                lineRenderer.enabled = false;
             }
         }
     }

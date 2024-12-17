@@ -489,7 +489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &145601794
 RectTransform:
   m_ObjectHideFlags: 0
@@ -589,10 +589,10 @@ RectTransform:
   - {fileID: 354234575}
   m_Father: {fileID: 249019922}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 800, y: 700}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -1200, y: -399.99997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &262513872
 MonoBehaviour:
@@ -765,6 +765,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354234574}
   m_CullTransparentMesh: 1
+--- !u!114 &440074943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1620325179189988091, guid: 813b744bd70bfc74a903b924b6bb1d6f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019798806}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &464279427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,10 +1768,10 @@ RectTransform:
   - {fileID: 2040701185}
   m_Father: {fileID: 262513871}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.000012755394, y: -384}
-  m_SizeDelta: {x: 743.3438, y: 300}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -60, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1553757873
 MonoBehaviour:
@@ -1858,8 +1870,20 @@ MonoBehaviour:
   coinsText: {fileID: 1580995768}
   progressText: {fileID: 1897228770}
   resultsPanel: {fileID: 262513870}
-  resultText: {fileID: 0}
   levelText: {fileID: 133495874}
+  attemptsText: {fileID: 440074943}
+  percentageText: {fileID: 1055809657}
+  coinsEarnedText: {fileID: 888759725}
+  stars:
+  - {fileID: 964493126}
+  - {fileID: 1450295600}
+  - {fileID: 464279429}
+  earnedStarSprite: {fileID: 21300048, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  unearnedStarSprite: {fileID: 21300050, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  badge: {fileID: 145601795}
+  bronzeBadge: {fileID: 21300012, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  silverBadge: {fileID: 21300010, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  goldBadge: {fileID: 21300008, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   levelsPanel: {fileID: 1238050147}
   levelButtonPrefab: {fileID: 2628223698769416082, guid: 2603fe28d9d35994f930458ca38fce01,
     type: 3}
@@ -2017,9 +2041,11 @@ MonoBehaviour:
   levelsAmount: 50
   maxLevelCompleted: 0
   level: 0
+  coinsEarnedOnLevel: 0
   totalBlocks: 0
   remainingBlocks: 0
   attempts: 0
+  maxAttempts: 3
   isLevelActive: 0
 --- !u!4 &1653712538
 Transform:
@@ -2507,10 +2533,10 @@ RectTransform:
   - {fileID: 464279428}
   m_Father: {fileID: 262513871}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 800, y: 300}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -92.44806}
+  m_SizeDelta: {x: 0, y: 184.896}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1868180457
 MonoBehaviour:
@@ -2959,6 +2985,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CurrentScorePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 4443085301332428760, guid: 813b744bd70bfc74a903b924b6bb1d6f,
+        type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4559958036175775397, guid: 813b744bd70bfc74a903b924b6bb1d6f,
         type: 3}
       propertyPath: m_Name
@@ -3050,10 +3081,10 @@ RectTransform:
   - {fileID: 15997811}
   m_Father: {fileID: 1553757872}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 250, y: 0}
-  m_SizeDelta: {x: 500, y: 0}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2040701186
 MonoBehaviour:

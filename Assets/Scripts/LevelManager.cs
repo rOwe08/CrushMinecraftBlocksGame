@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
@@ -8,10 +9,13 @@ public class LevelManager : MonoBehaviour
     public int maxLevelCompleted = 0;
     public int level = 0;
 
+    public int coinsEarnedOnLevel = 0;
+
     public int totalBlocks = 0;
     public int remainingBlocks = 0;
 
     public int attempts = 0;
+    public int maxAttempts = 3;
 
     public bool isLevelActive = false;
 
@@ -38,6 +42,9 @@ public class LevelManager : MonoBehaviour
 
     public void StartLevel(int levelToStart = 0)
     {
+        attempts = 0;
+        coinsEarnedOnLevel = 0;
+
         if (levelToStart == 0)
         {
             if (level < maxLevelCompleted + 2)
@@ -58,8 +65,9 @@ public class LevelManager : MonoBehaviour
     public void EndLevel()
     {
         isLevelActive = false;
+        float progress = (float)(totalBlocks - remainingBlocks) / totalBlocks * 100;
 
-        if (level == maxLevelCompleted + 1)
+        if (level == maxLevelCompleted + 1 && progress >= 50f)
         {
             maxLevelCompleted++;
         }
@@ -74,5 +82,10 @@ public class LevelManager : MonoBehaviour
     public void RemoveBlock()
     {
         remainingBlocks--;
+    }
+
+    internal void AddAttempt()
+    {
+        attempts++;
     }
 }

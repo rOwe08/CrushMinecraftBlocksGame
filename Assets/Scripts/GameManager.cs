@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
     public void AddCoins(int coins)
     {
         player.AddCoins(coins);
+        LevelManager.Instance.coinsEarnedOnLevel += coins;
     }
 
     private void LoadData()
