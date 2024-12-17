@@ -39,6 +39,6 @@ public class UIManager : MonoBehaviour
         // Обновляем прогресс в UI
         float progress = (float)(LevelManager.Instance.totalBlocks - LevelManager.Instance.remainingBlocks) / LevelManager.Instance.totalBlocks * 100;
 
-        progressText.text = "Progress: " + progress.ToString("F2") + "%";
+        progressText.text = "Progress: " + progress.ToString("F0") + "%";
     }
 }

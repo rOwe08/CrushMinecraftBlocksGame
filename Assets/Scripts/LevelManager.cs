@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
 
     public void StartLevel()
     {
-        SpawnManager.Instance.SpawnBuilding(new Vector3(10, 0, 10), 5, 5);
+        SpawnManager.Instance.SpawnBuilding(5, 5);
     }
 
     public void AddBlock()

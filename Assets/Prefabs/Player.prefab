@@ -71,6 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc80e99116349d445a8899a10d76fccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalCoins: 0
   speed: 5
   rotationSpeed: 700
   leftBound: 5
@@ -78,7 +79,7 @@ MonoBehaviour:
   minYRotation: -90
   maxYRotation: 90
   launchPoint: {fileID: 6786664278579801664}
-  launchSpeed: 10
+  launchSpeed: 50
   lineRenderer: {fileID: 5681397186110832337}
   linePoints: 175
   timeIntervalPoints: 0.01

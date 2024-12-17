@@ -1,4 +1,4 @@
-using Cinemachine;
+﻿using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,32 +54,43 @@ public class SpawnManager : MonoBehaviour
         {
             for(int j = 0; j < groundSizeY; j++)
             {
-                spawnedTile = SpawnObject(groundTileObject);
-                spawnedTile.transform.position = new Vector3(i * 1, 0, j * 1);
-
-                if(i == 0 || j == 0 || i == groundSizeX - 1 || j == groundSizeY - 1)
+                if (i == 0 || j == 0 || i == groundSizeX - 1 || j == groundSizeY - 1)
                 {
                     GameObject spawnedTileBounds = SpawnObject(groundTileObject);
                     spawnedTileBounds.transform.position = new Vector3(i * 1, groundTileObject.GetComponent<Collider>().bounds.size.y, j * 1);
                 }
-
+                else
+                {
+                    spawnedTile = SpawnObject(groundTileObject);
+                    spawnedTile.transform.position = new Vector3(i * 1, 0, j * 1);
+                }
             }
         }
     }
 
-    public void SpawnBuilding(Vector3 position, int width, int height)
+    public void SpawnBuilding(int width, int height)
     {
+        // Вычисляем центр карты
+        float centerX = groundSizeX / 2f;
+        float centerZ = groundSizeY / 2f;
+
+        // Позиция основания здания по центру карты
+        Vector3 startPosition = new Vector3(centerX - (width / 2f), 1f, centerZ - (width / 2f));
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
                 GameObject block = SpawnObject(groundTileObject);
-                block.transform.position = new Vector3(position.x + x, position.y + y, position.z);
+                block.transform.position = new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z);
+
                 block.AddComponent<DestructibleBlock>();
+
+                // Сообщаем LevelManager о добавлении нового блока
+                LevelManager.Instance.AddBlock();
             }
         }
     }
-
 
     public GameObject SpawnObject(GameObject gameObjectToSpawn, GameObject parentObject = null)
     {

@@ -539,6 +539,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4201cfc0f1feb4790337ed4735709a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalBlocks: 0
+  remainingBlocks: 0
 --- !u!4 &1653712538
 Transform:
   m_ObjectHideFlags: 0
@@ -866,6 +868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentLevel: 1
+  player: {fileID: 0}
 --- !u!4 &1929096744
 Transform:
   m_ObjectHideFlags: 0
@@ -1147,6 +1150,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 67.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6699870613129669190, guid: 813b744bd70bfc74a903b924b6bb1d6f,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6811912941060519472, guid: 813b744bd70bfc74a903b924b6bb1d6f,
         type: 3}
