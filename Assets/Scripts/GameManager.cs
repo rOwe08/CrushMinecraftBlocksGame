@@ -33,9 +33,10 @@ public class GameManager : MonoBehaviour
         StartLevel();
     }
 
-    public void StartLevel()
+    public void StartLevel(int level = 0)
     {
-        LevelManager.Instance.StartLevel();
+        LevelManager.Instance.StartLevel(level);
+        UIManager.Instance.SetUpUI();
         UIManager.Instance.UpdateUI();
     }
 

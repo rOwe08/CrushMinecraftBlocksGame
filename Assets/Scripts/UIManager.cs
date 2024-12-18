@@ -8,15 +8,19 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     private bool _IsUIActive = false;
+    public GameObject resultsPanel;  // Панель с результатами
 
+    [Header("Texts")]
     public TextMeshProUGUI coinsText;  // Ссылка на UI элемент для отображения количества монет
     public TextMeshProUGUI progressText;  // Ссылка на UI элемент для отображения процента уничтоженных блоков
-    public GameObject resultsPanel;  // Панель с результатами
     public TextMeshProUGUI levelText;  // Текст с уровнем
     public TextMeshProUGUI attemptsText; // Текст с попытками
     public TextMeshProUGUI percentageText; // Текст с процентами
     public TextMeshProUGUI coinsEarnedText; // Текст с собранными монетами
     public TextMeshProUGUI attemptsUsedText; // Текст с использованными попытками
+
+    [Header("Buttons")]
+    public Button resetButton;
 
     [Header("Stars")]
     public Image[] stars;  // Массив звёзд
@@ -78,8 +82,8 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < LevelManager.Instance.levelsAmount; i++)
         {
             GameObject levelButton = Instantiate(levelButtonPrefab, levelsContainer);
-            TextMeshProUGUI levelText = levelButton.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-            UnityEngine.UI.Button buttonComponent = levelButton.GetComponentInChildren<UnityEngine.UI.Button>();
+            TextMeshProUGUI levelText = levelButton.GetComponentInChildren<TextMeshProUGUI>();
+            Button buttonComponent = levelButton.GetComponentInChildren<Button>();
 
             // Устанавливаем текст на кнопке
             levelText.text = (i + 1).ToString();
@@ -145,6 +149,15 @@ public class UIManager : MonoBehaviour
         levelsPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления
     }
 
+    public void SetUpUI()
+    {
+        // reset button 
+        resetButton.onClick.RemoveAllListeners();
+        resetButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.StartLevel(LevelManager.Instance.level);
+        });
+    }
 
     // Закрытие панели уровней
     public void HideLevelsPanel()
@@ -209,12 +222,32 @@ public class UIManager : MonoBehaviour
                 });
         }
 
+        Transform nextActionButtonTransform = resultsPanel.transform.Find("NextActionButton").transform;
+        Button nextActionButton = nextActionButtonTransform.GetComponent<Button>();
+        nextActionButton.onClick.RemoveAllListeners();
+
+        if (earnedStars <= 0)
+        {
+            nextActionButton.onClick.AddListener(() =>
+            {
+                GameManager.Instance.StartLevel(LevelManager.Instance.level);
+            });
+            nextActionButtonTransform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = "Try Again";
+        }
+        else
+        {
+            nextActionButton.onClick.AddListener(() =>
+            {
+                GameManager.Instance.StartLevel();
+            });
+            nextActionButtonTransform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = "Next Level";
+        }
 
         // Плавное появление панели
         resultsPanel.transform.localScale = Vector3.zero;  // Начальное состояние (панель скрыта)
         resultsPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления панели
 
-        percentageText.text = $"Percentage: {progress}%";
+        percentageText.text = $"Percentage: {progress:F0}%";
         coinsEarnedText.text = $"Coins earned: {LevelManager.Instance.coinsEarnedOnLevel}";
         attemptsUsedText.text = $"Attempts used: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
 
@@ -254,7 +287,7 @@ public class UIManager : MonoBehaviour
     // Метод для обновления количества монет
     public void UpdateCoins()
     {
-        coinsText.text = "Coins: " + GameManager.Instance.player.totalCoins;
+        coinsText.text = GameManager.Instance.player.totalCoins.ToString();
     }
 
     // Метод для обновления уровня

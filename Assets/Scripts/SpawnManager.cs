@@ -87,7 +87,7 @@ public class SpawnManager : MonoBehaviour
                 block.AddComponent<DestructibleBlock>();
 
                 // Сообщаем LevelManager о добавлении нового блока
-                LevelManager.Instance.AddBlock();
+                LevelManager.Instance.AddBlock(block);
             }
         }
     }

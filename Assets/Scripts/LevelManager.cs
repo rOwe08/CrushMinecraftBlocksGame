@@ -6,6 +6,8 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
 
+    public List<GameObject> spawnedBlocks = new List<GameObject>();
+
     public int levelsAmount = 50;
     public int maxLevelCompleted = 0;
     public int level = 0;
@@ -50,8 +52,12 @@ public class LevelManager : MonoBehaviour
 
     public void StartLevel(int levelToStart = 0)
     {
+        DespawnAllBuildings();
+
         attempts = 0;
         coinsEarnedOnLevel = 0;
+        totalBlocks = 0;
+        remainingBlocks = 0;
 
         if (levelToStart == 0)
         {
@@ -68,6 +74,16 @@ public class LevelManager : MonoBehaviour
         SpawnManager.Instance.SpawnBuilding(5, 5);
         isLevelActive = true;
         UIManager.Instance.HideResults();
+    }
+
+    private void DespawnAllBuildings()
+    {
+        foreach(GameObject block in spawnedBlocks)
+        {
+            Destroy(block);
+        }
+
+        spawnedBlocks.Clear();
     }
 
     public void EndLevel()
@@ -88,10 +104,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void AddBlock()
+    public void AddBlock(GameObject block)
     {
         remainingBlocks++;
         totalBlocks++;
+        spawnedBlocks.Add(block);
     }
 
     public void RemoveBlock()
