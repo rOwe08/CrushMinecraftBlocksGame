@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI attemptsText; // Текст с попытками
     public TextMeshProUGUI percentageText; // Текст с процентами
     public TextMeshProUGUI coinsEarnedText; // Текст с собранными монетами
+    public TextMeshProUGUI attemptsUsedText; // Текст с использованными попытками
 
     [Header("Stars")]
     public Image[] stars;  // Массив звёзд
@@ -81,7 +82,7 @@ public class UIManager : MonoBehaviour
             UnityEngine.UI.Button buttonComponent = levelButton.GetComponentInChildren<UnityEngine.UI.Button>();
 
             // Устанавливаем текст на кнопке
-            levelText.text = "Level " + (i + 1);
+            levelText.text = (i + 1).ToString();
 
             // Присваиваем номер уровня для каждой кнопки
             int levelIndex = i;  // Локальная копия индекса для использования в замыкании
@@ -89,6 +90,18 @@ public class UIManager : MonoBehaviour
             // Устанавливаем состояние кнопки (нажимаема или нет)
             bool isUnlocked = (i + 1) <= LevelManager.Instance.maxLevelCompleted + 1;  // maxLevelCompleted — максимальный пройденный уровень
             buttonComponent.interactable = isUnlocked;  // Делаем кнопку неактивной, если уровень заблокирован
+
+            // Проверка на каждую 5-ю и 10-ю кнопку
+            if ((i + 1) % 10 == 0)
+            {
+                buttonComponent.gameObject.GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0.878f, 1f);  // Цвет для каждой 10-й кнопки (00E0FF)
+                buttonComponent.gameObject.transform.localScale = 1.2f * Vector3.one;
+            }
+            else if ((i + 1) % 5 == 0)
+            {
+                buttonComponent.gameObject.GetComponent<UnityEngine.UI.Image>().color = new Color(1f, 0.506f, 0f);  // Цвет для каждой 5-й кнопки (FF8100)
+                buttonComponent.gameObject.transform.localScale = 1.1f * Vector3.one;
+            }
 
             // Управляем отображением CloseImage (активен, если уровень заблокирован)
             Transform closeImage = levelButton.transform.Find("CloseImage");
@@ -102,6 +115,29 @@ public class UIManager : MonoBehaviour
             {
                 buttonComponent.onClick.AddListener(() => OnLevelSelected(levelIndex + 1));
             }
+
+            // Получаем текущий прогресс
+            float progress = LevelManager.Instance.levelList[i];
+
+            Transform badgeTransform = levelButton.transform.Find("BadgeImage");
+
+            Image badgeImage = badgeTransform.GetComponent<Image>();
+            if (progress >= 100)
+            {
+                badgeImage.sprite = goldBadge;
+                badgeTransform.gameObject.SetActive(true);
+            }
+            else if (progress >= 75)
+            {
+                badgeImage.sprite = silverBadge;
+                badgeTransform.gameObject.SetActive(true);
+            }
+            else if (progress >= 50)
+            {
+                badgeImage.sprite = bronzeBadge;
+                badgeTransform.gameObject.SetActive(true);
+            }
+
         }
 
         // Анимация появления панели (если нужно)
@@ -120,7 +156,7 @@ public class UIManager : MonoBehaviour
     // Функция, вызываемая при выборе уровня
     private void OnLevelSelected(int levelIndex)
     {
-        Debug.Log("Level " + (levelIndex + 1) + " selected");
+        Debug.Log("Level " + (levelIndex) + " selected");
         // Здесь можно вызывать функцию для начала выбранного уровня
         LevelManager.Instance.StartLevel(levelIndex);
         HideLevelsPanel();  // Закрываем панель после выбора уровня
@@ -179,7 +215,8 @@ public class UIManager : MonoBehaviour
         resultsPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления панели
 
         percentageText.text = $"Percentage: {progress}%";
-        coinsEarnedText.text = $"Coins earned: {LevelManager.Instance.coinsEarnedOnLevel}%";
+        coinsEarnedText.text = $"Coins earned: {LevelManager.Instance.coinsEarnedOnLevel}";
+        attemptsUsedText.text = $"Attempts used: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
 
         // Определяем медаль на основе количества звезд
         if (earnedStars == 3)

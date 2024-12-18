@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
+  m_Spacing: {x: 20, y: 25}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1450295598
@@ -1874,6 +1874,7 @@ MonoBehaviour:
   attemptsText: {fileID: 440074943}
   percentageText: {fileID: 1055809657}
   coinsEarnedText: {fileID: 888759725}
+  attemptsUsedText: {fileID: 15997812}
   stars:
   - {fileID: 964493126}
   - {fileID: 1450295600}
@@ -2047,6 +2048,7 @@ MonoBehaviour:
   attempts: 0
   maxAttempts: 3
   isLevelActive: 0
+  levelList: []
 --- !u!4 &1653712538
 Transform:
   m_ObjectHideFlags: 0

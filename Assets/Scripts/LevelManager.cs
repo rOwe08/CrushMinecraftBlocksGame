@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -19,6 +20,8 @@ public class LevelManager : MonoBehaviour
 
     public bool isLevelActive = false;
 
+    public List<float> levelList = new List<float>();
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -28,6 +31,11 @@ public class LevelManager : MonoBehaviour
         else
         {
             Instance = this;
+        }
+
+        for (int i = 0; i < levelsAmount; i++) 
+        {
+            levelList.Add(0);
         }
     }
 
@@ -70,6 +78,13 @@ public class LevelManager : MonoBehaviour
         if (level == maxLevelCompleted + 1 && progress >= 50f)
         {
             maxLevelCompleted++;
+        }
+
+        float prevResult = levelList[level - 1];
+
+        if (prevResult < progress)
+        {
+            levelList[level - 1] = progress;
         }
     }
 
