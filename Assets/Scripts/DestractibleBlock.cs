@@ -4,13 +4,15 @@ public class DestructibleBlock : MonoBehaviour
 {
     public int rewardCoins = 10;  // Награда за разрушение блока
     public float hp;  // Здоровье блока
-    public float fallDamageThreshold = 5f;  // Порог скорости падения, при котором наносится урон
+    public float fallDamageThreshold = 1f;  // Порог скорости падения, при котором наносится урон
     public float fallDamageMultiplier = 10f;  // Множитель урона при падении
     public bool isFalling = false;  // Флаг, активен ли блок в свободном падении
+    public float fallDamageActivationDelay = 1f;  // Время задержки перед активацией урона от падения
 
     private Rigidbody rb;  // Храним ссылку на Rigidbody
     private Renderer blockRenderer;  // Рендер для изменения цвета
     public BlockType blockType;  // Тип блока, включая максимальное здоровье
+    private bool canTakeFallDamage = false;  // Может ли блок получать урон от падения
 
     void Awake()
     {
@@ -19,8 +21,6 @@ public class DestructibleBlock : MonoBehaviour
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody>();
-            rb.isKinematic = true;  // Отключаем физику, если не нужно
-            rb.mass = 10f;  // Устанавливаем массу
         }
 
         // Получаем компонент Renderer
@@ -37,6 +37,13 @@ public class DestructibleBlock : MonoBehaviour
         }
 
         ActivatePhysics();
+        Invoke(nameof(EnableFallDamage), fallDamageActivationDelay);  // Активируем урон от падений через заданную задержку
+    }
+
+    // Метод, активирующий возможность получения урона от падений
+    void EnableFallDamage()
+    {
+        canTakeFallDamage = true;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -47,17 +54,10 @@ public class DestructibleBlock : MonoBehaviour
             float impactSpeed = collision.relativeVelocity.magnitude;  // Скорость столкновения
             float projectileDamage = impactSpeed * 10;  // Пример урона от скорости
             TakeDamage(projectileDamage);  // Наносим урон блоку
-
-            if (hp <= 0)
-            {
-                GameManager.Instance.AddCoins(rewardCoins);
-                LevelManager.Instance.RemoveBlock();
-                Destroy(gameObject, 0.01f);
-            }
         }
 
-        // 2. Проверяем урон от падений
-        if (!isFalling && rb.velocity.magnitude > fallDamageThreshold)
+        // 2. Проверяем урон от падений, только если разрешено брать урон от падений
+        if (canTakeFallDamage && hp > 0 && !isFalling && rb.velocity.magnitude > fallDamageThreshold)
         {
             float fallDamage = rb.velocity.magnitude * fallDamageMultiplier;
             TakeDamage(fallDamage);

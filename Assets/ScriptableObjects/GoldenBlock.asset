@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df7f429da867b55418d7c6f08ab2acb8, type: 3}
-  m_Name: GrassBlock 7
+  m_Name: GoldenBlock
   m_EditorClassIdentifier: 
   blockName: 
-  health: 0
-  mass: 0
-  blockColor: {r: 0, g: 0, b: 0, a: 0}
-  prefab: {fileID: 0}
+  health: 2000
+  mass: 225
+  blockColor: {r: 1, g: 1, b: 1, a: 1}
+  prefab: {fileID: 1592975561069620, guid: 10bb081f9211c334496be79c0bf69454, type: 3}

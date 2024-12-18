@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GrassBlock
   m_EditorClassIdentifier: 
   blockName: 
-  health: 1000
-  mass: 50
-  blockColor: {r: 1, g: 1, b: 1, a: 0}
+  health: 100
+  mass: 25
+  blockColor: {r: 1, g: 1, b: 1, a: 1}
   prefab: {fileID: 1994553454022704, guid: 34a031333f407ff46aa2be10d4990402, type: 3}

@@ -324,6 +324,11 @@ public class UIManager : MonoBehaviour
         attemptsText.text = $"Attempts: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
     }
 
+    public void ActivateUI()
+    {
+        _IsUIActive = true;
+    }
+
     public bool IsUIActive()
     {
         return _IsUIActive;

@@ -95,6 +95,7 @@ public class Player : MonoBehaviour
 
                             if (LevelManager.Instance.attempts >= LevelManager.Instance.maxAttempts)
                             {
+                                UIManager.Instance.ActivateUI(); 
                                 Invoke("EndLevelWithDelay", 1f); // Завершаем уровень через 1 секунду
                             }
                         }

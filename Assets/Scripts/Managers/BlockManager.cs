@@ -22,6 +22,8 @@ public class BlockManager : MonoBehaviour
     // Метод для настройки блока
     public GameObject SetupBlock(GameObject block, BlockType blockType)
     {
+        Rigidbody rb;
+
         // Добавляем компонент DestructibleBlock, если его нет
         if (block.GetComponent<DestructibleBlock>() == null)
         {
@@ -31,10 +33,15 @@ public class BlockManager : MonoBehaviour
         // Добавляем Rigidbody, если его нет
         if (block.GetComponent<Rigidbody>() == null)
         {
-            Rigidbody rb = block.AddComponent<Rigidbody>();
-            rb.isKinematic = true;  // Сначала отключаем физику для блоков
-            rb.mass = blockType.mass;  // Устанавливаем массу из типа блока
+            rb = block.AddComponent<Rigidbody>();
         }
+        else
+        {
+            rb = block.GetComponent<Rigidbody>();
+
+        }
+        rb.isKinematic = blockType.IsKinetic;  // Сначала отключаем физику для блоков
+        rb.mass = blockType.mass;  // Устанавливаем массу из типа блока
 
         // Настроим здоровье блока через компонент DestructibleBlock
         if (block.GetComponent<DestructibleBlock>() != null)

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df7f429da867b55418d7c6f08ab2acb8, type: 3}
-  m_Name: GrassBlock 2
+  m_Name: StoneBlock
   m_EditorClassIdentifier: 
   blockName: 
-  health: 0
-  mass: 0
-  blockColor: {r: 0, g: 0, b: 0, a: 0}
-  prefab: {fileID: 0}
+  health: 500
+  mass: 100
+  blockColor: {r: 1, g: 1, b: 1, a: 1}
+  prefab: {fileID: 1850283239334550, guid: d12ead6d516bc724f99bd345ce3538cd, type: 3}

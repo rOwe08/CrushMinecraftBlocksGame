@@ -74,14 +74,39 @@ public class LevelManager : MonoBehaviour
         // Вычисляем центр карты
         float centerX = SpawnManager.Instance.groundSizeX / 2f;
         float centerZ = SpawnManager.Instance.groundSizeY / 2f;
-        Vector3 startPosition = new Vector3(centerX, 0, centerZ);  // Центр карты
+        Vector3 startPosition = new Vector3(centerX, 1, centerZ);  // Центр карты
 
-        // Вызов метода с передачей позиции центра
-        SpawnManager.Instance.SpawnBuilding(5, 5, startPosition);
+        // В зависимости от уровня вызываем разные функции для спавна
+        if (level <= 10)
+        {
+            // Простой домик для первых 10 уровней
+            SpawnManager.Instance.SpawnSimpleHouse(startPosition);  // Например, дом 5x5
+        }
+        else if (level <= 20)
+        {
+            // Спавним башню для уровней с 11 по 20
+            SpawnManager.Instance.SpawnMediumHouse(startPosition);  // Спавн башни
+        }
+        else if (level <= 30)
+        {
+            // Спавним что-то более сложное, например, крепость для уровней с 21 по 30
+            SpawnManager.Instance.SpawnTwoStoryBuilding(startPosition);  // Спавн крепости
+        }
+        else if (level <= 40)
+        {
+            // Спавним замок для уровней с 31 по 40
+            SpawnManager.Instance.SpawnFortress(startPosition);  // Спавн замка
+        }
+        else
+        {
+            // Спавним что-то эпическое, например, небоскрёб для уровней с 41 по 50
+            SpawnManager.Instance.SpawnCastle(startPosition);  // Спавн небоскреба
+        }
 
         isLevelActive = true;
         UIManager.Instance.HideResults();
     }
+
 
     private void DespawnAllBuildings()
     {

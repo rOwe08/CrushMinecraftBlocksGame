@@ -977,7 +977,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockTypes:
+  - {fileID: 11400000, guid: 29259509e5dc1894cb87c525ec28e225, type: 2}
+  - {fileID: 11400000, guid: dd9e94b3b9be8ff419ec575bc551092e, type: 2}
+  - {fileID: 11400000, guid: 925734c077b92b04e9feff720eb35d6a, type: 2}
+  - {fileID: 11400000, guid: e4abb3630ed77a842818b067b9b510bb, type: 2}
+  - {fileID: 11400000, guid: 5c240f21d35efa04d8dc35d3b984043f, type: 2}
+  - {fileID: 11400000, guid: 99c1f8cb22999b24fa244ebcfc7df6e6, type: 2}
   - {fileID: 11400000, guid: 5e66cb1b0b62c0c45a76243ff9c9b236, type: 2}
+  - {fileID: 11400000, guid: 4c9255def36f34546b4cf674ac3ebbaf, type: 2}
+  - {fileID: 11400000, guid: 4a55d6d422a39ce4d9c2f275aed0bac3, type: 2}
+  - {fileID: 11400000, guid: e2003c5b2ddfefb4eb6acb6a409a3f27, type: 2}
 --- !u!4 &547932223
 Transform:
   m_ObjectHideFlags: 0
@@ -2530,7 +2539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnedBlocks: []
   levelsAmount: 50
-  maxLevelCompleted: 0
+  maxLevelCompleted: 50
   level: 0
   coinsEarnedOnLevel: 0
   totalBlocks: 0
