@@ -74,14 +74,14 @@ public class SpawnManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                // Получаем префаб блока из BlockManager
-                GameObject blockPrefab = BlockManager.Instance.GetBlockPrefab(x, y);
+                // Получаем первый BlockType из BlockManager
+                BlockType blockType = BlockManager.Instance.GetBlockType(0);  // Берем 0-й элемент массива блоков
 
-                // Спавним блок
-                GameObject block = Instantiate(blockPrefab, new Vector3(startPosition.x + x, startPosition.y + y + 1, startPosition.z), Quaternion.identity);
+                // Спавним блок с полученным префабом
+                GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y + 1, startPosition.z), Quaternion.identity);
 
-                // Настраиваем блок через BlockManager
-                block = BlockManager.Instance.SetupBlock(block);
+                // Настраиваем блок через BlockManager с передачей blockType
+                block = BlockManager.Instance.SetupBlock(block, blockType);
 
                 // Сообщаем LevelManager о добавлении нового блока
                 LevelManager.Instance.AddBlock(block);

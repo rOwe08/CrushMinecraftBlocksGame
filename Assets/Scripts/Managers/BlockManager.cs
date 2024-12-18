@@ -4,7 +4,7 @@ public class BlockManager : MonoBehaviour
 {
     public static BlockManager Instance { get; private set; }  // Синглтон
 
-    public GameObject[] blockPrefabs;  // Префабы для разных типов блоков
+    public BlockType[] blockTypes;  // Массив типов блоков (с префабами, массой и здоровьем)
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class BlockManager : MonoBehaviour
     }
 
     // Метод для настройки блока
-    public GameObject SetupBlock(GameObject block)
+    public GameObject SetupBlock(GameObject block, BlockType blockType)
     {
         // Добавляем компонент DestructibleBlock, если его нет
         if (block.GetComponent<DestructibleBlock>() == null)
@@ -33,22 +33,30 @@ public class BlockManager : MonoBehaviour
         {
             Rigidbody rb = block.AddComponent<Rigidbody>();
             rb.isKinematic = true;  // Сначала отключаем физику для блоков
-            rb.mass = 1000f;  // Устанавливаем массу, например, 1. Можно настроить в зависимости от нужд
+            rb.mass = blockType.mass;  // Устанавливаем массу из типа блока
+        }
+
+        // Настроим здоровье блока через компонент DestructibleBlock
+        if (block.GetComponent<DestructibleBlock>() != null)
+        {
+            DestructibleBlock destructibleBlock = block.GetComponent<DestructibleBlock>();
+            destructibleBlock.hp = blockType.health;  // Устанавливаем здоровье блока из типа блока
+            destructibleBlock.blockType = blockType;  // Устанавливаем BlockType для последующего использования
         }
 
         return block;  // Возвращаем настроенный блок
     }
 
 
-    // Метод для выбора префаба блока
-    public GameObject GetBlockPrefab(int x, int y)
+    // Метод для получения типа блока по индексу
+    public BlockType GetBlockType(int index)
     {
-        // Пример: каждые 5 блоков другого типа
-        if ((x + y) % 5 == 0)
+        if (index < 0 || index >= blockTypes.Length)
         {
-            return blockPrefabs.Length > 1 ? blockPrefabs[1] : blockPrefabs[0];
+            Debug.LogWarning("Invalid index for blockTypes array!");
+            return null;
         }
 
-        return blockPrefabs[0];
+        return blockTypes[index];  // Возвращаем тип блока по индексу
     }
 }
