@@ -68,23 +68,20 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnBuilding(int width, int height)
+    public void SpawnBuilding(int width, int height, Vector3 startPosition)
     {
-        // Вычисляем центр карты
-        float centerX = groundSizeX / 2f;
-        float centerZ = groundSizeY / 2f;
-
-        // Позиция основания здания по центру карты
-        Vector3 startPosition = new Vector3(centerX - (width / 2f), 1f, centerZ - (width / 2f));
-
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                GameObject block = SpawnObject(groundTileObject);
-                block.transform.position = new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z);
+                // Получаем префаб блока из BlockManager
+                GameObject blockPrefab = BlockManager.Instance.GetBlockPrefab(x, y);
 
-                block.AddComponent<DestructibleBlock>();
+                // Спавним блок
+                GameObject block = Instantiate(blockPrefab, new Vector3(startPosition.x + x, startPosition.y + y + 1, startPosition.z), Quaternion.identity);
+
+                // Настраиваем блок через BlockManager
+                block = BlockManager.Instance.SetupBlock(block);
 
                 // Сообщаем LevelManager о добавлении нового блока
                 LevelManager.Instance.AddBlock(block);

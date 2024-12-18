@@ -92,6 +92,11 @@ public class Player : MonoBehaviour
                             GameObject projectileObject = SpawnManager.Instance.SpawnObject(SpawnManager.Instance.projectilePrefab);
                             projectileObject.transform.position = launchPoint.position;
                             projectileObject.GetComponent<Rigidbody>().velocity = launchSpeed * launchDirection;
+
+                            if (LevelManager.Instance.attempts >= LevelManager.Instance.maxAttempts)
+                            {
+                                Invoke("EndLevelWithDelay", 1f); // Завершаем уровень через 1 секунду
+                            }
                         }
                         else
                         {
@@ -159,5 +164,10 @@ public class Player : MonoBehaviour
     public void AddCoins(int coins)
     {
         totalCoins += coins;
+    }
+
+    void EndLevelWithDelay()
+    {
+        GameManager.Instance.EndLevel();
     }
 }

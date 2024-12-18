@@ -8,7 +8,10 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     private bool _IsUIActive = false;
+
+    [Header("Panels")]
     public GameObject resultsPanel;  // Панель с результатами
+    public GameObject shopPanel;  // Панель с результатами
 
     [Header("Texts")]
     public TextMeshProUGUI coinsText;  // Ссылка на UI элемент для отображения количества монет
@@ -282,6 +285,16 @@ public class UIManager : MonoBehaviour
     {
         resultsPanel.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() => resultsPanel.SetActive(false));
         _IsUIActive = false;
+    }
+
+
+    public void ShowShopPanel()
+    {
+        shopPanel.SetActive(true);
+
+        // Анимация появления панели (если нужно)
+        shopPanel.transform.localScale = Vector3.zero;  // Начальное состояние (панель скрыта)
+        shopPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления
     }
 
     // Метод для обновления количества монет

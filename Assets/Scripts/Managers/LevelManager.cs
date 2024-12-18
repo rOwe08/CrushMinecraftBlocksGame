@@ -71,7 +71,14 @@ public class LevelManager : MonoBehaviour
             level = levelToStart;
         }
 
-        SpawnManager.Instance.SpawnBuilding(5, 5);
+        // Вычисляем центр карты
+        float centerX = SpawnManager.Instance.groundSizeX / 2f;
+        float centerZ = SpawnManager.Instance.groundSizeY / 2f;
+        Vector3 startPosition = new Vector3(centerX, 0, centerZ);  // Центр карты
+
+        // Вызов метода с передачей позиции центра
+        SpawnManager.Instance.SpawnBuilding(5, 5, startPosition);
+
         isLevelActive = true;
         UIManager.Instance.HideResults();
     }
