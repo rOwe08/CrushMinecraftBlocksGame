@@ -30,6 +30,7 @@ public class SpawnManager : MonoBehaviour
 
         SpawnGround();
         SpawnPlayer();
+        SpawnCameraFocusObject();
     }
 
     void SpawnPlayer()
@@ -39,36 +40,51 @@ public class SpawnManager : MonoBehaviour
         player = SpawnObject(playerObject);
         player.transform.position = new Vector3((groundSizeX / 2) * 1, 10, 5 * 1);
 
-        // Camera settings
         camera.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
-        camera.GetComponent<CinemachineVirtualCamera>().LookAt = player.transform;
-
         GameManager.Instance.player = player.GetComponent<Player>();
+    }
+
+    // Метод для создания пустого объекта для фокуса камеры
+    void SpawnCameraFocusObject()
+    {
+        // Создаем пустой объект в центре карты
+        GameObject cameraFocusObject = new GameObject("CameraFocusObject");
+        cameraFocusObject.transform.position = new Vector3((groundSizeX / 2), 0, (groundSizeY / 2));
+
+        // Настраиваем камеру, чтобы она смотрела на этот объект
+        camera.GetComponent<CinemachineVirtualCamera>().LookAt = cameraFocusObject.transform;
     }
 
     void SpawnGround()
     {
         GameObject spawnedTile;
-     
+
         for (int i = 0; i < groundSizeX; i++)
         {
-            for(int j = 0; j < groundSizeY; j++)
+            for (int j = 0; j < groundSizeY; j++)
             {
                 if (i == 0 || j == 0 || i == groundSizeX - 1 || j == groundSizeY - 1)
                 {
                     GameObject spawnedTileBounds = SpawnObject(groundTileObject);
                     spawnedTileBounds.transform.position = new Vector3(i * 1, groundTileObject.GetComponent<Collider>().bounds.size.y, j * 1);
+
+                    // Добавляем тег "Ground" для объекта по краям
+                    spawnedTileBounds.tag = "Ground";
                 }
                 else
                 {
                     spawnedTile = SpawnObject(groundTileObject);
                     spawnedTile.transform.position = new Vector3(i * 1, 0, j * 1);
+
+                    // Можно добавить тег "Ground" и для центральных блоков, если это нужно
+                    spawnedTile.tag = "Ground";
                 }
             }
         }
     }
 
-    public void SpawnSimpleHouse(Vector3 startPosition)
+
+    public void SpawnWall(Vector3 startPosition)
     {
         int width = 5;
         int height = 3;
@@ -77,17 +93,10 @@ public class SpawnManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                for (int z = 0; z < width; z++)
-                {
-                    if (x == 0 || y == 0 || z == 0 || x == width - 1 || y == height - 1 || z == width - 1)
-                    {
-                        // Спавн блока на границах (стены и крыша)
-                        BlockType blockType = BlockManager.Instance.GetBlockType(0);  // Листовой блок для начальных уровней
-                        GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z + z), Quaternion.identity);
-                        BlockManager.Instance.SetupBlock(block, blockType);
-                        LevelManager.Instance.AddBlock(block);
-                    }
-                }
+                BlockType blockType = BlockManager.Instance.GetBlockType(LevelManager.Instance.level % 10);  // Листовой блок для начальных уровней
+                GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z), Quaternion.identity);
+                BlockManager.Instance.SetupBlock(block, blockType);
+                LevelManager.Instance.AddBlock(block);
             }
         }
     }

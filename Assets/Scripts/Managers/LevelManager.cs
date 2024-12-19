@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour
         if (level <= 10)
         {
             // Простой домик для первых 10 уровней
-            SpawnManager.Instance.SpawnSimpleHouse(startPosition);  // Например, дом 5x5
+            SpawnManager.Instance.SpawnWall(startPosition);  // Например, дом 5x5
         }
         else if (level <= 20)
         {
