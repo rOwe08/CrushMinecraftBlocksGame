@@ -129,7 +129,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnFortifiedBuilding(Vector3 startPosition, int width = 0, int height = 0)
+    public Vector3 SpawnFortifiedBuilding(Vector3 startPosition, int width = 0, int height = 0)
     {
         if (width == 0 || height == 0) 
         {
@@ -143,6 +143,8 @@ public class SpawnManager : MonoBehaviour
         startPosition -= new Vector3(width / 2, 0, width / 2);
 
         SpawnWalls(startPosition, width + 3, height - 1);
+
+        return startPosition;
     }
 
     public void SpawnWalls(Vector3 startPosition, int width, int height)
@@ -167,7 +169,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
-    public void SpawnFortress(Vector3 startPosition, bool WithTowers, int width = 0, int height = 0)
+    public Vector3 SpawnFortress(Vector3 startPosition, bool WithTowers, int width = 0, int height = 0)
     {
 
         if (width == 0 || height == 0)
@@ -176,9 +178,7 @@ public class SpawnManager : MonoBehaviour
             height = 6;
         }
 
-        startPosition -= new Vector3(width / 2, 0, width / 2);
-
-        SpawnFortifiedBuilding(startPosition, width, height);
+        startPosition = SpawnFortifiedBuilding(startPosition, width, height);
 
         int widthOfWalls = 2;
         int heightOfWalls = 3;
@@ -194,15 +194,15 @@ public class SpawnManager : MonoBehaviour
 
             SpawnWalls(new Vector3(startPosition.x + width - widthOfWalls, startPosition.y + height, startPosition.z + width - widthOfWalls), widthOfWalls, heightOfWalls); // +
         }
+
+        return startPosition;
     }
 
     public void SpawnCastle(Vector3 startPosition, bool WithTowers)
     {
         int width = 10;
         int height = 8;
-        SpawnFortress(startPosition, true, width, height);
-
-        startPosition -= new Vector3(width / 2, 0, width / 2);
+        startPosition = SpawnFortress(startPosition, true, width, height);
 
         if ( WithTowers)
         {

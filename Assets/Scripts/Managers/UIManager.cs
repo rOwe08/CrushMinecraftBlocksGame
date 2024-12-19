@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Texts")]
     public TextMeshProUGUI coinsText;  // Ссылка на UI элемент для отображения количества монет
+    public TextMeshProUGUI diamondsText;  // Ссылка на UI элемент для отображения количества монет
+
     public TextMeshProUGUI progressText;  // Ссылка на UI элемент для отображения процента уничтоженных блоков
     public TextMeshProUGUI levelText;  // Текст с уровнем
     public TextMeshProUGUI attemptsText; // Текст с попытками
@@ -64,6 +66,7 @@ public class UIManager : MonoBehaviour
     public void UpdateUI()
     {
         UpdateCoins();
+        UpdateDiamonds();
         UpdateProgress();
         UpdateLevel();
         UpdateAttempts();
@@ -225,25 +228,43 @@ public class UIManager : MonoBehaviour
                 });
         }
 
-        Transform nextActionButtonTransform = resultsPanel.transform.Find("NextActionButton").transform;
-        Button nextActionButton = nextActionButtonTransform.GetComponent<Button>();
-        nextActionButton.onClick.RemoveAllListeners();
+        Transform nextLevelButtonTransform = resultsPanel.transform.Find("NextLevelButton").transform;
+        Transform restartButtonTransform = resultsPanel.transform.Find("RestartButton").transform;
+
+        Button nextLevelButton = nextLevelButtonTransform.GetComponent<Button>();
+        Button restartButton = restartButtonTransform.GetComponent<Button>();
+
+        nextLevelButton.onClick.RemoveAllListeners();
+        restartButton.onClick.RemoveAllListeners();
+
+        restartButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.StartLevel(LevelManager.Instance.level);
+        });
 
         if (earnedStars <= 0)
         {
-            nextActionButton.onClick.AddListener(() =>
+            if (LevelManager.Instance.level >= LevelManager.Instance.maxLevelCompleted)
             {
-                GameManager.Instance.StartLevel(LevelManager.Instance.level);
-            });
-            nextActionButtonTransform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = "Try Again";
+                nextLevelButton.interactable = false;
+            }
+            else
+            {
+                nextLevelButton.interactable = true;
+                nextLevelButton.onClick.AddListener(() =>
+                {
+                    GameManager.Instance.StartLevel();
+                });
+            }
         }
         else
         {
-            nextActionButton.onClick.AddListener(() =>
+            nextLevelButton.interactable = true;
+
+            nextLevelButton.onClick.AddListener(() =>
             {
                 GameManager.Instance.StartLevel();
             });
-            nextActionButtonTransform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = "Next Level";
         }
 
         // Плавное появление панели
@@ -301,6 +322,12 @@ public class UIManager : MonoBehaviour
     public void UpdateCoins()
     {
         coinsText.text = GameManager.Instance.player.totalCoins.ToString();
+    }
+
+    // Метод для обновления количества кристаллов
+    public void UpdateDiamonds()
+    {
+        diamondsText.text = GameManager.Instance.player.totalDiamonds.ToString();
     }
 
     // Метод для обновления уровня

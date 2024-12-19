@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int totalCoins = 0;
+    public int totalDiamonds = 0;
 
     public float speed = 10f;  // Скорость движения
     public float rotationSpeed = 700.0f;  // Скорость поворота
@@ -157,7 +158,10 @@ public class Player : MonoBehaviour
     {
         totalCoins += coins;
     }
-
+    public void AddDiamonds(int amount)
+    {
+        totalDiamonds += amount;
+    }
     void EndLevelWithDelay()
     {
         GameManager.Instance.EndLevel();
