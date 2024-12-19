@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         LoadData();
 
-        StartLevel();
+        UIManager.Instance.ShowLevelsPanel();
     }
 
     public void StartLevel(int level = 0)

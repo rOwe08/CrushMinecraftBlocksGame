@@ -90,6 +90,8 @@ public class SpawnManager : MonoBehaviour
         int width = 5;
         int height = 3;
 
+        startPosition -= new Vector3(width / 2, 0, width / 2);
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -109,6 +111,8 @@ public class SpawnManager : MonoBehaviour
             width = 6;
             height = 4;
         }
+
+        startPosition -= new Vector3(width / 2, 0, width / 2);
 
         for (int x = 0; x < width; x++)
         {
@@ -136,11 +140,14 @@ public class SpawnManager : MonoBehaviour
         // Спавним дом в центре
         SpawnHouse(startPosition, width, height);
 
+        startPosition -= new Vector3(width / 2, 0, width / 2);
+
         SpawnWalls(startPosition, width + 3, height - 1);
     }
 
     public void SpawnWalls(Vector3 startPosition, int width, int height)
     {
+
         // Спавним стены вокруг дома
         for (int x = -1; x < width; x++)
         {
@@ -162,11 +169,14 @@ public class SpawnManager : MonoBehaviour
     }
     public void SpawnFortress(Vector3 startPosition, bool WithTowers, int width = 0, int height = 0)
     {
-        if(width == 0 || height == 0)
+
+        if (width == 0 || height == 0)
         {
             width = 8;
             height = 6;
         }
+
+        startPosition -= new Vector3(width / 2, 0, width / 2);
 
         SpawnFortifiedBuilding(startPosition, width, height);
 
@@ -190,10 +200,11 @@ public class SpawnManager : MonoBehaviour
     {
         int width = 10;
         int height = 8;
-
         SpawnFortress(startPosition, true, width, height);
 
-        if( WithTowers)
+        startPosition -= new Vector3(width / 2, 0, width / 2);
+
+        if ( WithTowers)
         {
             // Башни
             SpawnWalls(new Vector3(startPosition.x - width, startPosition.y, startPosition.z + width + 4), 3, 6);

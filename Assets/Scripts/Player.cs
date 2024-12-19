@@ -24,12 +24,10 @@ public class Player : MonoBehaviour
     public float timeIntervalPoints = 0.01f;
 
     private Rigidbody rb;
-    private bool isActive = false; // Для отслеживания, активна ли пушка
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true; // Отключаем физику при старте (замораживаем движение)
 
         // Замораживаем ненужные оси, чтобы пушка не двигалась хаотично
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -39,13 +37,6 @@ public class Player : MonoBehaviour
     {
         if (!UIManager.Instance.IsUIActive())
         {
-            // Включаем физику при первом взаимодействии с объектом
-            if (!isActive && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || Input.GetMouseButtonDown(0)))
-            {
-                rb.isKinematic = false; // Включаем физику, пушка начинает поддаваться физическим силам
-                isActive = true;
-            }
-
             moveHorizontal = 0f;
 
             if (Input.GetKey(KeyCode.A))
