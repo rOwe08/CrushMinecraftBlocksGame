@@ -1,6 +1,7 @@
 ﻿using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -101,10 +102,13 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnMediumHouse(Vector3 startPosition)
+    public void SpawnHouse(Vector3 startPosition, int width = 0, int height = 0)
     {
-        int width = 7;
-        int height = 4;
+        if (width == 0 || height == 0)
+        {
+            width = 6;
+            height = 4;
+        }
 
         for (int x = 0; x < width; x++)
         {
@@ -121,99 +125,83 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnTwoStoryBuilding(Vector3 startPosition)
+    public void SpawnFortifiedBuilding(Vector3 startPosition, int width = 0, int height = 0)
     {
-        int width = 7;
-        int height = 6; // Два этажа по 3 блока
+        if (width == 0 || height == 0) 
+        {
+            width = 4;
+            height = 3;
+        }
 
-        for (int x = 0; x < width; x++)
+        // Спавним дом в центре
+        SpawnHouse(startPosition, width, height);
+
+        SpawnWalls(startPosition, width + 3, height - 1);
+    }
+
+    public void SpawnWalls(Vector3 startPosition, int width, int height)
+    {
+        // Спавним стены вокруг дома
+        for (int x = -1; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                for (int z = 0; z < width; z++)
+                for (int z = -1; z < width; z++)
                 {
-                    BlockType blockType = BlockManager.Instance.GetBlockType(2);  // Деревянные и каменные блоки
-                    GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z + z), Quaternion.identity);
-                    BlockManager.Instance.SetupBlock(block, blockType);
-                    LevelManager.Instance.AddBlock(block);
+                    // Проверяем, находятся ли текущие координаты на краях (стены)
+                    if (x == -1 || x == width - 1 || z == -1 || z == width - 1)
+                    {
+                        BlockType blockType = BlockManager.Instance.GetBlockType(2);  // Деревянные и каменные блоки
+                        GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x - 1, startPosition.y + y, startPosition.z + z - 1), Quaternion.identity);
+                        BlockManager.Instance.SetupBlock(block, blockType);
+                        LevelManager.Instance.AddBlock(block);
+                    }
                 }
             }
         }
     }
+    public void SpawnFortress(Vector3 startPosition, bool WithTowers, int width = 0, int height = 0)
+    {
+        if(width == 0 || height == 0)
+        {
+            width = 8;
+            height = 6;
+        }
 
-    public void SpawnFortress(Vector3 startPosition)
+        SpawnFortifiedBuilding(startPosition, width, height);
+
+        int widthOfWalls = 2;
+        int heightOfWalls = 3;
+
+        if (WithTowers)
+        {
+            startPosition += new Vector3(1, 0, 1);
+            // Башни
+            SpawnWalls(new Vector3(startPosition.x + 1, startPosition.y + height, startPosition.z + 1), widthOfWalls, heightOfWalls);
+            SpawnWalls(new Vector3(startPosition.x + 1, startPosition.y + height, startPosition.z + width - widthOfWalls), widthOfWalls, heightOfWalls);
+
+            SpawnWalls(new Vector3(startPosition.x + width - widthOfWalls, startPosition.y + height, startPosition.z + 1), widthOfWalls, heightOfWalls);
+
+            SpawnWalls(new Vector3(startPosition.x + width - widthOfWalls, startPosition.y + height, startPosition.z + width - widthOfWalls), widthOfWalls, heightOfWalls); // +
+        }
+    }
+
+    public void SpawnCastle(Vector3 startPosition, bool WithTowers)
     {
         int width = 10;
         int height = 8;
 
-        // Основание
-        for (int x = 0; x < width; x++)
+        SpawnFortress(startPosition, true, width, height);
+
+        if( WithTowers)
         {
-            for (int y = 0; y < height; y++)
-            {
-                for (int z = 0; z < width; z++)
-                {
-                    BlockType blockType = BlockManager.Instance.GetBlockType(3);  // Каменные или кирпичные блоки
-                    GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z + z), Quaternion.identity);
-                    BlockManager.Instance.SetupBlock(block, blockType);
-                    LevelManager.Instance.AddBlock(block);
-                }
-            }
-        }
-
-        // Башни
-        SpawnTower(new Vector3(startPosition.x, startPosition.y, startPosition.z));
-        SpawnTower(new Vector3(startPosition.x + width - 1, startPosition.y, startPosition.z + width - 1));
-    }
-
-    public void SpawnCastle(Vector3 startPosition)
-    {
-        int width = 15;
-        int height = 10;
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                for (int z = 0; z < width; z++)
-                {
-                    BlockType blockType = BlockManager.Instance.GetBlockType(4);  // Более прочные блоки, кирпичи и железо
-                    GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z + z), Quaternion.identity);
-                    BlockManager.Instance.SetupBlock(block, blockType);
-                    LevelManager.Instance.AddBlock(block);
-                }
-            }
-        }
-
-        // Дополнительные элементы (башни, ворота)
-        SpawnTower(new Vector3(startPosition.x, startPosition.y, startPosition.z));
-        SpawnTower(new Vector3(startPosition.x + width - 1, startPosition.y, startPosition.z + width - 1));
-        // Добавьте ворота или другие декоративные элементы
-    }
-
-    public void SpawnTower(Vector3 startPosition)
-    {
-        int towerHeight = 10;  // Высота башни
-        int towerWidth = 3;    // Ширина башни
-
-        for (int x = 0; x < towerWidth; x++)
-        {
-            for (int y = 0; y < towerHeight; y++)
-            {
-                for (int z = 0; z < towerWidth; z++)
-                {
-                    // Получаем тип блока для башни
-                    BlockType blockType = BlockManager.Instance.GetBlockType(3);  // Например, каменный блок для башни
-                    GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z + z), Quaternion.identity);
-
-                    // Настраиваем блок
-                    BlockManager.Instance.SetupBlock(block, blockType);
-                    LevelManager.Instance.AddBlock(block);
-                }
-            }
+            // Башни
+            SpawnWalls(new Vector3(startPosition.x - width, startPosition.y, startPosition.z + width + 4), 3, 6);
+            SpawnWalls(new Vector3(startPosition.x + width + 4, startPosition.y, startPosition.z + width + 4), 3, 6);
+            SpawnWalls(new Vector3(startPosition.x - width, startPosition.y, startPosition.z - width), 3, 6);
+            SpawnWalls(new Vector3(startPosition.x + width + 4, startPosition.y, startPosition.z - width), 3, 6);
         }
     }
-
 
     public GameObject SpawnObject(GameObject gameObjectToSpawn, GameObject parentObject = null)
     {

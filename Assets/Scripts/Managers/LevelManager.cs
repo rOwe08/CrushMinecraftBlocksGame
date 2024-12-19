@@ -76,6 +76,7 @@ public class LevelManager : MonoBehaviour
         float centerZ = SpawnManager.Instance.groundSizeY / 2f;
         Vector3 startPosition = new Vector3(centerX, 1, centerZ);  // Центр карты
 
+
         // В зависимости от уровня вызываем разные функции для спавна
         if (level <= 10)
         {
@@ -85,22 +86,30 @@ public class LevelManager : MonoBehaviour
         else if (level <= 20)
         {
             // Спавним башню для уровней с 11 по 20
-            SpawnManager.Instance.SpawnMediumHouse(startPosition);  // Спавн башни
+            SpawnManager.Instance.SpawnHouse(startPosition);  // Спавн башни
         }
         else if (level <= 30)
         {
             // Спавним что-то более сложное, например, крепость для уровней с 21 по 30
-            SpawnManager.Instance.SpawnTwoStoryBuilding(startPosition);  // Спавн крепости
+            SpawnManager.Instance.SpawnFortifiedBuilding(startPosition);  // Спавн крепости
         }
-        else if (level <= 40)
+        else if (level <= 35)
         {
             // Спавним замок для уровней с 31 по 40
-            SpawnManager.Instance.SpawnFortress(startPosition);  // Спавн замка
+            SpawnManager.Instance.SpawnFortress(startPosition, false);  // Спавн замка
         }
-        else
+        else if (level<= 40)
         {
-            // Спавним что-то эпическое, например, небоскрёб для уровней с 41 по 50
-            SpawnManager.Instance.SpawnCastle(startPosition);  // Спавн небоскреба
+            // Спавним замок для уровней с 40 по 45
+            SpawnManager.Instance.SpawnFortress(startPosition, true);  // Спавн замка
+        }
+        else if(level <= 45)
+        {
+            SpawnManager.Instance.SpawnCastle(startPosition, false);  // Спавн замка
+        }
+        else if (level <= 50)
+        {
+            SpawnManager.Instance.SpawnCastle(startPosition, true);  // Спавн замка
         }
 
         isLevelActive = true;
