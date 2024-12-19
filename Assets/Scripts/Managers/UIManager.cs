@@ -318,6 +318,12 @@ public class UIManager : MonoBehaviour
         shopPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления
     }
 
+    // Закрытие панели уровней
+    public void HideShopPanel()
+    {
+        shopPanel.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() => shopPanel.SetActive(false));
+    }
+
     // Метод для обновления количества монет
     public void UpdateCoins()
     {
