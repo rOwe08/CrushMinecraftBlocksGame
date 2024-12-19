@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using YG;
 
 public class UIManager : MonoBehaviour
 {
@@ -175,7 +176,6 @@ public class UIManager : MonoBehaviour
     // Функция, вызываемая при выборе уровня
     private void OnLevelSelected(int levelIndex)
     {
-        Debug.Log("Level " + (levelIndex) + " selected");
         // Здесь можно вызывать функцию для начала выбранного уровня
         LevelManager.Instance.StartLevel(levelIndex);
         HideLevelsPanel();  // Закрываем панель после выбора уровня
@@ -228,8 +228,8 @@ public class UIManager : MonoBehaviour
                 });
         }
 
-        Transform nextLevelButtonTransform = resultsPanel.transform.Find("NextLevelButton").transform;
-        Transform restartButtonTransform = resultsPanel.transform.Find("RestartButton").transform;
+        Transform nextLevelButtonTransform = resultsPanel.transform.Find("HorizontalLayout").Find("NextLevelButton").transform;
+        Transform restartButtonTransform = resultsPanel.transform.Find("HorizontalLayout").Find("RestartButton").transform;
 
         Button nextLevelButton = nextLevelButtonTransform.GetComponent<Button>();
         Button restartButton = restartButtonTransform.GetComponent<Button>();
@@ -271,9 +271,24 @@ public class UIManager : MonoBehaviour
         resultsPanel.transform.localScale = Vector3.zero;  // Начальное состояние (панель скрыта)
         resultsPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления панели
 
-        percentageText.text = $"Percentage: {progress:F0}%";
-        coinsEarnedText.text = $"Coins earned: {LevelManager.Instance.coinsEarnedOnLevel}";
-        attemptsUsedText.text = $"Attempts used: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+        if (YandexGame.EnvironmentData.language == "ru")
+        {
+            percentageText.text = $"Прогресс: {progress:F0}%";
+            coinsEarnedText.text = $"Монет получено: {LevelManager.Instance.coinsEarnedOnLevel}";
+            attemptsUsedText.text = $"Попыток использовано: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+        }
+        else if (YandexGame.EnvironmentData.language == "en")
+        {
+            percentageText.text = $"Progress: {progress:F0}%";
+            coinsEarnedText.text = $"Coins earned: {LevelManager.Instance.coinsEarnedOnLevel}";
+            attemptsUsedText.text = $"Attempts used: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+        }
+        else if (YandexGame.EnvironmentData.language == "tr")
+        {
+            percentageText.text = $"Yüzde: {progress:F0}%";
+            coinsEarnedText.text = $"Kazanılan paralar: {LevelManager.Instance.coinsEarnedOnLevel}";
+            attemptsUsedText.text = $"Kullanılan denemeler: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+        }
 
         // Определяем медаль на основе количества звезд
         if (earnedStars == 3)
@@ -339,7 +354,18 @@ public class UIManager : MonoBehaviour
     // Метод для обновления уровня
     public void UpdateLevel()
     {
-        levelText.text = "Level: " + LevelManager.Instance.level;
+        if (YandexGame.EnvironmentData.language == "ru")
+        {
+            levelText.text = "Уровень: " + LevelManager.Instance.level;
+        }
+        else if (YandexGame.EnvironmentData.language == "en")
+        {
+            levelText.text = "Level: " + LevelManager.Instance.level;
+        }
+        else if (YandexGame.EnvironmentData.language == "tr")
+        {
+            levelText.text = "Seviye: " + LevelManager.Instance.level;
+        }
     }
 
     // Метод для обновления процента уничтоженных блоков
@@ -348,13 +374,36 @@ public class UIManager : MonoBehaviour
         // Обновляем прогресс в UI
         float progress = (float)(LevelManager.Instance.totalBlocks - LevelManager.Instance.remainingBlocks) / LevelManager.Instance.totalBlocks * 100;
 
-        progressText.text = "Progress: " + progress.ToString("F0") + "%";
+
+        if (YandexGame.EnvironmentData.language == "ru")
+        {
+            progressText.text = "Прогресс: " + progress.ToString("F0") + "%";
+        }
+        else if (YandexGame.EnvironmentData.language == "en")
+        {
+            progressText.text = "Progress: " + progress.ToString("F0") + "%";
+        }
+        else if (YandexGame.EnvironmentData.language == "tr")
+        {
+            progressText.text = "İlerleme: " + progress.ToString("F0") + "%";
+        }
     }
 
     // Метод для обновления процента уничтоженных блоков
     public void UpdateAttempts()
     {
-        attemptsText.text = $"Attempts: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+        if (YandexGame.EnvironmentData.language == "ru")
+        {
+            attemptsText.text = $"Попытки: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+        }
+        else if (YandexGame.EnvironmentData.language == "en")
+        {
+            attemptsText.text = $"Attempts: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+        }
+        else if (YandexGame.EnvironmentData.language == "tr")
+        {
+            attemptsText.text = $"Denemeler: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+        }
     }
 
     public void ActivateUI()
