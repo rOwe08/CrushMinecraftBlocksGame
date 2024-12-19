@@ -5,6 +5,8 @@ public class BlockManager : MonoBehaviour
     public static BlockManager Instance { get; private set; }  // Синглтон
 
     public BlockType[] blockTypes;  // Массив типов блоков (с префабами, массой и здоровьем)
+    public BlockType[] rewardBlockTypes;  // Массив типов блоков для наград (с префабами, массой и здоровьем)
+
 
     private void Awake()
     {

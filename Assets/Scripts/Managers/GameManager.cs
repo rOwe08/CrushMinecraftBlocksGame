@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.coinsEarnedOnLevel += coins;
     }
 
+    public void AddDiamonds(int amount)
+    {
+        player.AddDiamonds(amount);
+    }
     private void LoadData()
     {
 

@@ -96,13 +96,32 @@ public class SpawnManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                BlockType blockType = BlockManager.Instance.GetBlockType(LevelManager.Instance.level % 10);  // Листовой блок для начальных уровней
+                BlockType blockType;
+
+                // Генерация случайного числа от 0 до 100
+                float randomChance = Random.Range(0f, 100f);
+
+                // Определение типа блока на основе случайного числа
+                if (randomChance <= 2f)
+                {
+                    blockType = BlockManager.Instance.rewardBlockTypes[0]; // Наградной блок с шансом 5%
+                }
+                else if (randomChance <= 10f)
+                {
+                    blockType = BlockManager.Instance.rewardBlockTypes[1]; // Наградной блок с шансом 10%
+                }
+                else
+                {
+                    blockType = BlockManager.Instance.GetBlockType(LevelManager.Instance.level % 10); // Основной тип блока
+                }
+
                 GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z), Quaternion.identity);
                 BlockManager.Instance.SetupBlock(block, blockType);
                 LevelManager.Instance.AddBlock(block);
             }
         }
     }
+
 
     public void SpawnHouse(Vector3 startPosition, int width = 0, int height = 0)
     {
@@ -120,7 +139,24 @@ public class SpawnManager : MonoBehaviour
             {
                 for (int z = 0; z < width; z++)
                 {
-                    BlockType blockType = BlockManager.Instance.GetBlockType(1);  // Трава, деревянные блоки
+                    BlockType blockType;
+
+                    // Генерация случайного числа от 0 до 100
+                    float randomChance = Random.Range(0f, 100f);
+
+                    // Определение типа блока на основе случайного числа
+                    if (randomChance <= 2f)
+                    {
+                        blockType = BlockManager.Instance.rewardBlockTypes[0]; // Наградной блок с шансом 5%
+                    }
+                    else if (randomChance <= 10f)
+                    {
+                        blockType = BlockManager.Instance.rewardBlockTypes[1]; // Наградной блок с шансом 10%
+                    }
+                    else
+                    {
+                        blockType = BlockManager.Instance.GetBlockType(LevelManager.Instance.level % 10); // Основной тип блока
+                    }
                     GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x, startPosition.y + y, startPosition.z + z), Quaternion.identity);
                     BlockManager.Instance.SetupBlock(block, blockType);
                     LevelManager.Instance.AddBlock(block);
@@ -160,7 +196,24 @@ public class SpawnManager : MonoBehaviour
                     // Проверяем, находятся ли текущие координаты на краях (стены)
                     if (x == -1 || x == width - 1 || z == -1 || z == width - 1)
                     {
-                        BlockType blockType = BlockManager.Instance.GetBlockType(2);  // Деревянные и каменные блоки
+                        BlockType blockType;
+
+                        // Генерация случайного числа от 0 до 100
+                        float randomChance = Random.Range(0f, 100f);
+
+                        // Определение типа блока на основе случайного числа
+                        if (randomChance <= 2f)
+                        {
+                            blockType = BlockManager.Instance.rewardBlockTypes[0]; // Наградной блок с шансом 5%
+                        }
+                        else if (randomChance <= 10f)
+                        {
+                            blockType = BlockManager.Instance.rewardBlockTypes[1]; // Наградной блок с шансом 10%
+                        }
+                        else
+                        {
+                            blockType = BlockManager.Instance.GetBlockType(LevelManager.Instance.level % 10); // Основной тип блока
+                        }
                         GameObject block = Instantiate(blockType.prefab, new Vector3(startPosition.x + x - 1, startPosition.y + y, startPosition.z + z - 1), Quaternion.identity);
                         BlockManager.Instance.SetupBlock(block, blockType);
                         LevelManager.Instance.AddBlock(block);

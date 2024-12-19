@@ -2,7 +2,6 @@
 
 public class DestructibleBlock : MonoBehaviour
 {
-    public int rewardCoins = 10;  // Награда за разрушение блока
     public float hp;  // Здоровье блока
     public float fallDamageThreshold = 3f;  // Минимальная высота падения для получения урона
     public float fallDamageMultiplier = 5f;  // Множитель урона при падении
@@ -39,7 +38,17 @@ public class DestructibleBlock : MonoBehaviour
     {
         if (hp < 0) 
         {
-            GameManager.Instance.AddCoins(rewardCoins);
+            if (blockType.IsCollectable) 
+            {
+                if (blockType == BlockManager.Instance.rewardBlockTypes[0]) 
+                {
+                    GameManager.Instance.AddDiamonds(blockType.reward);
+                }
+                else if (blockType == BlockManager.Instance.rewardBlockTypes[1])
+                {
+                    GameManager.Instance.AddCoins(blockType.reward);
+                }
+            }
             LevelManager.Instance.RemoveBlock();
             Destroy(gameObject);  // Уничтожаем блок   
         }
