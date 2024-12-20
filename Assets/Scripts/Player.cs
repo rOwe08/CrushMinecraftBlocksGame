@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         projectileAmount = 1;
+        cannonSize = 0.6f;
     }
 
     void Update()
@@ -127,19 +128,21 @@ public class Player : MonoBehaviour
     // Корутин для стрельбы снарядами с задержкой
     IEnumerator ShootProjectiles()
     {
-        Vector3 launchDirection = GetLaunchDirection();
-
         for (int i = 0; i < projectileAmount; i++)
         {
+            // Рассчитываем направление для каждого снаряда непосредственно перед выстрелом
+            Vector3 launchDirection = GetLaunchDirection();
+
             GameObject projectileObject = SpawnManager.Instance.SpawnObject(SpawnManager.Instance.projectilePrefab);
 
-            //projectileObject.transform.localScale = cannonSize * Vector3.one;
+            projectileObject.transform.localScale = cannonSize * Vector3.one;
             projectileObject.transform.position = launchPoint.position;
-            projectileObject.GetComponent<Rigidbody>().velocity = cannonPower * launchDirection;
+            projectileObject.GetComponent<Rigidbody>().velocity = 50f * launchDirection;
 
-            yield return new WaitForSeconds(0.2f); // Задержка между выстрелами (0.2 секунды)
+            yield return new WaitForSeconds(0.6f); // Задержка между выстрелами (0.2 секунды)
         }
     }
+
 
     // Метод для получения нормализованного направления на основе позиции курсора
     Vector3 GetLaunchDirection()

@@ -46,7 +46,14 @@ public class DestructibleBlock : MonoBehaviour
                 }
                 else if (blockType == BlockManager.Instance.rewardBlockTypes[1])
                 {
-                    GameManager.Instance.AddCoins(blockType.reward);
+                    if(blockType.reward > GameManager.Instance.player.totalCoins / 10)
+                    {
+                        GameManager.Instance.AddCoins(blockType.reward);
+                    }
+                    else
+                    {
+                        GameManager.Instance.AddCoins(GameManager.Instance.player.totalCoins / 10);
+                    }
                 }
             }
             LevelManager.Instance.RemoveBlock();
@@ -70,8 +77,9 @@ public class DestructibleBlock : MonoBehaviour
         // Проверка на урон от снарядов
         else if (collision.gameObject.CompareTag("Projectile"))
         {
-            float impactSpeed = collision.relativeVelocity.magnitude;
-            float projectileDamage = impactSpeed * 10;
+            float projectileDamage = GameManager.Instance.player.cannonPower * 10;
+            Debug.Log($"{(projectileDamage / hp) * 100} %");
+
             TakeDamage(projectileDamage);
         }
     }
