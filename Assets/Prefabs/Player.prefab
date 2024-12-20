@@ -69,8 +69,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc80e99116349d445a8899a10d76fccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCoins: 0
-  totalDiamonds: 0
+  cannonPower: 50
+  cannonSize: 0
+  cannonMass: 0
+  floorLevel: 0
+  maxAttempts: 0
+  explosiveDamage: 0
+  projectileAmount: 0
+  armageddonPower: 0
+  totalCoins: 1234567
+  totalDiamonds: 12345
   speed: 5
   rotationSpeed: 700
   leftBound: 5
@@ -78,7 +86,6 @@ MonoBehaviour:
   minYRotation: -90
   maxYRotation: 90
   launchPoint: {fileID: 6786664278579801664}
-  launchSpeed: 50
   lineRenderer: {fileID: 5681397186110832337}
   linePoints: 175
   timeIntervalPoints: 0.01

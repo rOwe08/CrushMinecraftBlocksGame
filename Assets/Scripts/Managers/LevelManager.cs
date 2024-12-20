@@ -145,6 +145,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void AddAttempts(int amount)
+    {
+        maxAttempts += amount;
+    }
+
     public void AddBlock(GameObject block)
     {
         remainingBlocks++;

@@ -61,8 +61,6 @@ public class DestructibleBlock : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Block collided with " + collision.gameObject.name);  // Логируй имя объекта, с которым произошло столкновение
-
         // Проверка на урон от падений только при столкновении с землей
         if (collision.gameObject.CompareTag("Ground") && canTakeFallDamage)
         {

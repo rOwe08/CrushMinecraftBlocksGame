@@ -1,8 +1,19 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public float cannonPower = 50f;
+    public float cannonSize;
+    public float cannonMass;
+    public int floorLevel;
+    public int maxAttempts;
+    public float explosiveDamage;
+    public int projectileAmount = 1;
+    public float armageddonPower;
+
     public int totalCoins = 0;
     public int totalDiamonds = 0;
 
@@ -17,7 +28,6 @@ public class Player : MonoBehaviour
     public Transform launchPoint;    // Позиция пушки или точки, откуда будет начинаться луч
 
     private float moveHorizontal = 0f;
-    public float launchSpeed = 50f;
 
     [Header("****Trajectory display****")]
     public LineRenderer lineRenderer; // Компонент LineRenderer
@@ -32,6 +42,8 @@ public class Player : MonoBehaviour
 
         // Замораживаем ненужные оси, чтобы пушка не двигалась хаотично
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        projectileAmount = 1;
     }
 
     void Update()
@@ -76,18 +88,14 @@ public class Player : MonoBehaviour
                     // Логика стрельбы
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if(LevelManager.Instance.attempts < LevelManager.Instance.maxAttempts)
+                        if (LevelManager.Instance.attempts < LevelManager.Instance.maxAttempts)
                         {
                             LevelManager.Instance.AddAttempt();
-
-                            Vector3 launchDirection = GetLaunchDirection();
-                            GameObject projectileObject = SpawnManager.Instance.SpawnObject(SpawnManager.Instance.projectilePrefab);
-                            projectileObject.transform.position = launchPoint.position;
-                            projectileObject.GetComponent<Rigidbody>().velocity = launchSpeed * launchDirection;
+                            StartCoroutine(ShootProjectiles());
 
                             if (LevelManager.Instance.attempts >= LevelManager.Instance.maxAttempts)
                             {
-                                UIManager.Instance.ActivateUI(); 
+                                UIManager.Instance.ActivateUI();
                                 Invoke("EndLevelWithDelay", 1f); // Завершаем уровень через 1 секунду
                             }
                         }
@@ -116,6 +124,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Корутин для стрельбы снарядами с задержкой
+    IEnumerator ShootProjectiles()
+    {
+        Vector3 launchDirection = GetLaunchDirection();
+
+        for (int i = 0; i < projectileAmount; i++)
+        {
+            GameObject projectileObject = SpawnManager.Instance.SpawnObject(SpawnManager.Instance.projectilePrefab);
+
+            //projectileObject.transform.localScale = cannonSize * Vector3.one;
+            projectileObject.transform.position = launchPoint.position;
+            projectileObject.GetComponent<Rigidbody>().velocity = cannonPower * launchDirection;
+
+            yield return new WaitForSeconds(0.2f); // Задержка между выстрелами (0.2 секунды)
+        }
+    }
+
     // Метод для получения нормализованного направления на основе позиции курсора
     Vector3 GetLaunchDirection()
     {
@@ -138,7 +163,7 @@ public class Player : MonoBehaviour
     public void DrawTrajectory()
     {
         Vector3 origin = launchPoint.position;
-        Vector3 startVelocity = launchSpeed * GetLaunchDirection(); // Используем вычисленное направление
+        Vector3 startVelocity = cannonPower * GetLaunchDirection(); // Используем вычисленное направление
         lineRenderer.positionCount = linePoints;
         float time = 0;
 
@@ -153,6 +178,7 @@ public class Player : MonoBehaviour
             time += timeIntervalPoints;
         }
     }
+
 
     public void AddCoins(int coins)
     {

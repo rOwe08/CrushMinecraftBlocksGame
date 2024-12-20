@@ -3,6 +3,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using YG;
+using Unity.VisualScripting;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,7 +27,25 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI coinsEarnedText; // Текст с собранными монетами
     public TextMeshProUGUI attemptsUsedText; // Текст с использованными попытками
 
-    [Header("Buttons")]
+    [Header("Shop Buttons")]
+    public Button powerCannonButton;
+    public Button sizeCannonButton;
+    public Button massCannonButton;
+    public Button floorButton;
+    public Button attemptsButton;
+    public Button explosiveButton;
+    public Button projectilesAmountButton;
+    public Button armageddonButton;
+
+    private GameObject[] upgradeButtons;
+
+    [Header("Prices")]
+    public int[] upgradeCostsCoins; // Цены на апгрейды в монетах для всех кнопок
+    public int[] upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
+
+    public int[] upgradeLevels; // Уровни апгрейда для всех кнопок
+
+    [Header("Main Canvas Buttons")]
     public Button resetButton;
 
     [Header("Stars")]
@@ -57,6 +77,32 @@ public class UIManager : MonoBehaviour
 
         levelsPanel.SetActive(false);  // Панель скрыта по умолчанию
         resultsPanel.SetActive(false);  // Панель скрыта по умолчанию
+
+        upgradeButtons = new GameObject[8];
+
+        // Привязываем функции к кнопкам
+        powerCannonButton.onClick.AddListener(() => Upgrade(0));
+        sizeCannonButton.onClick.AddListener(() => Upgrade(1));
+        massCannonButton.onClick.AddListener(() => Upgrade(2));
+        floorButton.onClick.AddListener(() => Upgrade(3));
+        attemptsButton.onClick.AddListener(() => Upgrade(4));
+        explosiveButton.onClick.AddListener(() => Upgrade(5));
+        projectilesAmountButton.onClick.AddListener(() => Upgrade(6));
+        armageddonButton.onClick.AddListener(() => Upgrade(7));
+
+        upgradeButtons[0] = powerCannonButton.gameObject;
+        upgradeButtons[1] = sizeCannonButton.gameObject;
+        upgradeButtons[2] = massCannonButton.gameObject;
+        upgradeButtons[3] = floorButton.gameObject;
+        upgradeButtons[4] = attemptsButton.gameObject;
+        upgradeButtons[5] = explosiveButton.gameObject;
+        upgradeButtons[6] = projectilesAmountButton.gameObject;
+        upgradeButtons[7] = armageddonButton.gameObject;
+
+        for(int i = 0; i < upgradeButtons.Length; i++)
+        {
+            UpdateUpgradeButton(i);
+        }
     }
 
     private void Update()
@@ -181,6 +227,111 @@ public class UIManager : MonoBehaviour
         HideLevelsPanel();  // Закрываем панель после выбора уровня
     }
 
+    private void UpdateUpgradeButton(int index)
+    {
+        // Находим нужную кнопку по индексу (например, через массив кнопок)
+        GameObject upgradeButton = upgradeButtons[index];
+
+        // Находим текстовые компоненты внутри кнопки
+        Transform parentTransform = upgradeButton.transform.parent;
+
+        TextMeshProUGUI priceText = upgradeButton.transform.Find("Text/PriceText").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI levelText = parentTransform.Find("LevelText").GetComponent<TextMeshProUGUI>();
+
+        // Получаем текущие значения уровня и стоимости
+        int currentLevel = upgradeLevels[index];
+        int currentCoinsCost = upgradeCostsCoins[index];
+        int currentDiamondsCost = upgradeCostsDiamonds[index];
+
+        if(currentCoinsCost > currentDiamondsCost)
+        {
+            priceText.text = $"{FormatNumber(currentCoinsCost)}";
+        }
+        else
+        {
+            priceText.text = $"{FormatNumber(currentDiamondsCost)}";
+        }
+        
+        // Обновляем текст уровня
+        levelText.text = currentLevel.ToString();
+    }
+
+    private void Upgrade(int index)
+    {
+        int currentLevel = upgradeLevels[index]; // Текущий уровень апгрейда
+        int coinsCost = upgradeCostsCoins[index]; // Текущая цена в монетах
+        int diamondsCost = upgradeCostsDiamonds[index]; // Текущая цена в кристаллах
+
+        // Проверка, хватает ли ресурсов для апгрейда
+        if (GameManager.Instance.player.totalCoins >= coinsCost && GameManager.Instance.player.totalDiamonds >= diamondsCost)
+        {
+            // Уменьшаем количество ресурсов
+            GameManager.Instance.player.totalCoins -= coinsCost;
+            GameManager.Instance.player.totalDiamonds -= diamondsCost;
+
+            // Повышаем уровень апгрейда
+            upgradeLevels[index]++;
+
+            // Повышаем цену для следующего уровня
+            upgradeCostsCoins[index] += upgradeCostsCoins[index] / 10;
+            upgradeCostsDiamonds[index] += upgradeCostsDiamonds[index] / 10;
+
+            // Применяем изменения (например, апгрейд статов)
+            ApplyUpgrade(index);
+
+            // Обновляем UI
+            UpdateCoins();
+            UpdateDiamonds();
+            UpdateUpgradeButton(index); // Обновляем текст кнопки после апгрейда
+        }
+        else
+        {
+            Debug.Log("Не хватает ресурсов для апгрейда!");
+        }
+    }
+
+    private void ApplyUpgrade(int index)
+    {
+        switch (index)
+        {
+            case 0:
+            // Применяем изменения для Power Cannon
+            GameManager.Instance.player.cannonPower += 1f;
+            break;
+            case 1:
+            // Применяем изменения для Size Cannon
+            GameManager.Instance.player.cannonSize += 0.05f;
+            break;
+            case 2:
+            // Применяем изменения для Mass Cannon
+            GameManager.Instance.player.cannonMass += 1f;
+            break;
+            case 3:
+            // Применяем изменения для Floor
+            GameManager.Instance.player.floorLevel += 1;
+            break;
+            case 4:
+            // Применяем изменения для Attempts
+            LevelManager.Instance.AddAttempts(1);
+            break;
+            case 5:
+            // Применяем изменения для Explosive
+            GameManager.Instance.player.explosiveDamage += 10;
+            break;
+            case 6:
+            // Применяем изменения для Projectiles Amount
+            GameManager.Instance.player.projectileAmount += 1;
+            break;
+            case 7:
+            // Применяем изменения для Armageddon
+            GameManager.Instance.player.armageddonPower += 50;
+            break;
+            default:
+            Debug.Log("Неверный индекс апгрейда!");
+            break;
+        }
+    }
+
     public void ShowResults()
     {
         badge.gameObject.SetActive(false);
@@ -274,19 +425,19 @@ public class UIManager : MonoBehaviour
         if (YandexGame.EnvironmentData.language == "ru")
         {
             percentageText.text = $"Прогресс: {progress:F0}%";
-            coinsEarnedText.text = $"Монет получено: {LevelManager.Instance.coinsEarnedOnLevel}";
+            coinsEarnedText.text = $"Монет получено: {FormatNumber(LevelManager.Instance.coinsEarnedOnLevel)}";
             attemptsUsedText.text = $"Попыток использовано: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
         }
         else if (YandexGame.EnvironmentData.language == "en")
         {
             percentageText.text = $"Progress: {progress:F0}%";
-            coinsEarnedText.text = $"Coins earned: {LevelManager.Instance.coinsEarnedOnLevel}";
+            coinsEarnedText.text = $"Coins earned: {FormatNumber(LevelManager.Instance.coinsEarnedOnLevel)}";
             attemptsUsedText.text = $"Attempts used: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
         }
         else if (YandexGame.EnvironmentData.language == "tr")
         {
             percentageText.text = $"Yüzde: {progress:F0}%";
-            coinsEarnedText.text = $"Kazanılan paralar: {LevelManager.Instance.coinsEarnedOnLevel}";
+            coinsEarnedText.text = $"Kazanılan paralar: {FormatNumber(LevelManager.Instance.coinsEarnedOnLevel)}";
             attemptsUsedText.text = $"Kullanılan denemeler: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
         }
 
@@ -323,7 +474,6 @@ public class UIManager : MonoBehaviour
         _IsUIActive = false;
     }
 
-
     public void ShowShopPanel()
     {
         shopPanel.SetActive(true);
@@ -342,13 +492,13 @@ public class UIManager : MonoBehaviour
     // Метод для обновления количества монет
     public void UpdateCoins()
     {
-        coinsText.text = GameManager.Instance.player.totalCoins.ToString();
+        coinsText.text = FormatNumber(GameManager.Instance.player.totalCoins);
     }
 
     // Метод для обновления количества кристаллов
     public void UpdateDiamonds()
     {
-        diamondsText.text = GameManager.Instance.player.totalDiamonds.ToString();
+        diamondsText.text = FormatNumber(GameManager.Instance.player.totalDiamonds);
     }
 
     // Метод для обновления уровня
@@ -405,6 +555,22 @@ public class UIManager : MonoBehaviour
             attemptsText.text = $"Denemeler: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
         }
     }
+    string FormatNumber(int number)
+    {
+        if (number >= 1000000)
+        {
+            return $"{(number / 1000000f):0.00}m";
+        }
+        else if (number >= 1000)
+        {
+            return $"{(number / 1000f):0.00}k";
+        }
+        else
+        {
+            return number.ToString();
+        }
+    }
+
 
     public void ActivateUI()
     {
