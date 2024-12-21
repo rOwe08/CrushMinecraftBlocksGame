@@ -127,8 +127,8 @@ public class SpawnManager : MonoBehaviour
     {
         if (width == 0 || height == 0)
         {
-            width = 6;
-            height = 4;
+            width = 4;
+            height = 2;
         }
 
         startPosition -= new Vector3(width / 2, 0, width / 2);
@@ -170,7 +170,7 @@ public class SpawnManager : MonoBehaviour
         if (width == 0 || height == 0) 
         {
             width = 4;
-            height = 3;
+            height = 2;
         }
 
         // Спавним дом в центре
@@ -227,14 +227,14 @@ public class SpawnManager : MonoBehaviour
 
         if (width == 0 || height == 0)
         {
-            width = 8;
-            height = 6;
+            width = 5;
+            height = 3;
         }
 
         startPosition = SpawnFortifiedBuilding(startPosition, width, height);
 
-        int widthOfWalls = 2;
-        int heightOfWalls = 3;
+        int widthOfWalls = 1;
+        int heightOfWalls = 2;
 
         if (WithTowers)
         {
@@ -253,17 +253,17 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnCastle(Vector3 startPosition, bool WithTowers)
     {
-        int width = 10;
-        int height = 8;
+        int width = 6;
+        int height = 4;
         startPosition = SpawnFortress(startPosition, true, width, height);
 
         if ( WithTowers)
         {
             // Башни
-            SpawnWalls(new Vector3(startPosition.x - width, startPosition.y, startPosition.z + width + 4), 3, 6);
-            SpawnWalls(new Vector3(startPosition.x + width + 4, startPosition.y, startPosition.z + width + 4), 3, 6);
-            SpawnWalls(new Vector3(startPosition.x - width, startPosition.y, startPosition.z - width), 3, 6);
-            SpawnWalls(new Vector3(startPosition.x + width + 4, startPosition.y, startPosition.z - width), 3, 6);
+            SpawnWalls(new Vector3(startPosition.x - width, startPosition.y, startPosition.z + width + 4), 2, 4);
+            SpawnWalls(new Vector3(startPosition.x + width + 4, startPosition.y, startPosition.z + width + 4), 2, 4);
+            SpawnWalls(new Vector3(startPosition.x - width, startPosition.y, startPosition.z - width), 2, 4);
+            SpawnWalls(new Vector3(startPosition.x + width + 4, startPosition.y, startPosition.z - width), 2, 4);
         }
     }
 

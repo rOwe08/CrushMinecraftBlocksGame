@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
     public int[] upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
 
     public int[] upgradeLevels; // Уровни апгрейда для всех кнопок
+    public int[] upgradeMaxLevels; // Уровни апгрейда для всех кнопок
 
     [Header("Main Canvas Buttons")]
     public Button resetButton;
@@ -265,24 +266,56 @@ public class UIManager : MonoBehaviour
         // Проверка, хватает ли ресурсов для апгрейда
         if (GameManager.Instance.player.totalCoins >= coinsCost && GameManager.Instance.player.totalDiamonds >= diamondsCost)
         {
-            // Уменьшаем количество ресурсов
-            GameManager.Instance.player.totalCoins -= coinsCost;
-            GameManager.Instance.player.totalDiamonds -= diamondsCost;
+            if (upgradeMaxLevels[index] > upgradeLevels[index]) 
+            {
+                // Уменьшаем количество ресурсов
+                GameManager.Instance.player.totalCoins -= coinsCost;
+                GameManager.Instance.player.totalDiamonds -= diamondsCost;
 
-            // Повышаем уровень апгрейда
-            upgradeLevels[index]++;
+                // Повышаем уровень апгрейда
+                upgradeLevels[index]++;
 
-            // Повышаем цену для следующего уровня
-            upgradeCostsCoins[index] += upgradeCostsCoins[index] / 10;
-            upgradeCostsDiamonds[index] += upgradeCostsDiamonds[index] / 10;
+                // Повышаем цену для следующего уровня
+                upgradeCostsCoins[index] += upgradeCostsCoins[index] / 10;
+                upgradeCostsDiamonds[index] += upgradeCostsDiamonds[index] / 10;
 
-            // Применяем изменения (например, апгрейд статов)
-            ApplyUpgrade(index);
+                // Применяем изменения (например, апгрейд статов)
+                ApplyUpgrade(index);
 
-            // Обновляем UI
-            UpdateCoins();
-            UpdateDiamonds();
-            UpdateUpgradeButton(index); // Обновляем текст кнопки после апгрейда
+                // Обновляем UI
+                UpdateCoins();
+                UpdateDiamonds();
+                UpdateUpgradeButton(index); // Обновляем текст кнопки после апгрейда
+            }
+            else
+            {
+                // Находим нужную кнопку по индексу (например, через массив кнопок)
+                GameObject upgradeButton = upgradeButtons[index];
+
+                // Находим текстовые компоненты внутри кнопки
+                Transform parentTransform = upgradeButton.transform.parent;
+
+                GameObject priceObj = upgradeButton.transform.Find("Text").gameObject;
+                TextMeshProUGUI levelText = parentTransform.Find("LevelText").GetComponent<TextMeshProUGUI>();
+
+                priceObj.SetActive(false);
+
+                if (YandexGame.EnvironmentData.language == "ru")
+                {
+                    // Обновляем текст уровня
+                    levelText.text = "MAКС.";
+                }
+                else if (YandexGame.EnvironmentData.language == "en")
+                {
+                    // Обновляем текст уровня
+                    levelText.text = "MAX.";
+                }
+                else if (YandexGame.EnvironmentData.language == "tr")
+                {
+                    // Обновляем текст уровня
+                    levelText.text = "MAX.";
+                }
+            }
         }
         else
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ public class LevelManager : MonoBehaviour
     public bool isLevelActive = false;
 
     public List<float> levelList = new List<float>();
+    private bool allProjectilesShot = false; // Флаг для проверки, что все ядра выпущены
 
     private void Awake()
     {
@@ -43,11 +45,27 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+        // Проверяем, если уровень активен и все блоки разрушены
         if (isLevelActive && remainingBlocks <= 0)
         {
-            GameManager.Instance.EndLevel();
-            Debug.Log("Level completed!");
+            // Если попытки использованы и все снаряды выпущены
+            if (allProjectilesShot && !GameManager.Instance.player.IsLevelEnding)
+            {
+                GameManager.Instance.EndLevel();
+                Debug.Log("Level completed!");
+            }
         }
+    }
+
+    public void OnAllProjectilesShot()
+    {
+        allProjectilesShot = true;
+    }
+
+    // Отдельный метод, который будет вызван после задержки
+    private void DelayedEndLevel()
+    {
+        GameManager.Instance.EndLevel();
     }
 
     public void StartLevel(int levelToStart = 0)
@@ -58,6 +76,9 @@ public class LevelManager : MonoBehaviour
         coinsEarnedOnLevel = 0;
         totalBlocks = 0;
         remainingBlocks = 0;
+
+        GameManager.Instance.player.IsLevelEnding = false;
+        allProjectilesShot = false; // Сбрасываем флаг
 
         if (levelToStart == 0)
         {
@@ -81,7 +102,7 @@ public class LevelManager : MonoBehaviour
         if (level <= 10)
         {
             // Простой домик для первых 10 уровней
-            SpawnManager.Instance.SpawnWall(startPosition);  // Например, дом 5x5
+            SpawnManager.Instance.SpawnWall(startPosition);  
         }
         else if (level <= 20)
         {

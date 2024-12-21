@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LeavesBlock
   m_EditorClassIdentifier: 
   health: 1
-  mass: 0.01
+  mass: 50
   blockColor: {r: 1, g: 1, b: 1, a: 1}
   prefab: {fileID: 1861767947012644, guid: f4e2dbe5bcefcb849bd3b83478f8a1f4, type: 3}
   IsKinetic: 0

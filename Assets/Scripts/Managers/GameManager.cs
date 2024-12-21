@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour
     [ContextMenu("EndLevel")]
     public void EndLevel()
     {
+        player.IsLevelEnding = true;
+
+        Debug.Log("Level Ended");
         LevelManager.Instance.EndLevel();
         UIManager.Instance.ShowResults();
     }

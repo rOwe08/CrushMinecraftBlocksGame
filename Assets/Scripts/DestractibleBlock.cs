@@ -52,7 +52,14 @@ public class DestructibleBlock : MonoBehaviour
                     }
                     else
                     {
-                        GameManager.Instance.AddCoins(GameManager.Instance.player.totalCoins / 10);
+                        if(GameManager.Instance.player.totalCoins / 10 > 50000)
+                        {
+                            GameManager.Instance.AddCoins(50000);
+                        }
+                        else
+                        {
+                            GameManager.Instance.AddCoins(GameManager.Instance.player.totalCoins / 10);
+                        }
                     }
                 }
             }

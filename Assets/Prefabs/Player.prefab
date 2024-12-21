@@ -77,7 +77,7 @@ MonoBehaviour:
   explosiveDamage: 0
   projectileAmount: 0
   armageddonPower: 0
-  totalCoins: 1234567
+  totalCoins: 12345670
   totalDiamonds: 12345
   speed: 5
   rotationSpeed: 700

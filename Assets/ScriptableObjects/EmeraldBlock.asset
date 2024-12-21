@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7f429da867b55418d7c6f08ab2acb8, type: 3}
   m_Name: EmeraldBlock
   m_EditorClassIdentifier: 
-  blockName: 
-  health: 5000
+  health: 2500
   mass: 300
   blockColor: {r: 1, g: 1, b: 1, a: 1}
   prefab: {fileID: 1737906714266782, guid: 3f34101a8a1875d449d81cc1047e276b, type: 3}
+  IsKinetic: 0
+  IsCollectable: 0
+  reward: 0

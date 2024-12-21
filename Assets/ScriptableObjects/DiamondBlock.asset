@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7f429da867b55418d7c6f08ab2acb8, type: 3}
   m_Name: DiamondBlock
   m_EditorClassIdentifier: 
-  blockName: 
-  health: 10000
+  health: 5000
   mass: 500
   blockColor: {r: 1, g: 1, b: 1, a: 1}
   prefab: {fileID: 1831895050583612, guid: 02f6a19c3e0e38348affd1e9a7cf2949, type: 3}
+  IsKinetic: 0
+  IsCollectable: 0
+  reward: 0

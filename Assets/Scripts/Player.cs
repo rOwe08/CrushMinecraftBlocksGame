@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
 
     private float moveHorizontal = 0f;
 
+    public bool IsLevelEnding = false;
+
     [Header("****Trajectory display****")]
     public LineRenderer lineRenderer; // Компонент LineRenderer
     public int linePoints = 175;
@@ -93,16 +95,6 @@ public class Player : MonoBehaviour
                         {
                             LevelManager.Instance.AddAttempt();
                             StartCoroutine(ShootProjectiles());
-
-                            if (LevelManager.Instance.attempts >= LevelManager.Instance.maxAttempts)
-                            {
-                                UIManager.Instance.ActivateUI();
-                                Invoke("EndLevelWithDelay", 1f); // Завершаем уровень через 1 секунду
-                            }
-                        }
-                        else
-                        {
-                            GameManager.Instance.EndLevel();
                         }
                     }
                     // Логика отображения траектории
@@ -139,10 +131,14 @@ public class Player : MonoBehaviour
             projectileObject.transform.position = launchPoint.position;
             projectileObject.GetComponent<Rigidbody>().velocity = 50f * launchDirection;
 
-            yield return new WaitForSeconds(0.6f); // Задержка между выстрелами (0.2 секунды)
+            yield return new WaitForSeconds(0.6f); // Задержка между выстрелами (0.6 секунды)
+        }
+
+        if (!IsLevelEnding)
+        {
+            LevelManager.Instance.OnAllProjectilesShot();
         }
     }
-
 
     // Метод для получения нормализованного направления на основе позиции курсора
     Vector3 GetLaunchDirection()
@@ -190,9 +186,5 @@ public class Player : MonoBehaviour
     public void AddDiamonds(int amount)
     {
         totalDiamonds += amount;
-    }
-    void EndLevelWithDelay()
-    {
-        GameManager.Instance.EndLevel();
     }
 }
