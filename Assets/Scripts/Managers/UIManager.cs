@@ -341,7 +341,7 @@ public class UIManager : MonoBehaviour
             break;
             case 3:
             // Применяем изменения для Floor
-            GameManager.Instance.player.floorLevel += 1;
+            SpawnManager.Instance.ChangeGround();
             break;
             case 4:
             // Применяем изменения для Attempts

@@ -12810,7 +12810,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 610, y: -14.669165}
+  m_AnchoredPosition: {x: 610, y: -14.669189}
   m_SizeDelta: {x: 1220, y: 29.33833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1643507937
@@ -15289,6 +15289,18 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5252752005369191408, guid: 0051aac641481f241b7b06db235d515e,
     type: 3}
   camera: {fileID: 1694245656}
+  groundObjectsPrefabs:
+  - {fileID: 1994553454022704, guid: 34a031333f407ff46aa2be10d4990402, type: 3}
+  - {fileID: 1411253489999858, guid: c3389d84e00eec940be2227fc3a969f4, type: 3}
+  - {fileID: 1243633763692660, guid: 0571353b1ebb74d408acc22951f8f169, type: 3}
+  - {fileID: 1446259799433016, guid: 495820cc58d38ab428c2cf59583be9b2, type: 3}
+  - {fileID: 1399598299009964, guid: 47e07916408f77947bea842fda15d1bb, type: 3}
+  - {fileID: 1948497804321964, guid: 9613127ceeeac8e4bb1d9b220e27c712, type: 3}
+  - {fileID: 1598827023602804, guid: 80928a3f7943e704a933b1d9ceed7702, type: 3}
+  - {fileID: 1301194713184414, guid: f7426cc52759b6241bad4ef0822a1a9d, type: 3}
+  - {fileID: 1312446199984508, guid: a0e5cd3921dcef144a8c5bb0fb3e67c9, type: 3}
+  - {fileID: 1136087126612918, guid: 3be9b280cce341f458217226fb86d800, type: 3}
+  groundBlocks: []
   groundSizeX: 50
   groundSizeY: 50
 --- !u!4 &2014994528

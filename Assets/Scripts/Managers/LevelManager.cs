@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
     public int maxAttempts = 3;
 
     public bool isLevelActive = false;
+    public bool IsLevelEnding = false;
 
     public List<float> levelList = new List<float>();
     private bool allProjectilesShot = false; // Флаг для проверки, что все ядра выпущены
@@ -49,21 +50,34 @@ public class LevelManager : MonoBehaviour
         if (isLevelActive && remainingBlocks <= 0)
         {
             // Если попытки использованы и все снаряды выпущены
-            if (allProjectilesShot && !GameManager.Instance.player.IsLevelEnding)
+            if (allProjectilesShot && !GameManager.Instance.player.IsLevelEnding && !IsLevelEnding)
             {
+                IsLevelEnding = true;
                 GameManager.Instance.EndLevel();
-                Debug.Log("Level completed!");
-            }
+                Debug.Log("Level completed!"); 
+            } 
         }
     }
+
 
     public void OnAllProjectilesShot()
     {
         allProjectilesShot = true;
+
+        if (attempts >= maxAttempts && !IsLevelEnding) 
+        {
+            IsLevelEnding = true;
+            DelayedEndLevel();
+        }
     }
 
     // Отдельный метод, который будет вызван после задержки
-    private void DelayedEndLevel()
+    public void DelayedEndLevel()
+    {
+        Invoke("InvokeDelayedEndLevel", 1f);
+    }
+
+    private void InvokeDelayedEndLevel()
     {
         GameManager.Instance.EndLevel();
     }
@@ -79,6 +93,7 @@ public class LevelManager : MonoBehaviour
 
         GameManager.Instance.player.IsLevelEnding = false;
         allProjectilesShot = false; // Сбрасываем флаг
+        IsLevelEnding = false;
 
         if (levelToStart == 0)
         {

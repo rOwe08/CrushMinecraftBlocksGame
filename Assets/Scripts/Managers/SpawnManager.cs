@@ -14,6 +14,12 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject camera;
 
+    public List<GameObject> groundObjectsPrefabs;
+
+    private int indexOfGround;
+
+    public List<GameObject> groundBlocks;
+
     public int groundSizeX = 30;
     public int groundSizeY = 30;
 
@@ -29,6 +35,7 @@ public class SpawnManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+        indexOfGround = 0;
         SpawnGround();
         SpawnPlayer();
         SpawnCameraFocusObject();
@@ -66,11 +73,13 @@ public class SpawnManager : MonoBehaviour
             {
                 if (i == 0 || j == 0 || i == groundSizeX - 1 || j == groundSizeY - 1)
                 {
-                    GameObject spawnedTileBounds = SpawnObject(groundTileObject);
+                    GameObject spawnedTileBounds = SpawnObject(groundObjectsPrefabs[indexOfGround]);
                     spawnedTileBounds.transform.position = new Vector3(i * 1, groundTileObject.GetComponent<Collider>().bounds.size.y, j * 1);
 
                     // Добавляем тег "Ground" для объекта по краям
                     spawnedTileBounds.tag = "Ground";
+
+                    groundBlocks.Add(spawnedTileBounds);
                 }
                 else
                 {
@@ -79,6 +88,8 @@ public class SpawnManager : MonoBehaviour
 
                     // Можно добавить тег "Ground" и для центральных блоков, если это нужно
                     spawnedTile.tag = "Ground";
+
+                    groundBlocks.Add(spawnedTile);
                 }
             }
         }
@@ -121,7 +132,6 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
-
 
     public void SpawnHouse(Vector3 startPosition, int width = 0, int height = 0)
     {
@@ -222,6 +232,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
+
     public Vector3 SpawnFortress(Vector3 startPosition, bool WithTowers, int width = 0, int height = 0)
     {
 
@@ -282,4 +293,22 @@ public class SpawnManager : MonoBehaviour
         
         return gameObject;
     }
+
+    public void ChangeGround()
+    {
+        indexOfGround++;
+
+        foreach (GameObject spawnedGroundObject in groundBlocks)
+        {
+            // Получаем текущий массив материалов
+            Material[] materials = spawnedGroundObject.GetComponent<MeshRenderer>().materials;
+
+            // Меняем только нужный материал
+            materials[0] = groundObjectsPrefabs[indexOfGround].GetComponent<MeshRenderer>().sharedMaterials[0];
+
+            // Присваиваем обратно изменённый массив материалов
+            spawnedGroundObject.GetComponent<MeshRenderer>().materials = materials;
+        }
+    }
+
 }
