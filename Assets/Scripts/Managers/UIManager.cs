@@ -279,42 +279,48 @@ public class UIManager : MonoBehaviour
                 upgradeCostsCoins[index] += upgradeCostsCoins[index] / 10;
                 upgradeCostsDiamonds[index] += upgradeCostsDiamonds[index] / 10;
 
-                // Применяем изменения (например, апгрейд статов)
-                ApplyUpgrade(index);
+                if (upgradeLevels[index] == upgradeMaxLevels[index])
+                {
+                    // Находим нужную кнопку по индексу (например, через массив кнопок)
+                    GameObject upgradeButton = upgradeButtons[index];
+
+                    // Находим текстовые компоненты внутри кнопки
+                    Transform parentTransform = upgradeButton.transform.parent;
+
+                    GameObject priceObj = upgradeButton.transform.Find("Text").gameObject;
+                    TextMeshProUGUI levelText = parentTransform.Find("LevelText").GetComponent<TextMeshProUGUI>();
+
+                    priceObj.SetActive(false);
+
+                    if (YandexGame.EnvironmentData.language == "ru")
+                    {
+                        // Обновляем текст уровня
+                        levelText.text = "MAКС.";
+                    }
+                    else if (YandexGame.EnvironmentData.language == "en")
+                    {
+                        // Обновляем текст уровня
+                        levelText.text = "MAX.";
+                    }
+                    else if (YandexGame.EnvironmentData.language == "tr")
+                    {
+                        // Обновляем текст уровня
+                        levelText.text = "MAX.";
+                    }
+
+                    upgradeButton.GetComponent<Button>().interactable = false;
+                }
+                else
+                {
+                    UpdateUpgradeButton(index); // Обновляем текст кнопки после апгрейда
+                }
 
                 // Обновляем UI
                 UpdateCoins();
                 UpdateDiamonds();
-                UpdateUpgradeButton(index); // Обновляем текст кнопки после апгрейда
-            }
-            else
-            {
-                // Находим нужную кнопку по индексу (например, через массив кнопок)
-                GameObject upgradeButton = upgradeButtons[index];
 
-                // Находим текстовые компоненты внутри кнопки
-                Transform parentTransform = upgradeButton.transform.parent;
-
-                GameObject priceObj = upgradeButton.transform.Find("Text").gameObject;
-                TextMeshProUGUI levelText = parentTransform.Find("LevelText").GetComponent<TextMeshProUGUI>();
-
-                priceObj.SetActive(false);
-
-                if (YandexGame.EnvironmentData.language == "ru")
-                {
-                    // Обновляем текст уровня
-                    levelText.text = "MAКС.";
-                }
-                else if (YandexGame.EnvironmentData.language == "en")
-                {
-                    // Обновляем текст уровня
-                    levelText.text = "MAX.";
-                }
-                else if (YandexGame.EnvironmentData.language == "tr")
-                {
-                    // Обновляем текст уровня
-                    levelText.text = "MAX.";
-                }
+                // Применяем изменения (например, апгрейд статов)
+                ApplyUpgrade(index);
             }
         }
         else
