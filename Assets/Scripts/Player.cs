@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public int maxAttempts;
     public float explosiveDamage;
     public int projectileAmount = 1;
-    public float armageddonPower;
+    public float armageddonLevel = 0;
 
     public int totalCoins = 0;
     public int totalDiamonds = 0;
@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
 
         projectileAmount = 1;
         cannonSize = 0.6f;
+        cannonMass = 25f;
     }
 
     void Update()
@@ -127,10 +128,8 @@ public class Player : MonoBehaviour
 
             GameObject projectileObject = SpawnManager.Instance.SpawnObject(SpawnManager.Instance.projectilePrefab);
 
-            projectileObject.transform.localScale = cannonSize * Vector3.one;
             projectileObject.transform.position = launchPoint.position;
             projectileObject.GetComponent<Rigidbody>().velocity = 50f * launchDirection;
-
             yield return new WaitForSeconds(0.6f); // Задержка между выстрелами (0.6 секунды)
         }
 

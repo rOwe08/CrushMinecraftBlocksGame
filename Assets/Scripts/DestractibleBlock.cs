@@ -78,7 +78,7 @@ public class DestructibleBlock : MonoBehaviour
         // Проверка на урон от падений только при столкновении с землей
         if (collision.gameObject.CompareTag("Ground") && canTakeFallDamage)
         {
-            TakeDamage(10f);  // Фиксированный урон от падения
+            TakeDamage(SpawnManager.Instance.GetSpawnedGroundIndex() * 100f);  // Фиксированный урон от падения
         }
 
         // Проверка на урон от снарядов

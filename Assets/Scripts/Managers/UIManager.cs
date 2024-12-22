@@ -48,6 +48,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Main Canvas Buttons")]
     public Button resetButton;
+    public Button armageddonUseButton;
 
     [Header("Stars")]
     public Image[] stars;  // Массив звёзд
@@ -343,7 +344,7 @@ public class UIManager : MonoBehaviour
             break;
             case 2:
             // Применяем изменения для Mass Cannon
-            GameManager.Instance.player.cannonMass += 1f;
+            GameManager.Instance.player.cannonMass += 50f;
             break;
             case 3:
             // Применяем изменения для Floor
@@ -363,7 +364,8 @@ public class UIManager : MonoBehaviour
             break;
             case 7:
             // Применяем изменения для Armageddon
-            GameManager.Instance.player.armageddonPower += 50;
+            armageddonUseButton.interactable = true;
+            SpawnManager.Instance.armageddonInterval -= SpawnManager.Instance.armageddonInterval * 0.2f;
             break;
             default:
             Debug.Log("Неверный индекс апгрейда!");

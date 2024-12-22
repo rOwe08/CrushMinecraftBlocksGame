@@ -23,6 +23,11 @@ public class SpawnManager : MonoBehaviour
     public int groundSizeX = 30;
     public int groundSizeY = 30;
 
+    public float armageddonDuration = 10f; // Время действия Армагеддона
+    public float armageddonInterval = 1f; // Интервал между падениями ядер
+    public float projectileSpawnHeight = 30f; // Высота спавна ядер
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -51,6 +56,55 @@ public class SpawnManager : MonoBehaviour
         camera.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
         GameManager.Instance.player = player.GetComponent<Player>();
     }
+
+    public void StartArmageddon()
+    {
+        StartCoroutine(ArmageddonCoroutine());
+    }
+
+    private IEnumerator ArmageddonCoroutine()
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < armageddonDuration)
+        {
+            SpawnArmageddonProjectile();
+            elapsedTime += armageddonInterval;
+
+            yield return new WaitForSeconds(armageddonInterval);
+        }
+    }
+
+    private void SpawnArmageddonProjectile()
+    {
+        // Спавним ядро в случайной позиции над блоками
+        Vector3 randomPosition = new Vector3(
+            Random.Range(10, groundSizeX - 10), // случайная позиция по оси X
+            projectileSpawnHeight,              // высота спавна
+            Random.Range(10, groundSizeY - 10)  // случайная позиция по оси Z
+        );
+
+        GameObject projectileObject = Instantiate(projectilePrefab, randomPosition, Quaternion.identity);
+
+        // Определяем центральную точку области, куда должны лететь снаряды
+        Vector3 targetPosition = new Vector3(groundSizeX / 2, 0, groundSizeY / 2); // Центр области блоков
+
+        // Вычисляем вектор направления к цели
+        Vector3 directionToTarget = (targetPosition - randomPosition).normalized;
+
+        // Добавляем небольшой случайный угол наклона для естественности
+        float angleX = Random.Range(-5f, 5f); // Маленький наклон по оси X
+        float angleZ = Random.Range(-5f, 5f); // Маленький наклон по оси Z
+
+        // Применяем наклон к направлению
+        Vector3 finalDirection = Quaternion.Euler(angleX, 0, angleZ) * directionToTarget;
+
+        // Применяем скорость с учетом направления
+        projectileObject.GetComponent<Rigidbody>().velocity = 50f * finalDirection;
+        projectileObject.GetComponent<Rigidbody>().mass = GameManager.Instance.player.cannonMass;
+    }
+
+
 
     // Метод для создания пустого объекта для фокуса камеры
     void SpawnCameraFocusObject()
@@ -309,6 +363,11 @@ public class SpawnManager : MonoBehaviour
             // Присваиваем обратно изменённый массив материалов
             spawnedGroundObject.GetComponent<MeshRenderer>().materials = materials;
         }
+    }
+
+    public int GetSpawnedGroundIndex()
+    {
+        return indexOfGround;
     }
 
 }

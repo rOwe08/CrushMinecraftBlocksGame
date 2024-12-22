@@ -86,6 +86,7 @@ MonoBehaviour:
   minYRotation: -90
   maxYRotation: 90
   launchPoint: {fileID: 6786664278579801664}
+  IsLevelEnding: 0
   lineRenderer: {fileID: 5681397186110832337}
   linePoints: 175
   timeIntervalPoints: 0.01
