@@ -59,7 +59,11 @@ public class SpawnManager : MonoBehaviour
 
     public void StartArmageddon()
     {
-        StartCoroutine(ArmageddonCoroutine());
+        if (!GameManager.Instance.player.IsArmageddonActivated && !UIManager.Instance.IsUIActive())
+        {
+            StartCoroutine(ArmageddonCoroutine());
+            GameManager.Instance.player.IsArmageddonActivated = true;
+        }
     }
 
     private IEnumerator ArmageddonCoroutine()

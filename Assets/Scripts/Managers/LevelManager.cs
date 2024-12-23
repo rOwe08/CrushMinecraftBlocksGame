@@ -91,6 +91,15 @@ public class LevelManager : MonoBehaviour
         totalBlocks = 0;
         remainingBlocks = 0;
 
+        if(GameManager.Instance.player.armageddonLevel > 0)
+        {
+            GameManager.Instance.player.IsArmageddonActivated = false;
+        }
+        else
+        {
+            GameManager.Instance.player.IsArmageddonActivated = true;
+        }
+
         GameManager.Instance.player.IsLevelEnding = false;
         allProjectilesShot = false; // Сбрасываем флаг
         IsLevelEnding = false;

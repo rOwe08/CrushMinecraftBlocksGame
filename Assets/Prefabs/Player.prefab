@@ -76,9 +76,9 @@ MonoBehaviour:
   maxAttempts: 0
   explosiveDamage: 0
   projectileAmount: 0
-  armageddonPower: 0
-  totalCoins: 12345670
-  totalDiamonds: 12345
+  armageddonLevel: 0
+  totalCoins: 0
+  totalDiamonds: 110
   speed: 5
   rotationSpeed: 700
   leftBound: 5
@@ -87,6 +87,7 @@ MonoBehaviour:
   maxYRotation: 90
   launchPoint: {fileID: 6786664278579801664}
   IsLevelEnding: 0
+  IsArmageddonActivated: 0
   lineRenderer: {fileID: 5681397186110832337}
   linePoints: 175
   timeIntervalPoints: 0.01
@@ -98,7 +99,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7630628286807345382}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

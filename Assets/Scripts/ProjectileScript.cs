@@ -2,8 +2,6 @@
 
 public class ProjectileScript : MonoBehaviour
 {
-    public float damage = 10f;  // Урон, который наносится при столкновении
-
     public void Start()
     {
         GetComponent<Rigidbody>().mass = GameManager.Instance.player.cannonMass;

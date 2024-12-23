@@ -119,6 +119,19 @@ public class UIManager : MonoBehaviour
         UpdateProgress();
         UpdateLevel();
         UpdateAttempts();
+        UpdateArmageddonButton();
+    }
+
+    private void UpdateArmageddonButton()
+    {
+        if (!GameManager.Instance.player.IsArmageddonActivated)
+        {
+            armageddonUseButton.interactable = true;
+        }
+        else
+        {
+            armageddonUseButton.interactable = false;
+        }
     }
 
     // Функция для появления панели уровней
@@ -269,6 +282,9 @@ public class UIManager : MonoBehaviour
         {
             if (upgradeMaxLevels[index] > upgradeLevels[index]) 
             {
+                ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins - coinsCost, true);
+                ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds - diamondsCost, false);
+
                 // Уменьшаем количество ресурсов
                 GameManager.Instance.player.totalCoins -= coinsCost;
                 GameManager.Instance.player.totalDiamonds -= diamondsCost;
@@ -366,6 +382,7 @@ public class UIManager : MonoBehaviour
             // Применяем изменения для Armageddon
             armageddonUseButton.interactable = true;
             SpawnManager.Instance.armageddonInterval -= SpawnManager.Instance.armageddonInterval * 0.2f;
+            GameManager.Instance.player.armageddonLevel++;
             break;
             default:
             Debug.Log("Неверный индекс апгрейда!");

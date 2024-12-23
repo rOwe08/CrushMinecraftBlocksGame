@@ -42,22 +42,27 @@ public class DestructibleBlock : MonoBehaviour
             {
                 if (blockType == BlockManager.Instance.rewardBlockTypes[0]) 
                 {
+                    ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds + blockType.reward, false);
                     GameManager.Instance.AddDiamonds(blockType.reward);
+
                 }
                 else if (blockType == BlockManager.Instance.rewardBlockTypes[1])
                 {
                     if(blockType.reward > GameManager.Instance.player.totalCoins / 10)
-                    {
+                    { 
+                        ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + blockType.reward, true);
                         GameManager.Instance.AddCoins(blockType.reward);
                     }
                     else
                     {
                         if(GameManager.Instance.player.totalCoins / 10 > 50000)
                         {
+                            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + 50000, true);
                             GameManager.Instance.AddCoins(50000);
                         }
                         else
                         {
+                            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + GameManager.Instance.player.totalCoins / 10, true);
                             GameManager.Instance.AddCoins(GameManager.Instance.player.totalCoins / 10);
                         }
                     }

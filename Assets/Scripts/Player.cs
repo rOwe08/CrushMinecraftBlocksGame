@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     private float moveHorizontal = 0f;
 
     public bool IsLevelEnding = false;
+    public bool IsArmageddonActivated = false;
 
     [Header("****Trajectory display****")]
     public LineRenderer lineRenderer; // Компонент LineRenderer
