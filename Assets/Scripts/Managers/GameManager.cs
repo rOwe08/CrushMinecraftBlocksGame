@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ShowResults();
 
         SaveData();
+        AddNewLeaderboard();
     }
 
     public void AddCoins(int coins)
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
     {
         player.LoadData();
         LevelManager.Instance.LoadData();
+        
     }
 
     private void SaveData()
@@ -128,9 +130,18 @@ public class GameManager : MonoBehaviour
         YandexGame.RewVideoShow(id);
     }
 
-    // Update is called once per frame
-    void Update()
+    void AddNewLeaderboard()
     {
-        
+        int count = 0;
+
+        foreach (float progress in LevelManager.Instance.levelList) 
+        {
+            if(progress >= 100)
+            {
+                count++;
+            }
+        }
+
+        YandexGame.NewLeaderboardScores("mainLeaderboard", count);
     }
 }

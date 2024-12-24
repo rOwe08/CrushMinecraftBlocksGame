@@ -19,7 +19,7 @@ MonoBehaviour:
     authorized: 1
     isMobile: 0
     language: ru
-    name: Player this
+    name: rOwe
     uniqueID: 000
     photo: https://justplaygames.ru/public/icon_player.png
     payingStatus: paying
@@ -40,10 +40,10 @@ MonoBehaviour:
   quitGameParameters:
     objectName: YandexGame
     methodName: _SaveProgress
-  leaderboardEnable: 0
+  leaderboardEnable: 1
   saveScoreAnonymousPlayers: 1
   leaderboardSimulation:
-  - technoName: advanced
+  - technoName: mainLeaderboard
     entries: 'Test LeaderBoard
 
       Name: advanced
@@ -71,112 +71,22 @@ MonoBehaviour:
       uniqueID: 321
     - rank: 3
       name: Tanya
-      score: 23
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 456
-    - rank: 4
-      name: Player4
-      score: 30
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 321
-    - rank: 5
-      name: Player this
-      score: 40
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 000
-    - rank: 6
-      name: Player6
-      score: 50
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 321
-    thisPlayer:
-      rank: 2
-      score: 10
-  - technoName: simple
-    entries: "Test LeaderBoard\nName: simple\n1. \u0441\u043A\u0440\u044B\u0442:
-      10\n2. Max: 15\n3. Maria: 23"
-    isDefault: 0
-    isInvertSortOrder: 0
-    decimalOffset: 0
-    type: numeric
-    players:
-    - rank: 6
-      name: anonymous
-      score: 10
-      photo: https://games-sdk.yandex.ru/games/api/sdk/v1/player/avatar/0/islands-retina-small
-      uniqueID: 123
-    - rank: 5
-      name: Ivan
-      score: 15
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 321
-    - rank: 4
-      name: Tanya
-      score: 23
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 456
-    - rank: 3
-      name: player4
-      score: 30
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 321
-    - rank: 2
-      name: playerThis
-      score: 40
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 000
-    - rank: 1
-      name: player6
-      score: 50
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 321
-    thisPlayer:
-      rank: 0
       score: 0
-  - technoName: time
-    entries: 'Test LeaderBoard
-
-      Name: time
-
-      1. anonymous: 10
-
-      2.
-      Max: 15
-
-      3. Maria: 23'
-    isDefault: 0
-    isInvertSortOrder: 0
-    decimalOffset: 0
-    type: numeric
-    players:
-    - rank: 6
-      name: anonymous
-      score: 7123
-      photo: https://games-sdk.yandex.ru/games/api/sdk/v1/player/avatar/0/islands-retina-small
-      uniqueID: 789
-    - rank: 5
-      name: Max
-      score: 15321
       photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 987
+      uniqueID: 456
     - rank: 4
-      name: Maria
-      score: 62000
-      photo: https://justplaygames.ru/public/icon_player.png
-      uniqueID: 891
-    - rank: 3
       name: Player4
-      score: 122000
+      score: 0
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 321
-    - rank: 6
+    - rank: 5
       name: Player this
-      score: 11000
+      score: 0
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 000
-    - rank: 2
+    - rank: 6
       name: Player6
-      score: 340000
+      score: 50
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 321
     thisPlayer:
