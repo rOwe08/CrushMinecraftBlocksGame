@@ -2,8 +2,10 @@
 
 public class ProjectileScript : MonoBehaviour
 {
-    public void Start()
+    public void Awake()
     {
+        LevelManager.Instance.IsProjectileInScene = true;
+
         GetComponent<Rigidbody>().mass = GameManager.Instance.player.cannonMass;
         transform.localScale = GameManager.Instance.player.cannonSize * Vector3.one;
     }
@@ -19,5 +21,10 @@ public class ProjectileScript : MonoBehaviour
         {
             Destroy(gameObject, 3);
         }
+    }
+
+    private void OnDestroy()
+    {
+        LevelManager.Instance.IsProjectileInScene = false;
     }
 }

@@ -22,10 +22,11 @@ public class LevelManager : MonoBehaviour
     public int maxAttempts = 3;
 
     public bool isLevelActive = false;
-    public bool IsLevelEnding = false;
 
     private bool allProjectilesShot = false; // Флаг для проверки, что все ядра выпущены
     public bool ArmageddonEnded = true;
+    public bool AreMovingBlocks = false;
+    public bool IsProjectileInScene = false; // Флаг для проверки, что все ядра выпущены
 
     public int maxLevelCompleted = 0;
     public List<float> levelList = new List<float>();
@@ -49,13 +50,32 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+        foreach (GameObject block in spawnedBlocks)
+        {
+            if (block != null)
+            {
+                if (block.GetComponent<Rigidbody>().velocity.magnitude > 0f)
+                {
+                    AreMovingBlocks = true;
+                    break;
+                }
+                else
+                {
+                    AreMovingBlocks = false;
+                }
+            }
+            else
+            {
+                AreMovingBlocks = false;
+            }
+        }
+
         // Проверяем, если уровень активен и все блоки разрушены
-        if (isLevelActive && remainingBlocks <= 0)
+        if (isLevelActive && (remainingBlocks <= 0 || (attempts == maxAttempts && !IsProjectileInScene && !AreMovingBlocks)))
         {
             // Если попытки использованы и все снаряды выпущены
-            if (ArmageddonEnded && allProjectilesShot && !GameManager.Instance.player.IsLevelEnding && !IsLevelEnding)
+            if (ArmageddonEnded && allProjectilesShot && !GameManager.Instance.player.IsLevelEnding)
             {
-                IsLevelEnding = true;
                 GameManager.Instance.EndLevel();
                 Debug.Log("Level completed!"); 
             } 
@@ -66,23 +86,6 @@ public class LevelManager : MonoBehaviour
     public void OnAllProjectilesShot()
     {
         allProjectilesShot = true;
-
-        if (attempts >= maxAttempts && !IsLevelEnding && ArmageddonEnded) 
-        {
-            IsLevelEnding = true;
-            DelayedEndLevel();
-        }
-    }
-
-    // Отдельный метод, который будет вызван после задержки
-    public void DelayedEndLevel()
-    {
-        Invoke("InvokeDelayedEndLevel", 1f);
-    }
-
-    private void InvokeDelayedEndLevel()
-    {
-        GameManager.Instance.EndLevel();
     }
 
     public void StartLevel(int levelToStart = 0)
@@ -106,7 +109,6 @@ public class LevelManager : MonoBehaviour
 
         GameManager.Instance.player.IsLevelEnding = false;
         allProjectilesShot = false; // Сбрасываем флаг
-        IsLevelEnding = false;
 
         if (levelToStart == 0)
         {

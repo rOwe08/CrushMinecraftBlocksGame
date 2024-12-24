@@ -36,41 +36,46 @@ public class DestructibleBlock : MonoBehaviour
 
     private void Update()
     {
-        if (hp < 0) 
+        // Проверяем здоровье блока
+        if (hp < 0)
         {
-            if (blockType.IsCollectable) 
-            {
-                if (blockType == BlockManager.Instance.rewardBlockTypes[0]) 
-                {
-                    ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds + blockType.reward, false);
-                    GameManager.Instance.AddDiamonds(blockType.reward);
+            HandleBlockDestruction();
+        }
 
-                }
-                else if (blockType == BlockManager.Instance.rewardBlockTypes[1])
+        // Проверяем, если блок вылетел за пределы карты (по оси Y)
+        if (transform.position.y < -10)
+        {
+            HandleBlockDestruction();
+        }
+    }
+
+    private void HandleBlockDestruction()
+    {
+        if (blockType.IsCollectable)
+        {
+            if (blockType == BlockManager.Instance.rewardBlockTypes[0])
+            {
+                ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds + blockType.reward, false);
+                GameManager.Instance.AddDiamonds(blockType.reward);
+            }
+            else if (blockType == BlockManager.Instance.rewardBlockTypes[1])
+            {
+                if (blockType.reward > GameManager.Instance.player.totalCoins / 10)
                 {
-                    if(blockType.reward > GameManager.Instance.player.totalCoins / 10)
-                    { 
-                        ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + blockType.reward, true);
-                        GameManager.Instance.AddCoins(blockType.reward);
-                    }
-                    else
-                    {
-                        if(GameManager.Instance.player.totalCoins / 10 > 1000)
-                        {
-                            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + 1000, true);
-                            GameManager.Instance.AddCoins(1000);
-                        }
-                        else
-                        {
-                            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + GameManager.Instance.player.totalCoins / 10, true);
-                            GameManager.Instance.AddCoins(GameManager.Instance.player.totalCoins / 10);
-                        }
-                    }
+                    ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + blockType.reward, true);
+                    GameManager.Instance.AddCoins(blockType.reward);
+                }
+                else
+                {
+                    int coinsToAdd = (GameManager.Instance.player.totalCoins / 10 > 1000) ? 1000 : GameManager.Instance.player.totalCoins / 10;
+                    ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + coinsToAdd, true);
+                    GameManager.Instance.AddCoins(coinsToAdd);
                 }
             }
-            LevelManager.Instance.RemoveBlock();
-            Destroy(gameObject);  // Уничтожаем блок   
         }
+
+        LevelManager.Instance.RemoveBlock();
+        Destroy(gameObject);  // Уничтожаем блок
     }
     // Активируем возможность получать урон от падения через задержку
     void EnableFallDamage()
