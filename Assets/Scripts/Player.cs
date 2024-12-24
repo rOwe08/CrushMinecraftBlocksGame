@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 public class Player : MonoBehaviour
 {
@@ -45,10 +46,6 @@ public class Player : MonoBehaviour
 
         // Замораживаем ненужные оси, чтобы пушка не двигалась хаотично
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-
-        projectileAmount = 1;
-        cannonSize = 0.6f;
-        cannonMass = 25f;
     }
 
     void Update()
@@ -178,6 +175,35 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SaveData()
+    {
+        YandexGame.savesData.cannonPower = cannonPower;
+        YandexGame.savesData.cannonSize = cannonSize;
+        YandexGame.savesData.cannonMass = cannonMass;
+        YandexGame.savesData.floorLevel = floorLevel;
+        YandexGame.savesData.maxAttempts = maxAttempts;
+        YandexGame.savesData.explosiveDamage = explosiveDamage;
+        YandexGame.savesData.projectileAmount = projectileAmount;
+        YandexGame.savesData.armageddonLevel = armageddonLevel;
+
+        YandexGame.savesData.totalCoins = totalCoins;
+        YandexGame.savesData.totalDiamonds = totalDiamonds;
+    }
+
+    public void LoadData()
+    {
+        cannonPower = YandexGame.savesData.cannonPower;
+        cannonSize = YandexGame.savesData.cannonSize;
+        cannonMass = YandexGame.savesData.cannonMass;
+        floorLevel = YandexGame.savesData.floorLevel;
+        maxAttempts = YandexGame.savesData.maxAttempts;
+        explosiveDamage = YandexGame.savesData.explosiveDamage;
+        projectileAmount = YandexGame.savesData.projectileAmount;
+        armageddonLevel = YandexGame.savesData.armageddonLevel;
+
+        totalCoins = YandexGame.savesData.totalCoins;
+        totalDiamonds = YandexGame.savesData.totalDiamonds;
+    }
 
     public void AddCoins(int coins)
     {

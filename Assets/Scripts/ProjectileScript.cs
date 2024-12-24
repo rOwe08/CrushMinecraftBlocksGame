@@ -15,5 +15,9 @@ public class ProjectileScript : MonoBehaviour
         {
             Destroy(gameObject, 1);
         }
+        else if (collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(gameObject, 3);
+        }
     }
 }

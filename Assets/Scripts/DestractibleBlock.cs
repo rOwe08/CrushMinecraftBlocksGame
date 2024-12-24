@@ -55,10 +55,10 @@ public class DestructibleBlock : MonoBehaviour
                     }
                     else
                     {
-                        if(GameManager.Instance.player.totalCoins / 10 > 50000)
+                        if(GameManager.Instance.player.totalCoins / 10 > 1000)
                         {
-                            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + 50000, true);
-                            GameManager.Instance.AddCoins(50000);
+                            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins + 1000, true);
+                            GameManager.Instance.AddCoins(1000);
                         }
                         else
                         {
@@ -84,6 +84,8 @@ public class DestructibleBlock : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") && canTakeFallDamage)
         {
             TakeDamage(SpawnManager.Instance.GetSpawnedGroundIndex() * 100f);  // Фиксированный урон от падения
+
+            Debug.Log($"{(SpawnManager.Instance.GetSpawnedGroundIndex() * 100f / hp) * 100} % от падения");
         }
 
         // Проверка на урон от снарядов
@@ -111,11 +113,12 @@ public class DestructibleBlock : MonoBehaviour
     {
         if (blockRenderer != null && blockType != null)
         {
-            // Вычисляем процент оставшегося здоровья
+            // Вычисляем процент оставшегося здоровья (от 0 до 1)
             float healthPercentage = hp / blockType.health;
 
-            // Изменяем только красный цвет
-            blockRenderer.material.color = new Color(1f, 1f - healthPercentage, 1f - healthPercentage);
+            // Чем меньше здоровье, тем больше красный, уменьшаем синий и зеленый
+            blockRenderer.material.color = new Color(1f, healthPercentage, healthPercentage);
         }
     }
+
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 public class LevelManager : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> spawnedBlocks = new List<GameObject>();
 
     public int levelsAmount = 50;
-    public int maxLevelCompleted = 0;
     public int level = 0;
 
     public int coinsEarnedOnLevel = 0;
@@ -24,8 +24,11 @@ public class LevelManager : MonoBehaviour
     public bool isLevelActive = false;
     public bool IsLevelEnding = false;
 
-    public List<float> levelList = new List<float>();
     private bool allProjectilesShot = false; // Флаг для проверки, что все ядра выпущены
+    public bool ArmageddonEnded = true;
+
+    public int maxLevelCompleted = 0;
+    public List<float> levelList = new List<float>();
 
     private void Awake()
     {
@@ -50,7 +53,7 @@ public class LevelManager : MonoBehaviour
         if (isLevelActive && remainingBlocks <= 0)
         {
             // Если попытки использованы и все снаряды выпущены
-            if (allProjectilesShot && !GameManager.Instance.player.IsLevelEnding && !IsLevelEnding)
+            if (ArmageddonEnded && allProjectilesShot && !GameManager.Instance.player.IsLevelEnding && !IsLevelEnding)
             {
                 IsLevelEnding = true;
                 GameManager.Instance.EndLevel();
@@ -64,7 +67,7 @@ public class LevelManager : MonoBehaviour
     {
         allProjectilesShot = true;
 
-        if (attempts >= maxAttempts && !IsLevelEnding) 
+        if (attempts >= maxAttempts && !IsLevelEnding && ArmageddonEnded) 
         {
             IsLevelEnding = true;
             DelayedEndLevel();
@@ -90,8 +93,9 @@ public class LevelManager : MonoBehaviour
         coinsEarnedOnLevel = 0;
         totalBlocks = 0;
         remainingBlocks = 0;
+        ArmageddonEnded = true;
 
-        if(GameManager.Instance.player.armageddonLevel > 0)
+        if (GameManager.Instance.player.armageddonLevel > 0)
         {
             GameManager.Instance.player.IsArmageddonActivated = false;
         }
@@ -211,4 +215,19 @@ public class LevelManager : MonoBehaviour
     {
         attempts++;
     }
+
+    public void SaveData()
+    {
+        YandexGame.savesData.maxLevelCompleted = maxLevelCompleted;
+        YandexGame.savesData.levelList = levelList; // Преобразуем List в массив для сохранения
+    }
+
+    public void LoadData()
+    {
+        maxLevelCompleted = YandexGame.savesData.maxLevelCompleted;
+
+        // Загружаем массив уровней обратно в List
+        levelList = new List<float>(YandexGame.savesData.levelList);
+    }
+
 }

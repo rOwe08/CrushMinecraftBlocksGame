@@ -70,15 +70,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonPower: 50
-  cannonSize: 0
-  cannonMass: 0
+  cannonSize: 0.6
+  cannonMass: 25
   floorLevel: 0
   maxAttempts: 0
   explosiveDamage: 0
   projectileAmount: 0
   armageddonLevel: 0
-  totalCoins: 0
-  totalDiamonds: 110
+  totalCoins: 30000
+  totalDiamonds: 0
   speed: 5
   rotationSpeed: 700
   leftBound: 5

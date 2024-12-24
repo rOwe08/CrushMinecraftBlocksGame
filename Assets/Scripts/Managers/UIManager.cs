@@ -37,6 +37,10 @@ public class UIManager : MonoBehaviour
     public Button projectilesAmountButton;
     public Button armageddonButton;
 
+    public Button rewardedCoinsButton;
+    public Button rewardedAttemptButton;
+    public Button rewardedDiamondsButton;
+
     private GameObject[] upgradeButtons;
 
     [Header("Prices")]
@@ -65,6 +69,9 @@ public class UIManager : MonoBehaviour
     public GameObject levelsPanel;  // Панель для уровней
     public GameObject levelButtonPrefab;  // Префаб кнопки уровня
     public Transform levelsContainer;  // Контейнер, куда будут добавляться кнопки уровней
+
+    private int rewardForRewardCoins = 100;
+    private int rewardForRewardDiamonds =  15;
 
     private void Awake()
     {
@@ -539,6 +546,35 @@ public class UIManager : MonoBehaviour
         // Анимация появления панели (если нужно)
         shopPanel.transform.localScale = Vector3.zero;  // Начальное состояние (панель скрыта)
         shopPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления
+
+        UpdateRewardedButtons();
+    }
+
+    private void UpdateRewardedButtons()
+    {
+        int rewardCoinsAd = (GameManager.Instance.player.totalCoins / 10 > 100) ? (int)(GameManager.Instance.player.totalCoins / 10) : 100;
+        int rewardDiamondsAd = (GameManager.Instance.player.totalDiamonds / 5 > 15) ? (int)(GameManager.Instance.player.totalDiamonds / 5) : 15;
+
+        GameManager.Instance.rewardCoinsAd = rewardCoinsAd;
+        GameManager.Instance.rewardDiamondsAd = rewardDiamondsAd;
+
+        rewardedCoinsButton.transform.Find("Text/AmountText").GetComponent<TextMeshProUGUI>().text = FormatNumber(rewardCoinsAd);
+        rewardedDiamondsButton.transform.Find("Text/AmountText").GetComponent<TextMeshProUGUI>().text = FormatNumber(rewardDiamondsAd);
+
+        rewardedCoinsButton.onClick.RemoveAllListeners();
+        rewardedDiamondsButton.onClick.RemoveAllListeners();
+
+        rewardedCoinsButton.onClick.AddListener(() => {
+                GameManager.Instance.WatchRewardedAd(1);
+            }
+        );
+        rewardedDiamondsButton.onClick.AddListener(() => {
+                GameManager.Instance.WatchRewardedAd(2);
+            }
+        );
+        //rewardedAttemptButton;
+        //private int rewardForRewardCoins = 100;
+        //private int rewardForRewardDiamonds = 15;
     }
 
     // Закрытие панели уровней
@@ -628,7 +664,6 @@ public class UIManager : MonoBehaviour
             return number.ToString();
         }
     }
-
 
     public void ActivateUI()
     {

@@ -63,7 +63,9 @@ public class SpawnManager : MonoBehaviour
         {
             StartCoroutine(ArmageddonCoroutine());
             GameManager.Instance.player.IsArmageddonActivated = true;
+            LevelManager.Instance.ArmageddonEnded = false;
         }
+
     }
 
     private IEnumerator ArmageddonCoroutine()
@@ -77,6 +79,8 @@ public class SpawnManager : MonoBehaviour
 
             yield return new WaitForSeconds(armageddonInterval);
         }
+
+        LevelManager.Instance.ArmageddonEnded = true;
     }
 
     private void SpawnArmageddonProjectile()
@@ -371,7 +375,7 @@ public class SpawnManager : MonoBehaviour
 
     public int GetSpawnedGroundIndex()
     {
-        return indexOfGround;
+        return indexOfGround + 1;
     }
 
 }
