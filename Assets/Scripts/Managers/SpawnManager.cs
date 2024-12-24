@@ -27,6 +27,37 @@ public class SpawnManager : MonoBehaviour
     public float armageddonInterval = 1f; // Интервал между падениями ядер
     public float projectileSpawnHeight = 30f; // Высота спавна ядер
 
+    public GameObject blockPrefab;  // Префаб блока для пола магазина
+    public GameObject[] shopPrefabs;  // Массив префабов для магазина
+    private int gridWidth = 10;  // Ширина сетки (например, 10 блоков)
+    private int gridHeight = 10;  // Высота сетки (например, 10 блоков)
+    private float blockSize = 1f;  // Размер блока (размер одного блока в юнитах)
+    private Vector3 shopPosition = new Vector3(50f, 0f, -20f);  // Позиция магазина справа от основной локации
+
+    // Метод для спавна магазина
+    void SpawnShop()
+    {
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int z = 0; z < gridHeight; z++)
+            {
+                // Позиция для каждого блока в сетке
+                Vector3 blockPosition = new Vector3(x * blockSize, 0f, z * blockSize) + shopPosition;
+
+                // Спавним блок пола
+                GameObject block = Instantiate(blockPrefab, blockPosition, Quaternion.identity);
+
+                // Случайным образом выбираем префаб для размещения на блоке (или можно разместить по логике)
+                if (shopPrefabs.Length > 0)
+                {
+                    GameObject shopItemPrefab = shopPrefabs[Random.Range(0, shopPrefabs.Length)];
+
+                    // Спавним объект магазина на блоке (чуть выше, чтобы не пересекался с полом)
+                    Instantiate(shopItemPrefab, blockPosition + Vector3.up, Quaternion.identity);
+                }
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -44,6 +75,8 @@ public class SpawnManager : MonoBehaviour
         SpawnGround();
         SpawnPlayer();
         SpawnCameraFocusObject();
+
+        SpawnShop();
     }
 
     void SpawnPlayer()
