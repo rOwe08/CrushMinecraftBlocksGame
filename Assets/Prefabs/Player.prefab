@@ -78,7 +78,7 @@ MonoBehaviour:
   projectileAmount: 0
   armageddonLevel: 0
   totalCoins: 30000
-  totalDiamonds: 0
+  totalDiamonds: 10000
   speed: 5
   rotationSpeed: 700
   leftBound: 5
@@ -91,6 +91,7 @@ MonoBehaviour:
   lineRenderer: {fileID: 5681397186110832337}
   linePoints: 175
   timeIntervalPoints: 0.01
+  shopMaterialsPurchased: 
 --- !u!54 &1563987135763006255
 Rigidbody:
   m_ObjectHideFlags: 0

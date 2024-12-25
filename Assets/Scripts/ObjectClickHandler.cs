@@ -47,6 +47,7 @@ public class ObjectClickHandler : MonoBehaviour
             });
 
             // Включаем UI окно
+            UIManager.Instance.PrepareProjectileShopPanel(this.gameObject);
             uiWindow.SetActive(true);
         }
         else

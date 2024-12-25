@@ -675,4 +675,61 @@ public class UIManager : MonoBehaviour
     {
         return _IsUIActive;
     }
+
+    internal void PrepareProjectileShopPanel(GameObject projectile)
+    {
+        int j = -1;
+
+        Button useButton = buyProjectilePanel.transform.Find("UseButton").GetComponent<Button>();
+        Button buyButton = buyProjectilePanel.transform.Find("BuyButton").GetComponent<Button>();
+
+        for (int i = 0; i < SpawnManager.Instance.shopMaterials.Length; i++)
+        {
+            if (projectile.GetComponent<MeshRenderer>().material.name.Contains(SpawnManager.Instance.shopMaterials[i].name))
+            {
+                j = i;
+                break;
+            }
+        }
+
+        if(j != -1)
+        {
+            if (GameManager.Instance.player.shopMaterialsPurchased[j])
+            {
+                buyProjectilePanel.transform.Find("ResourcePanel").gameObject.SetActive(false);
+                useButton.interactable = true;
+                buyButton.interactable = false;
+            }
+            else
+            {
+                buyProjectilePanel.transform.Find("ResourcePanel").gameObject.SetActive(true);
+                useButton.interactable = false;
+                buyButton.interactable = true;
+            }
+
+            useButton.onClick.RemoveAllListeners();
+            buyButton.onClick.RemoveAllListeners();
+
+            useButton.onClick.AddListener(() =>
+            {
+                SpawnManager.Instance.projectilePrefab.GetComponent<MeshRenderer>().sharedMaterial = SpawnManager.Instance.shopMaterials[j];
+            });
+
+            buyButton.onClick.AddListener(() =>
+            {
+                if (GameManager.Instance.player.totalDiamonds >= 50)
+                {
+                    ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds - 50, true);
+                    GameManager.Instance.AddDiamonds(-50);
+                    GameManager.Instance.player.shopMaterialsPurchased[j] = true;
+
+                    PrepareProjectileShopPanel(projectile);
+                }
+            });
+        }
+        else
+        {
+            Debug.Log("Material isnt here");
+        }
+    }
 }

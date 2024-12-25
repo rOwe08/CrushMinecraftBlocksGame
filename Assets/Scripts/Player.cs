@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     public int linePoints = 175;
     public float timeIntervalPoints = 0.01f;
 
+    public bool[] shopMaterialsPurchased;
+
     private Rigidbody rb;
 
     void Start()
@@ -46,6 +48,9 @@ public class Player : MonoBehaviour
 
         // Замораживаем ненужные оси, чтобы пушка не двигалась хаотично
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        int amountOfMaterials = SpawnManager.Instance.shopMaterials.Length;
+        shopMaterialsPurchased = new bool[amountOfMaterials];
     }
 
     void Update()
@@ -188,6 +193,7 @@ public class Player : MonoBehaviour
 
         YandexGame.savesData.totalCoins = totalCoins;
         YandexGame.savesData.totalDiamonds = totalDiamonds;
+        YandexGame.savesData.shopMaterialsPurchased = shopMaterialsPurchased;
     }
 
     public void LoadData()
@@ -203,6 +209,8 @@ public class Player : MonoBehaviour
 
         totalCoins = YandexGame.savesData.totalCoins;
         totalDiamonds = YandexGame.savesData.totalDiamonds;
+
+        shopMaterialsPurchased = YandexGame.savesData.shopMaterialsPurchased;
     }
 
     public void AddCoins(int coins)

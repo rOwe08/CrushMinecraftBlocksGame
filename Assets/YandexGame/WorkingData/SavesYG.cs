@@ -24,6 +24,7 @@ namespace YG
         public int totalCoins;
         public int totalDiamonds;
 
+        public bool[] shopMaterialsPurchased;
 
         public int maxLevelCompleted = 0;
         public List<float> levelList = new List<float>();
@@ -36,6 +37,8 @@ namespace YG
             {
                 levelList.Add(0);
             }
+
+            shopMaterialsPurchased = new bool[16];
         }
     }
 }
