@@ -15882,9 +15882,55 @@ MonoBehaviour:
   armageddonDuration: 10
   armageddonInterval: 0.5
   projectileSpawnHeight: 50
-  blockPrefab: {fileID: 1496412915063364, guid: 388a5a6a09745b747b9aac3ffcaaa8d2,
+  blockPrefab: {fileID: 1676852700581210, guid: 8f473d6ed20efee4291658e1c8397049,
     type: 3}
-  shopPrefabs: []
+  shopPrefab: {fileID: 4109736601368225072, guid: 252733029d75e83488bd6d7e9be3058b,
+    type: 3}
+  shopMaterials:
+  - {fileID: 2100000, guid: d1c4a17745f5f1340b6b2a20a991ac96, type: 2}
+  - {fileID: 2100000, guid: 6cc7d26ee236b1c4caf7268c78d0b371, type: 2}
+  - {fileID: 2100000, guid: cdebbd06789dda9428c6d1388a3a6fe1, type: 2}
+  - {fileID: 2100000, guid: 7c6f9e5292c98ad4eb32006b953321c9, type: 2}
+  - {fileID: 2100000, guid: 664b65ad2106ac740a00ab1ce1974646, type: 2}
+  - {fileID: 2100000, guid: 6e3bbe964c465804bafcaba15cfe1d61, type: 2}
+  - {fileID: 2100000, guid: 5a4f90bd017dde540a73bf6040d3baa7, type: 2}
+  - {fileID: 2100000, guid: a0d10fcdbb61a934a97402e3f2a3bc34, type: 2}
+  - {fileID: 2100000, guid: c31d0f352dda27847813d954e4f859e7, type: 2}
+  - {fileID: 2100000, guid: 813d0372dc85aaf47b106847d7e8a390, type: 2}
+  - {fileID: 2100000, guid: 58ff59dcb1c17ef4d9068f5b1e59c039, type: 2}
+  - {fileID: 2100000, guid: 284926ca839ef6a48a8f44fb76007f3a, type: 2}
+  - {fileID: 2100000, guid: 2fa80640e9017e446869a9ac591c505a, type: 2}
+  - {fileID: 2100000, guid: 6f1180375e351414ab2ae7838fdfb127, type: 2}
+  - {fileID: 2100000, guid: 8928443014b001e499a932137e78e291, type: 2}
+  - {fileID: 2100000, guid: 29adb2ad71e287043abe646e967166da, type: 2}
+  - {fileID: 2100000, guid: f47c300140e827b46a2c467c102c3b02, type: 2}
+  - {fileID: 2100000, guid: 42c8ba631da84a94e9194697a1a66779, type: 2}
+  - {fileID: 2100000, guid: ca78d79d1a42d5e4d8fe5d4b633c972a, type: 2}
+  - {fileID: 2100000, guid: d4708754057f4b44394495fe94551912, type: 2}
+  - {fileID: 2100000, guid: 56bf593f189b5a94eb403a6359058443, type: 2}
+  - {fileID: 2100000, guid: 524fdc2b2afe2f24b94115cd8ed06b1b, type: 2}
+  - {fileID: 2100000, guid: bfadc9f3ea2455a4a96fe40056325de3, type: 2}
+  - {fileID: 2100000, guid: 05f141b79b48daf4bbb6274bd5f41bf3, type: 2}
+  - {fileID: 2100000, guid: 3d70edfb7650b0344bc29d2b7bb7377a, type: 2}
+  - {fileID: 2100000, guid: 6ea5c228703ac8a4a8d9e5da4915cf34, type: 2}
+  - {fileID: 2100000, guid: 65be317b07288f24cb576741d49a7e29, type: 2}
+  - {fileID: 2100000, guid: 3c7ac44763a1f964093c38f4217a240d, type: 2}
+  - {fileID: 2100000, guid: 553d986c7d6f7ec408ea9d04ee8aeedb, type: 2}
+  - {fileID: 2100000, guid: 00e2accff76820c488ea922ec9b8a4bb, type: 2}
+  - {fileID: 2100000, guid: ed309cfe1c53a4b44b926d7254637418, type: 2}
+  - {fileID: 2100000, guid: 904c7a3763da4c644897d1ddb6d44a72, type: 2}
+  - {fileID: 2100000, guid: 83d0d5577bb487c4291f45bcf0b0d011, type: 2}
+  - {fileID: 2100000, guid: 45c2429ed07fce541b6f217a2013534b, type: 2}
+  - {fileID: 2100000, guid: a30a6e18a78220540b8e9539af53bd70, type: 2}
+  - {fileID: 2100000, guid: 6835c1f1b9c085c488abcd1ec040cef6, type: 2}
+  - {fileID: 2100000, guid: 725f31cde2d225f41a1cc149853d703d, type: 2}
+  - {fileID: 2100000, guid: c85456db401cc684a85b32d0d1c4f6b0, type: 2}
+  - {fileID: 2100000, guid: 276d3b36e7368b14197bd1f9980bfb1e, type: 2}
+  - {fileID: 2100000, guid: 418842fac0771b445a871ca485820a61, type: 2}
+  - {fileID: 2100000, guid: 722428b06618a2042a982365175f9eb1, type: 2}
+  - {fileID: 2100000, guid: d324cbc83dae895499772e5870409dd9, type: 2}
+  - {fileID: 2100000, guid: 45298754e53467c4e9f87fdacb153bb7, type: 2}
+  - {fileID: 2100000, guid: d5d4a67f6fd50df468c44f5a85c5e6ee, type: 2}
 --- !u!4 &2014994528
 Transform:
   m_ObjectHideFlags: 0
@@ -16527,7 +16573,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 5
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -16558,14 +16604,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2050345591}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19253117, y: 0.6803909, z: -0.19253117, w: 0.6803909}
-  m_LocalPosition: {x: 45.11, y: 8.101142, z: -15}
+  m_LocalRotation: {x: 0.247634, y: 0.6623273, z: -0.247634, w: 0.6623273}
+  m_LocalPosition: {x: 45.43, y: 8.101142, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1411689392}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 31.6, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 41, y: 90, z: 0}
 --- !u!1 &2082341251
 GameObject:
   m_ObjectHideFlags: 0

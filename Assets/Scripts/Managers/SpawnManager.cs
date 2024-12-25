@@ -28,7 +28,10 @@ public class SpawnManager : MonoBehaviour
     public float projectileSpawnHeight = 30f; // Высота спавна ядер
 
     public GameObject blockPrefab;  // Префаб блока для пола магазина
-    public GameObject[] shopPrefabs;  // Массив префабов для магазина
+
+    public GameObject shopPrefab;  // Массив префабов для магазина
+    public Material[] shopMaterials;  // Массив префабов для магазина
+
     private int gridWidth = 10;  // Ширина сетки (например, 10 блоков)
     private int gridHeight = 10;  // Высота сетки (например, 10 блоков)
     private float blockSize = 1f;  // Размер блока (размер одного блока в юнитах)
@@ -37,6 +40,7 @@ public class SpawnManager : MonoBehaviour
     // Метод для спавна магазина
     void SpawnShop()
     {
+        int i = 0;
         for (int x = 0; x < gridWidth; x++)
         {
             for (int z = 0; z < gridHeight; z++)
@@ -47,17 +51,28 @@ public class SpawnManager : MonoBehaviour
                 // Спавним блок пола
                 GameObject block = Instantiate(blockPrefab, blockPosition, Quaternion.identity);
 
-                // Случайным образом выбираем префаб для размещения на блоке (или можно разместить по логике)
-                if (shopPrefabs.Length > 0)
+                if (x % 3 == 0 && z % 3 == 0)
                 {
-                    GameObject shopItemPrefab = shopPrefabs[Random.Range(0, shopPrefabs.Length)];
-
                     // Спавним объект магазина на блоке (чуть выше, чтобы не пересекался с полом)
-                    Instantiate(shopItemPrefab, blockPosition + Vector3.up, Quaternion.identity);
+                    GameObject spawnedPrefab = Instantiate(shopPrefab, blockPosition + Vector3.up, Quaternion.identity);
+
+                    // Находим "Projectile" в заспавненном префабе
+                    Transform projectileTransform = spawnedPrefab.transform.Find("Projectile");
+                    if (projectileTransform != null)
+                    {
+                        Renderer projectileRenderer = projectileTransform.GetComponent<Renderer>();
+                        if (projectileRenderer != null && i < shopMaterials.Length)
+                        {
+                            // Устанавливаем новый материал для заспавненного объекта
+                            projectileRenderer.material = shopMaterials[i];
+                        }
+                        i++;
+                    }
                 }
             }
         }
     }
+
 
     private void Awake()
     {
