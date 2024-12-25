@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [Header("Panels")]
     public GameObject resultsPanel;  // Панель с результатами
     public GameObject shopPanel;  // Панель с результатами
+    public GameObject buyProjectilePanel;
 
     [Header("Texts")]
     public TextMeshProUGUI coinsText;  // Ссылка на UI элемент для отображения количества монет

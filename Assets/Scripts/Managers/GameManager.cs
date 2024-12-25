@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public int rewardCoinsAd;
     public int rewardDiamondsAd;
 
+    public GameObject chosenProjectileInShop;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
