@@ -77,7 +77,6 @@ public class GameManager : MonoBehaviour
     {
         player.LoadData();
         LevelManager.Instance.LoadData();
-        
     }
 
     private void SaveData()

@@ -77,8 +77,8 @@ MonoBehaviour:
   explosiveDamage: 0
   projectileAmount: 0
   armageddonLevel: 0
-  totalCoins: 30000
-  totalDiamonds: 10000
+  totalCoins: 0
+  totalDiamonds: 0
   speed: 5
   rotationSpeed: 700
   leftBound: 5

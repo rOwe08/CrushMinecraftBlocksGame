@@ -12,11 +12,11 @@ public class Player : MonoBehaviour
     public int floorLevel;
     public int maxAttempts;
     public float explosiveDamage;
-    public int projectileAmount = 1;
-    public float armageddonLevel = 0;
+    public int projectileAmount;
+    public float armageddonLevel;
 
-    public int totalCoins = 0;
-    public int totalDiamonds = 0;
+    public int totalCoins;
+    public int totalDiamonds;
 
     public float speed = 10f;  // Скорость движения
     public float rotationSpeed = 700.0f;  // Скорость поворота
