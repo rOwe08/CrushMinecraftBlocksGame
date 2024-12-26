@@ -7294,6 +7294,7 @@ GameObject:
   - component: {fileID: 859255313}
   - component: {fileID: 859255312}
   - component: {fileID: 859255311}
+  - component: {fileID: 859255314}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -7415,6 +7416,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859255309}
   m_CullTransparentMesh: 1
+--- !u!114 &859255314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859255309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &869701135
 GameObject:
   m_ObjectHideFlags: 0
@@ -16793,6 +16807,8 @@ MonoBehaviour:
   rewardCoinsAd: 0
   rewardDiamondsAd: 0
   chosenProjectileInShop: {fileID: 0}
+  destructionSound: {fileID: 8300000, guid: 7bef0064f8567430cac22499c6b93d4f, type: 3}
+  hitSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
 --- !u!4 &1929096744
 Transform:
   m_ObjectHideFlags: 0

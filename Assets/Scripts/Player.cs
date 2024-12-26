@@ -42,6 +42,11 @@ public class Player : MonoBehaviour
 
     private Rigidbody rb;
 
+
+    [Header("Sound Settings")]
+    private AudioSource audioSource;   // Источник звука
+    public AudioClip shootSound;      // Звук выстрела
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -51,6 +56,8 @@ public class Player : MonoBehaviour
 
         int amountOfMaterials = SpawnManager.Instance.shopMaterials.Length;
         shopMaterialsPurchased = new bool[amountOfMaterials];
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -126,6 +133,9 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < projectileAmount; i++)
         {
+            // Проигрываем звук выстрела
+            PlayShootSound();
+
             // Рассчитываем направление для каждого снаряда непосредственно перед выстрелом
             Vector3 launchDirection = GetLaunchDirection();
 
@@ -139,6 +149,15 @@ public class Player : MonoBehaviour
         if (!IsLevelEnding)
         {
             LevelManager.Instance.OnAllProjectilesShot();
+        }
+    }
+
+    // Метод для воспроизведения звука
+    void PlayShootSound()
+    {
+        if (audioSource != null && shootSound != null)
+        {
+            audioSource.PlayOneShot(shootSound);
         }
     }
 

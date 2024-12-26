@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject chosenProjectileInShop;
 
+    public AudioClip destructionSound; // Звук разрушения блока
+    public AudioClip hitSound; // Звук разрушения блока
+
     void Awake()
     {
         if (Instance != null && Instance != this)

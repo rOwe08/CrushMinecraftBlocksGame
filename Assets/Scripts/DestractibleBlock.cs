@@ -13,6 +13,11 @@ public class DestructibleBlock : MonoBehaviour
     private Renderer blockRenderer;  // Рендер для изменения цвета
     private bool canTakeFallDamage = false;  // Флаг, можно ли получать урон от падений
 
+    [Header("Audio Clips")]
+    private AudioClip destructionSound; // Звук разрушения блока
+    private AudioClip hitSound;         // Звук попадания снаряда
+    private AudioSource audioSource;   // Источник звука
+
     void Awake()
     {
         // Попытка найти Rigidbody
@@ -32,6 +37,19 @@ public class DestructibleBlock : MonoBehaviour
         }
 
         Invoke(nameof(EnableFallDamage), fallDamageActivationDelay);  // Задержка перед активацией урона от падений
+
+        // Инициализация компонента AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // Проверяем, если звуковые клипы загружены
+        if (destructionSound == null || hitSound == null)
+        {
+            Debug.LogWarning("Audio clips are missing in GameManager.");
+        }
     }
 
     private void Update()
@@ -51,6 +69,19 @@ public class DestructibleBlock : MonoBehaviour
 
     private void HandleBlockDestruction()
     {
+        destructionSound = GameManager.Instance.destructionSound;
+        hitSound = GameManager.Instance.hitSound;
+
+        // Проигрываем звук разрушения
+        if (destructionSound != null)
+        {
+            audioSource.PlayOneShot(destructionSound);
+        }
+        else
+        {
+            Debug.LogWarning("Destruction sound not set.");
+        }
+
         if (blockType.IsCollectable)
         {
             if (blockType == BlockManager.Instance.rewardBlockTypes[0])
@@ -85,21 +116,27 @@ public class DestructibleBlock : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // Проверка на урон от падений только при столкновении с землей
         if (collision.gameObject.CompareTag("Ground") && canTakeFallDamage)
         {
-            TakeDamage(SpawnManager.Instance.GetSpawnedGroundIndex() * 100f);  // Фиксированный урон от падения
-
+            TakeDamage(SpawnManager.Instance.GetSpawnedGroundIndex() * 100f);
             Debug.Log($"{(SpawnManager.Instance.GetSpawnedGroundIndex() * 100f / hp) * 100} % от падения");
         }
-
-        // Проверка на урон от снарядов
         else if (collision.gameObject.CompareTag("Projectile"))
         {
             float projectileDamage = GameManager.Instance.player.cannonPower * 10;
             Debug.Log($"{(projectileDamage / hp) * 100} %");
 
             TakeDamage(projectileDamage);
+
+            // Проигрываем звук попадания снаряда
+            if (hitSound != null)
+            {
+                audioSource.PlayOneShot(hitSound);
+            }
+            else
+            {
+                Debug.LogWarning("Hit sound not set.");
+            }
         }
     }
 
