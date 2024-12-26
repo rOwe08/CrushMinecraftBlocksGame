@@ -422,6 +422,7 @@ GameObject:
   - component: {fileID: 67600184}
   - component: {fileID: 67600183}
   - component: {fileID: 67600182}
+  - component: {fileID: 67600185}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -532,6 +533,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67600180}
   m_CullTransparentMesh: 1
+--- !u!114 &67600185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67600180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &70951768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1839,6 +1853,7 @@ GameObject:
   - component: {fileID: 195169143}
   - component: {fileID: 195169142}
   - component: {fileID: 195169141}
+  - component: {fileID: 195169144}
   m_Layer: 5
   m_Name: WatchAdButton
   m_TagString: Untagged
@@ -1949,6 +1964,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 195169139}
   m_CullTransparentMesh: 1
+--- !u!114 &195169144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195169139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &219158643
 GameObject:
   m_ObjectHideFlags: 0
@@ -3234,6 +3262,7 @@ GameObject:
   - component: {fileID: 354234578}
   - component: {fileID: 354234577}
   - component: {fileID: 354234576}
+  - component: {fileID: 354234579}
   m_Layer: 5
   m_Name: LevelsButton
   m_TagString: Untagged
@@ -3355,6 +3384,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354234574}
   m_CullTransparentMesh: 1
+--- !u!114 &354234579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354234574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &360970904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3691,6 +3733,7 @@ GameObject:
   - component: {fileID: 422173324}
   - component: {fileID: 422173323}
   - component: {fileID: 422173322}
+  - component: {fileID: 422173325}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -3801,6 +3844,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422173320}
   m_CullTransparentMesh: 1
+--- !u!114 &422173325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422173320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!114 &440074943 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1620325179189988091, guid: 813b744bd70bfc74a903b924b6bb1d6f,
@@ -4495,7 +4551,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019798806}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019798807}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -4701,6 +4757,7 @@ GameObject:
   - component: {fileID: 538721941}
   - component: {fileID: 538721940}
   - component: {fileID: 538721939}
+  - component: {fileID: 538721942}
   m_Layer: 5
   m_Name: WatchAdButton
   m_TagString: Untagged
@@ -4823,6 +4880,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538721937}
   m_CullTransparentMesh: 1
+--- !u!114 &538721942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538721937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &545459940
 GameObject:
   m_ObjectHideFlags: 0
@@ -7357,6 +7427,7 @@ GameObject:
   - component: {fileID: 869701139}
   - component: {fileID: 869701138}
   - component: {fileID: 869701137}
+  - component: {fileID: 869701140}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -7467,6 +7538,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869701135}
   m_CullTransparentMesh: 1
+--- !u!114 &869701140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869701135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &870824522
 GameObject:
   m_ObjectHideFlags: 0
@@ -7554,6 +7638,7 @@ GameObject:
   - component: {fileID: 877728051}
   - component: {fileID: 877728050}
   - component: {fileID: 877728049}
+  - component: {fileID: 877728052}
   m_Layer: 5
   m_Name: DonateShopButton
   m_TagString: Untagged
@@ -7675,6 +7760,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877728047}
   m_CullTransparentMesh: 1
+--- !u!114 &877728052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877728047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &881620782
 GameObject:
   m_ObjectHideFlags: 0
@@ -8357,6 +8455,7 @@ GameObject:
   - component: {fileID: 926069038}
   - component: {fileID: 926069037}
   - component: {fileID: 926069036}
+  - component: {fileID: 926069039}
   m_Layer: 5
   m_Name: BuyButton
   m_TagString: Untagged
@@ -8466,6 +8565,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926069034}
   m_CullTransparentMesh: 1
+--- !u!114 &926069039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926069034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &932688484
 GameObject:
   m_ObjectHideFlags: 0
@@ -8553,6 +8665,7 @@ GameObject:
   - component: {fileID: 942806952}
   - component: {fileID: 942806951}
   - component: {fileID: 942806950}
+  - component: {fileID: 942806953}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -8663,6 +8776,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942806948}
   m_CullTransparentMesh: 1
+--- !u!114 &942806953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942806948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &964493124
 GameObject:
   m_ObjectHideFlags: 0
@@ -9013,6 +9139,7 @@ GameObject:
   - component: {fileID: 985160712}
   - component: {fileID: 985160711}
   - component: {fileID: 985160710}
+  - component: {fileID: 985160713}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -9123,6 +9250,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985160708}
   m_CullTransparentMesh: 1
+--- !u!114 &985160713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985160708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &986430889
 GameObject:
   m_ObjectHideFlags: 0
@@ -9135,6 +9275,7 @@ GameObject:
   - component: {fileID: 986430893}
   - component: {fileID: 986430892}
   - component: {fileID: 986430891}
+  - component: {fileID: 986430894}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -9245,6 +9386,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986430889}
   m_CullTransparentMesh: 1
+--- !u!114 &986430894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986430889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1014938094
 GameObject:
   m_ObjectHideFlags: 0
@@ -10467,6 +10621,7 @@ GameObject:
   - component: {fileID: 1202217394}
   - component: {fileID: 1202217393}
   - component: {fileID: 1202217392}
+  - component: {fileID: 1202217395}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -10577,6 +10732,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202217390}
   m_CullTransparentMesh: 1
+--- !u!114 &1202217395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202217390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1205521756
 GameObject:
   m_ObjectHideFlags: 0
@@ -10819,6 +10987,7 @@ GameObject:
   - component: {fileID: 1222860482}
   - component: {fileID: 1222860481}
   - component: {fileID: 1222860480}
+  - component: {fileID: 1222860483}
   m_Layer: 5
   m_Name: ShopButton
   m_TagString: Untagged
@@ -10940,6 +11109,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222860478}
   m_CullTransparentMesh: 1
+--- !u!114 &1222860483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222860478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1222944114
 GameObject:
   m_ObjectHideFlags: 0
@@ -11366,6 +11548,7 @@ GameObject:
   - component: {fileID: 1284195341}
   - component: {fileID: 1284195340}
   - component: {fileID: 1284195339}
+  - component: {fileID: 1284195342}
   m_Layer: 5
   m_Name: WatchAdButton
   m_TagString: Untagged
@@ -11476,6 +11659,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284195337}
   m_CullTransparentMesh: 1
+--- !u!114 &1284195342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284195337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1336646549
 GameObject:
   m_ObjectHideFlags: 0
@@ -11488,6 +11684,7 @@ GameObject:
   - component: {fileID: 1336646553}
   - component: {fileID: 1336646552}
   - component: {fileID: 1336646551}
+  - component: {fileID: 1336646554}
   m_Layer: 5
   m_Name: ArmageddonButton
   m_TagString: Untagged
@@ -11609,6 +11806,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336646549}
   m_CullTransparentMesh: 1
+--- !u!114 &1336646554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336646549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1339938294
 GameObject:
   m_ObjectHideFlags: 0
@@ -11771,6 +11981,7 @@ GameObject:
   - component: {fileID: 1410895218}
   - component: {fileID: 1410895217}
   - component: {fileID: 1410895216}
+  - component: {fileID: 1410895219}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -11881,6 +12092,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410895214}
   m_CullTransparentMesh: 1
+--- !u!114 &1410895219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410895214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1411689391
 GameObject:
   m_ObjectHideFlags: 3
@@ -12138,6 +12362,7 @@ GameObject:
   - component: {fileID: 1466121381}
   - component: {fileID: 1466121380}
   - component: {fileID: 1466121379}
+  - component: {fileID: 1466121382}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -12247,6 +12472,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1466121377}
   m_CullTransparentMesh: 1
+--- !u!114 &1466121382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466121377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1476828279
 GameObject:
   m_ObjectHideFlags: 0
@@ -14075,6 +14313,7 @@ GameObject:
   - component: {fileID: 1625703438}
   - component: {fileID: 1625703437}
   - component: {fileID: 1625703436}
+  - component: {fileID: 1625703439}
   m_Layer: 5
   m_Name: NextLevelButton
   m_TagString: Untagged
@@ -14184,6 +14423,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625703434}
   m_CullTransparentMesh: 1
+--- !u!114 &1625703439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625703434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1640548308
 GameObject:
   m_ObjectHideFlags: 0
@@ -16568,6 +16820,7 @@ GameObject:
   - component: {fileID: 1932136919}
   - component: {fileID: 1932136918}
   - component: {fileID: 1932136917}
+  - component: {fileID: 1932136920}
   m_Layer: 5
   m_Name: UseButton
   m_TagString: Untagged
@@ -16677,6 +16930,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932136915}
   m_CullTransparentMesh: 1
+--- !u!114 &1932136920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932136915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &1965147535
 GameObject:
   m_ObjectHideFlags: 0
@@ -17487,8 +17753,31 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 61144916}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7611354332437204678, guid: 813b744bd70bfc74a903b924b6bb1d6f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2019798808}
   m_SourcePrefab: {fileID: 100100000, guid: 813b744bd70bfc74a903b924b6bb1d6f, type: 3}
+--- !u!1 &2019798807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7611354332437204678, guid: 813b744bd70bfc74a903b924b6bb1d6f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019798806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2019798808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019798807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdeadb213cc8bfd419ab6fc204352286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
 --- !u!1 &2040701184
 GameObject:
   m_ObjectHideFlags: 0
