@@ -16,12 +16,16 @@ public class CameraSwitch : MonoBehaviour
             // Включаем основную камеру и выключаем магазинную
             mainCamera.Priority = 10;
             shopCamera.Priority = 5;
+
+            GameManager.Instance.cameraPosition = 0;
         }
         else
         {
             // Включаем магазинную камеру и выключаем основную
             mainCamera.Priority = 5;
             shopCamera.Priority = 10;
+
+            GameManager.Instance.cameraPosition = 1;
         }
 
         // Переключаем флаг

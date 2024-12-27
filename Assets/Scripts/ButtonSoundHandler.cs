@@ -23,6 +23,8 @@ public class ButtonSoundHandler : MonoBehaviour
         {
             button.onClick.AddListener(PlayClickSound);
         }
+
+        audioSource.playOnAwake = false;
     }
 
     // Метод для воспроизведения звука

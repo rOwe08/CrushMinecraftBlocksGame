@@ -183,6 +183,16 @@ public class LevelManager : MonoBehaviour
         isLevelActive = false;
         float progress = (float)(totalBlocks - remainingBlocks) / totalBlocks * 100;
 
+
+        if (progress >= 50f)
+        {
+            GameManager.Instance.PlaySoundOnce(GameManager.Instance.winningSound);
+        }
+        else
+        {
+            GameManager.Instance.PlaySoundOnce(GameManager.Instance.losingSound);
+        }
+
         if (level == maxLevelCompleted + 1 && progress >= 50f)
         {
             maxLevelCompleted++;

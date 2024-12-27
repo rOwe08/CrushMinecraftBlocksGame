@@ -69,17 +69,13 @@ public class DestructibleBlock : MonoBehaviour
 
     private void HandleBlockDestruction()
     {
-        destructionSound = GameManager.Instance.destructionSound;
         hitSound = GameManager.Instance.hitSound;
+        destructionSound = GameManager.Instance.destructionSound;
 
-        // Проигрываем звук разрушения
+        // Проигрываем звук разрушения с помощью временного объекта
         if (destructionSound != null)
         {
-            audioSource.PlayOneShot(destructionSound);
-        }
-        else
-        {
-            Debug.LogWarning("Destruction sound not set.");
+            PlayDestructionSound(transform.position, destructionSound);
         }
 
         if (blockType.IsCollectable)
@@ -108,6 +104,26 @@ public class DestructibleBlock : MonoBehaviour
         LevelManager.Instance.RemoveBlock();
         Destroy(gameObject);  // Уничтожаем блок
     }
+
+    void PlayDestructionSound(Vector3 position, AudioClip clip)
+    {
+        // Создаем временный объект
+        GameObject tempAudioObject = new GameObject("TempAudio");
+        tempAudioObject.transform.position = position;
+
+        // Добавляем компонент AudioSource
+        AudioSource tempAudioSource = tempAudioObject.AddComponent<AudioSource>();
+        tempAudioSource.clip = clip;
+        tempAudioSource.volume = 0.1f;
+
+        // Проигрываем звук
+        tempAudioSource.Play();
+
+        // Уничтожаем объект после завершения воспроизведения звука
+        Destroy(tempAudioObject, clip.length);
+    }
+
+
     // Активируем возможность получать урон от падения через задержку
     void EnableFallDamage()
     {

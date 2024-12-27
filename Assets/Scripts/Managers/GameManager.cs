@@ -20,6 +20,14 @@ public class GameManager : MonoBehaviour
     public AudioClip destructionSound; // Звук разрушения блока
     public AudioClip hitSound; // Звук разрушения блока
 
+    public AudioManager audioManager;
+
+    public int cameraPosition = 0;
+
+    [Header("Audio Clips")]
+    public AudioClip winningSound;
+    public AudioClip losingSound;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -147,5 +155,10 @@ public class GameManager : MonoBehaviour
         }
 
         YandexGame.NewLeaderboardScores("mainLeaderboard", count);
+    }
+
+    public void PlaySoundOnce(AudioClip clip)
+    {
+        audioManager.PlaySoundOnce(clip);
     }
 }
