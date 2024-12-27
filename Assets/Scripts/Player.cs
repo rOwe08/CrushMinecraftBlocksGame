@@ -213,6 +213,8 @@ public class Player : MonoBehaviour
         YandexGame.savesData.totalCoins = totalCoins;
         YandexGame.savesData.totalDiamonds = totalDiamonds;
         YandexGame.savesData.shopMaterialsPurchased = shopMaterialsPurchased;
+
+        YandexGame.SaveProgress();
     }
 
     public void LoadData()

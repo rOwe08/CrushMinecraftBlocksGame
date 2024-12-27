@@ -1010,6 +1010,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1694245657}
   shopCamera: {fileID: 2050345592}
+  OnCameraSwitched:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &126687424
 GameObject:
   m_ObjectHideFlags: 0
@@ -7781,6 +7784,7 @@ GameObject:
   - component: {fileID: 877728050}
   - component: {fileID: 877728049}
   - component: {fileID: 877728052}
+  - component: {fileID: 877728053}
   m_Layer: 5
   m_Name: DonateShopButton
   m_TagString: Untagged
@@ -7915,6 +7919,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+--- !u!114 &877728053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877728047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affbf2516198ede48bf1835ebdefc945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backSprite: {fileID: 21300088, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  shopSprite: {fileID: 21300078, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
 --- !u!1 &881620782
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,12 +32,6 @@ namespace YG
         // Вы можете выполнить какие то действия при загрузке сохранений
         public SavesYG()
         {
-            // Допустим, задать значения по умолчанию для отдельных элементов массива
-            for (int i = 0; i < 50; i++)
-            {
-                levelList.Add(0);
-            }
-
             shopMaterialsPurchased = new bool[16];
         }
     }

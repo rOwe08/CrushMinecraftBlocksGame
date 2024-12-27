@@ -1,0 +1,38 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+public class DonateShopButtonScripts : MonoBehaviour
+{
+    public Sprite backSprite; // Спрайт для возвращения
+    public Sprite shopSprite; // Спрайт для магазина
+
+    private Image buttonImage; // Компонент Image на кнопке
+
+    void Start()
+    {
+        buttonImage = transform.Find("Image").GetComponent<Image>(); // Получаем ссылку на компонент Image
+
+        CameraSwitch cameraSwitch = FindObjectOfType<CameraSwitch>();
+
+        if (cameraSwitch != null)
+        {
+            // Подписываемся на UnityEvent
+            cameraSwitch.OnCameraSwitched.AddListener(OnCameraSwitched);
+        }
+    }
+
+    // Метод, который будет вызываться при переключении камеры
+    private void OnCameraSwitched(bool isShopCameraActive)
+    {
+        if (isShopCameraActive)
+        {
+            // Меняем спрайт кнопки на магазинный
+            buttonImage.sprite = shopSprite;
+        }
+        else
+        {
+            // Меняем спрайт кнопки на основной
+            buttonImage.sprite = backSprite;
+        }
+    }
+}

@@ -41,11 +41,6 @@ public class LevelManager : MonoBehaviour
         {
             Instance = this;
         }
-
-        for (int i = 0; i < levelsAmount; i++) 
-        {
-            levelList.Add(0);
-        }
     }
 
     private void Update()
@@ -238,8 +233,18 @@ public class LevelManager : MonoBehaviour
     {
         maxLevelCompleted = YandexGame.savesData.maxLevelCompleted;
 
-        // Загружаем массив уровней обратно в List
-        levelList = new List<float>(YandexGame.savesData.levelList);
+        if (YandexGame.savesData.levelList.Count <= 0)
+        {
+            for(int i = 0; i < 50; i++)
+            {
+                levelList.Add(0);
+            }
+        }
+        else
+        {
+            // Загружаем массив уровней обратно в List
+            levelList = new List<float>(YandexGame.savesData.levelList);
+        }
     }
 
 }
