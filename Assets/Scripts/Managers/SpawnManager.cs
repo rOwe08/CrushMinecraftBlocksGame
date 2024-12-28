@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using YG;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -86,8 +87,11 @@ public class SpawnManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        indexOfGround = 0;
+        LoadData();
+
         SpawnGround();
+        UpdateGroundMaterials();
+
         SpawnPlayer();
         SpawnCameraFocusObject();
 
@@ -408,6 +412,13 @@ public class SpawnManager : MonoBehaviour
     {
         indexOfGround++;
 
+        UpdateGroundMaterials();
+
+        SaveData();
+    }
+
+    private void UpdateGroundMaterials()
+    {
         foreach (GameObject spawnedGroundObject in groundBlocks)
         {
             // Получаем текущий массив материалов
@@ -426,4 +437,13 @@ public class SpawnManager : MonoBehaviour
         return indexOfGround + 1;
     }
 
+    public void LoadData()
+    {
+        indexOfGround = YandexGame.savesData.indexOfGround;
+    }
+
+    public void SaveData()
+    {
+        YandexGame.savesData.indexOfGround = indexOfGround;
+    }
 }

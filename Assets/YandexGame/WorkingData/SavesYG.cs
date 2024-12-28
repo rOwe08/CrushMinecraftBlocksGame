@@ -32,6 +32,9 @@ namespace YG
         public int[] upgradeCostsCoins; // Цены на апгрейды в монетах для всех кнопок
         public int[] upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
 
+
+        public int indexOfGround;
+
         // Вы можете выполнить какие то действия при загрузке сохранений
         public SavesYG()
         {
