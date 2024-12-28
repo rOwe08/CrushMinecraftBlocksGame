@@ -88,12 +88,14 @@ public class GameManager : MonoBehaviour
     {
         player.LoadData();
         LevelManager.Instance.LoadData();
+        UIManager.Instance.LoadData();
     }
 
     private void SaveData()
     {
         player.SaveData();
         LevelManager.Instance.SaveData();
+        UIManager.Instance.SaveData();
     }
 
     // Сохранение данных при выходе из игры

@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
     public Transform levelsContainer;  // Контейнер, куда будут добавляться кнопки уровней
 
     private int rewardForRewardCoins = 100;
-    private int rewardForRewardDiamonds =  15;
+    private int rewardForRewardDiamonds = 15;
 
     private void Awake()
     {
@@ -109,7 +109,7 @@ public class UIManager : MonoBehaviour
         upgradeButtons[6] = projectilesAmountButton.gameObject;
         upgradeButtons[7] = armageddonButton.gameObject;
 
-        for(int i = 0; i < upgradeButtons.Length; i++)
+        for (int i = 0; i < upgradeButtons.Length; i++)
         {
             UpdateUpgradeButton(i);
         }
@@ -266,7 +266,7 @@ public class UIManager : MonoBehaviour
         int currentCoinsCost = upgradeCostsCoins[index];
         int currentDiamondsCost = upgradeCostsDiamonds[index];
 
-        if(currentCoinsCost > currentDiamondsCost)
+        if (currentCoinsCost > currentDiamondsCost)
         {
             priceText.text = $"{FormatNumber(currentCoinsCost)}";
         }
@@ -274,7 +274,7 @@ public class UIManager : MonoBehaviour
         {
             priceText.text = $"{FormatNumber(currentDiamondsCost)}";
         }
-        
+
         // Обновляем текст уровня
         levelText.text = currentLevel.ToString();
     }
@@ -288,7 +288,7 @@ public class UIManager : MonoBehaviour
         // Проверка, хватает ли ресурсов для апгрейда
         if (GameManager.Instance.player.totalCoins >= coinsCost && GameManager.Instance.player.totalDiamonds >= diamondsCost)
         {
-            if (upgradeMaxLevels[index] > upgradeLevels[index]) 
+            if (upgradeMaxLevels[index] > upgradeLevels[index])
             {
                 ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins - coinsCost, true);
                 ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds - diamondsCost, false);
@@ -346,6 +346,8 @@ public class UIManager : MonoBehaviour
 
                 // Применяем изменения (например, апгрейд статов)
                 ApplyUpgrade(index);
+
+                SaveData();
             }
         }
         else
@@ -548,6 +550,11 @@ public class UIManager : MonoBehaviour
         shopPanel.transform.localScale = Vector3.zero;  // Начальное состояние (панель скрыта)
         shopPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);  // Анимация появления
 
+        for (int i = 0; i < upgradeButtons.Length; i++)
+        {
+            UpdateUpgradeButton(i);
+        }
+
         UpdateRewardedButtons();
     }
 
@@ -566,12 +573,12 @@ public class UIManager : MonoBehaviour
         rewardedDiamondsButton.onClick.RemoveAllListeners();
 
         rewardedCoinsButton.onClick.AddListener(() => {
-                GameManager.Instance.WatchRewardedAd(1);
-            }
+            GameManager.Instance.WatchRewardedAd(1);
+        }
         );
         rewardedDiamondsButton.onClick.AddListener(() => {
-                GameManager.Instance.WatchRewardedAd(2);
-            }
+            GameManager.Instance.WatchRewardedAd(2);
+        }
         );
         //rewardedAttemptButton;
         //private int rewardForRewardCoins = 100;
@@ -700,7 +707,7 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        if(j != -1)
+        if (j != -1)
         {
             if (GameManager.Instance.player.shopMaterialsPurchased[j])
             {
@@ -739,6 +746,34 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("Material isnt here");
         }
+    }
+
+    public void SaveData()
+    {
+        YandexGame.savesData.upgradeLevels = upgradeLevels;
+        YandexGame.savesData.upgradeCostsCoins = upgradeCostsCoins; // Цены на апгрейды в монетах для всех кнопок
+        YandexGame.savesData.upgradeCostsDiamonds = upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
+}
+
+    public void LoadData()
+    {
+        if (YandexGame.savesData.upgradeLevels == null || YandexGame.savesData.upgradeLevels.Length <= 0)
+        {
+            SaveData();
+        }
+        upgradeLevels = YandexGame.savesData.upgradeLevels;
+
+        if(YandexGame.savesData.upgradeCostsCoins == null || YandexGame.savesData.upgradeCostsCoins.Length <= 0)
+        {
+            SaveData();
+        }
+        upgradeCostsCoins = YandexGame.savesData.upgradeCostsCoins; // Цены на апгрейды в монетах для всех кнопок
+
+        if (YandexGame.savesData.upgradeCostsDiamonds == null || YandexGame.savesData.upgradeCostsDiamonds.Length <= 0)
+        {
+            SaveData();
+        }
+        upgradeCostsDiamonds = YandexGame.savesData.upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
     }
 
     public void HideProjectileBuyPanel()

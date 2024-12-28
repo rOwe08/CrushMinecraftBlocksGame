@@ -28,6 +28,9 @@ namespace YG
 
         public int maxLevelCompleted = 0;
         public List<float> levelList = new List<float>();
+        public int[] upgradeLevels; // Уровни апгрейда для всех кнопок
+        public int[] upgradeCostsCoins; // Цены на апгрейды в монетах для всех кнопок
+        public int[] upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
 
         // Вы можете выполнить какие то действия при загрузке сохранений
         public SavesYG()

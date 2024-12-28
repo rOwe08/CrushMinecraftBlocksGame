@@ -1,18 +1,18 @@
 {
-  "idSave": 108,
+  "idSave": 126,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
-  "cannonPower": 62.0,
-  "cannonSize": 0.700000048,
+  "cannonPower": 69.0,
+  "cannonSize": 0.75000006,
   "cannonMass": 25.0,
   "floorLevel": 0,
   "maxAttempts": 0,
   "explosiveDamage": 0.0,
-  "projectileAmount": 1,
+  "projectileAmount": 2,
   "armageddonLevel": 0.0,
-  "totalCoins": 694,
-  "totalDiamonds": 115,
+  "totalCoins": 293,
+  "totalDiamonds": 15,
   "shopMaterialsPurchased": [
     false,
     false,
@@ -35,9 +35,9 @@
   "levelList": [
     100.0,
     100.0,
-    93.3333359,
+    100.0,
     53.3333321,
-    33.3333321,
+    40.0,
     0.0,
     0.0,
     0.0,
@@ -83,5 +83,35 @@
     0.0,
     0.0,
     0.0
+  ],
+  "upgradeLevels": [
+    7,
+    1,
+    0,
+    1,
+    4,
+    0,
+    2,
+    0
+  ],
+  "upgradeCostsCoins": [
+    55,
+    500,
+    500,
+    1000,
+    0,
+    0,
+    0,
+    0
+  ],
+  "upgradeCostsDiamonds": [
+    0,
+    0,
+    0,
+    0,
+    50,
+    50,
+    50,
+    100
   ]
 }
