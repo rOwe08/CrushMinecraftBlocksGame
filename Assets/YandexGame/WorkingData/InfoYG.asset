@@ -80,17 +80,37 @@ MonoBehaviour:
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 321
     - rank: 5
-      name: Player this
+      name: Player this12
       score: 0
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 000
     - rank: 6
       name: Player6
+      score: 4
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 321
+    - rank: 6
+      name: Player7
+      score: 3
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 321
+    - rank: 6
+      name: Player8
+      score: 2
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 321
+    - rank: 6
+      name: Player9
+      score: 1
+      photo: https://justplaygames.ru/public/icon_player.png
+      uniqueID: 321
+    - rank: 6
+      name: Player10
       score: 50
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 321
     thisPlayer:
-      rank: 2
+      rank: 3
       score: 10
   LocalizationEnable: 1
   callingLanguageCheck: 1

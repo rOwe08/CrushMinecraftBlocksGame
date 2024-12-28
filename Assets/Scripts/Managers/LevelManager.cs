@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using YG;
 
 public class LevelManager : MonoBehaviour
@@ -31,6 +32,7 @@ public class LevelManager : MonoBehaviour
     public int maxLevelCompleted = 0;
     public List<float> levelList = new List<float>();
 
+    public UnityEvent<bool> OnLevelStarted;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -76,7 +78,6 @@ public class LevelManager : MonoBehaviour
             } 
         }
     }
-
 
     public void OnAllProjectilesShot()
     {
@@ -160,6 +161,7 @@ public class LevelManager : MonoBehaviour
 
         isLevelActive = true;
         UIManager.Instance.HideResults();
+        OnLevelStarted.Invoke(isLevelActive);
     }
 
 
@@ -178,6 +180,7 @@ public class LevelManager : MonoBehaviour
         isLevelActive = false;
         float progress = (float)(totalBlocks - remainingBlocks) / totalBlocks * 100;
 
+        OnLevelStarted.Invoke(isLevelActive);
 
         if (progress >= 50f)
         {

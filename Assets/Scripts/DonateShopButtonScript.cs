@@ -19,6 +19,21 @@ public class DonateShopButtonScripts : MonoBehaviour
             // Подписываемся на UnityEvent
             cameraSwitch.OnCameraSwitched.AddListener(OnCameraSwitched);
         }
+
+        LevelManager.Instance.OnLevelStarted.AddListener(OnLevelStarted);
+    }
+
+    // Метод, который будет вызываться при переключении камеры
+    private void OnLevelStarted(bool isLevelStarted)
+    {
+        if (isLevelStarted)
+        {
+            transform.GetComponent<Button>().interactable = false;    
+        }
+        else
+        {
+            transform.GetComponent<Button>().interactable = true;
+        }
     }
 
     // Метод, который будет вызываться при переключении камеры
@@ -28,11 +43,16 @@ public class DonateShopButtonScripts : MonoBehaviour
         {
             // Меняем спрайт кнопки на магазинный
             buttonImage.sprite = shopSprite;
+            UIManager.Instance.HideProjectileBuyPanel();
+            UIManager.Instance.ShowLevelsPanel();
         }
         else
         {
             // Меняем спрайт кнопки на основной
             buttonImage.sprite = backSprite;
+            UIManager.Instance.HideLevelsPanel();
+            UIManager.Instance.HideShopPanel();
+            UIManager.Instance.HideResults();
         }
     }
 }

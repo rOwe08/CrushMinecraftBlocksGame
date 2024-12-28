@@ -616,9 +616,17 @@ public class UIManager : MonoBehaviour
     // Метод для обновления процента уничтоженных блоков
     public void UpdateProgress()
     {
-        // Обновляем прогресс в UI
-        float progress = (float)(LevelManager.Instance.totalBlocks - LevelManager.Instance.remainingBlocks) / LevelManager.Instance.totalBlocks * 100;
+        float progress;
 
+        // Обновляем прогресс в UI
+        if (LevelManager.Instance.totalBlocks == 0)
+        {
+            progress = 0f;
+        }
+        else
+        {
+            progress = (float)(LevelManager.Instance.totalBlocks - LevelManager.Instance.remainingBlocks) / LevelManager.Instance.totalBlocks * 100;
+        }
 
         if (YandexGame.EnvironmentData.language == "ru")
         {
@@ -731,5 +739,10 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("Material isnt here");
         }
+    }
+
+    public void HideProjectileBuyPanel()
+    {
+        buyProjectilePanel.SetActive(false);
     }
 }
