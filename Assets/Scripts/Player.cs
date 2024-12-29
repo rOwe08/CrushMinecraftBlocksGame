@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     public bool IsLevelEnding = false;
     public bool IsArmageddonActivated = false;
 
+    public int AmountOfRewardedHP;
+
     [Header("****Trajectory display****")]
     public LineRenderer lineRenderer; // Компонент LineRenderer
     public int linePoints = 175;
@@ -104,7 +106,7 @@ public class Player : MonoBehaviour
                     // Логика стрельбы
                     if (Input.GetMouseButtonDown(0))
                     {
-                        if (LevelManager.Instance.attempts < LevelManager.Instance.maxAttempts)
+                        if (LevelManager.Instance.attempts < LevelManager.Instance.maxAttempts + AmountOfRewardedHP)
                         {
                             LevelManager.Instance.AddAttempt();
                             StartCoroutine(ShootProjectiles());
@@ -217,6 +219,8 @@ public class Player : MonoBehaviour
 
         YandexGame.savesData.shopMaterialsPurchased = shopMaterialsPurchased;
 
+        YandexGame.savesData.AmountOfRewardedHP = AmountOfRewardedHP;
+
         YandexGame.SaveProgress();
     }
 
@@ -235,11 +239,13 @@ public class Player : MonoBehaviour
         totalDiamonds = YandexGame.savesData.totalDiamonds;
 
         shopMaterialsPurchased = YandexGame.savesData.shopMaterialsPurchased;
+        AmountOfRewardedHP = YandexGame.savesData.AmountOfRewardedHP;
     }
 
     public void AddCoins(int coins)
     {
         totalCoins += coins;
+        Debug.Log("Total coins: " + totalCoins + " + rewarded coins: " + coins);
     }
     public void AddDiamonds(int amount)
     {
@@ -259,6 +265,8 @@ public class Player : MonoBehaviour
 
         totalCoins = 0;
         totalDiamonds = 0;
+
+        AmountOfRewardedHP = 0;
 
         shopMaterialsPurchased = new bool[16];
     }

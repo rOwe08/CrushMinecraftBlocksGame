@@ -1818,6 +1818,7 @@ GameObject:
   - component: {fileID: 195169142}
   - component: {fileID: 195169141}
   - component: {fileID: 195169144}
+  - component: {fileID: 195169145}
   m_Layer: 5
   m_Name: WatchAdButton
   m_TagString: Untagged
@@ -1941,6 +1942,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+--- !u!114 &195169145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195169139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a0a5c38e25b0947b5ef4d43ea3aed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 1
+  shakeStrength: 10
+  shakeVibrato: 5
+  shakeRandomness: 90
+  delayBetweenShakes: 1
 --- !u!1 &219158643
 GameObject:
   m_ObjectHideFlags: 0
@@ -4763,6 +4781,7 @@ GameObject:
   - component: {fileID: 538721940}
   - component: {fileID: 538721939}
   - component: {fileID: 538721942}
+  - component: {fileID: 538721943}
   m_Layer: 5
   m_Name: WatchAdButton
   m_TagString: Untagged
@@ -4898,6 +4917,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+--- !u!114 &538721943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538721937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a0a5c38e25b0947b5ef4d43ea3aed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 1
+  shakeStrength: 10
+  shakeVibrato: 5
+  shakeRandomness: 90
+  delayBetweenShakes: 1
 --- !u!1 &545459940
 GameObject:
   m_ObjectHideFlags: 0
@@ -11696,6 +11732,7 @@ GameObject:
   - component: {fileID: 1284195340}
   - component: {fileID: 1284195339}
   - component: {fileID: 1284195342}
+  - component: {fileID: 1284195343}
   m_Layer: 5
   m_Name: WatchAdButton
   m_TagString: Untagged
@@ -11819,6 +11856,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSound: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+--- !u!114 &1284195343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284195337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a0a5c38e25b0947b5ef4d43ea3aed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 1
+  shakeStrength: 10
+  shakeVibrato: 5
+  shakeRandomness: 90
+  delayBetweenShakes: 1
 --- !u!1 &1336646549
 GameObject:
   m_ObjectHideFlags: 0
@@ -14448,6 +14502,7 @@ MonoBehaviour:
   levelButtonPrefab: {fileID: 2628223698769416082, guid: 2603fe28d9d35994f930458ca38fce01,
     type: 3}
   levelsContainer: {fileID: 1268599846}
+  isExplosionPurchased: 0
 --- !u!1 &1625703434
 GameObject:
   m_ObjectHideFlags: 0
@@ -14696,7 +14751,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 610, y: -14.669189}
+  m_AnchoredPosition: {x: 610, y: -14.669165}
   m_SizeDelta: {x: 1220, y: 29.33833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1643507937

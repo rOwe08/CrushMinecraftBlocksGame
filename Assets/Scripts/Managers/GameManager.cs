@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     public AudioClip winningSound;
     public AudioClip losingSound;
 
+    private bool isRewardedSubscribed = false;
+    private bool rewardClaimed = false;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -41,6 +44,35 @@ public class GameManager : MonoBehaviour
 
         //ResetData();
         //SaveData();
+    }
+
+    // Сохранение данных при паузе (сворачивании приложения или на мобильных устройствах)
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            SaveData();
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (!isRewardedSubscribed)
+        {
+            Debug.Log("Подписка на событие RewardVideoEvent");
+            YandexGame.RewardVideoEvent += Rewarded;
+            isRewardedSubscribed = true;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (isRewardedSubscribed)
+        {
+            Debug.Log("Отписка от события RewardVideoEvent");
+            YandexGame.RewardVideoEvent -= Rewarded;
+            isRewardedSubscribed = false;
+        }
     }
 
     // Start is called before the first frame update
@@ -67,6 +99,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("Level Ended");
         LevelManager.Instance.EndLevel();
         UIManager.Instance.ShowResults();
+
+        GameManager.Instance.player.AmountOfRewardedHP = 0;
 
         SaveData();
         AddNewLeaderboard();
@@ -107,37 +141,41 @@ public class GameManager : MonoBehaviour
         SaveData();
     }
 
-    // Сохранение данных при паузе (сворачивании приложения или на мобильных устройствах)
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        if (pauseStatus)
-        {
-            SaveData();
-        }
-    }
-
-    private void OnEnable()
-    {
-        YandexGame.RewardVideoEvent += Rewarded;
-    }
-    // Отписываемся от события открытия рекламы в OnDisable
-    private void OnDisable()
-    {
-        YandexGame.RewardVideoEvent -= Rewarded;
-    }
-
     // Подписанный метод получения награды
+
     void Rewarded(int id)
     {
-        // Если ID = 1, то выдаём "+100 монет"
+        if (rewardClaimed)
+        {
+            Debug.LogWarning("Reward already claimed. Ignoring duplicate call.");
+            return;
+        }
+
+        rewardClaimed = true;
+
+        Debug.Log($"Rewarded event triggered. ID: {id}");
+
         if (id == 1)
+        {
             player.AddCoins(rewardCoinsAd);
-        // Если ID = 2, то выдаём "+оружие".
+        }
         else if (id == 2)
+        {
             player.AddDiamonds(rewardDiamondsAd);
-        // Если ID = 2, то выдаём "+оружие".
-        //else if (id == 2)
-        //    AddWeapon();
+        }
+        else if (id == 3)
+        {
+            player.AmountOfRewardedHP++;
+        }
+
+        // Через какое-то время сбрасываем флаг
+        StartCoroutine(ResetRewardFlag());
+    }
+
+    private IEnumerator ResetRewardFlag()
+    {
+        yield return new WaitForSeconds(2);  // или любое другое время
+        rewardClaimed = false;
     }
 
     // Метод для вызова видео рекламы

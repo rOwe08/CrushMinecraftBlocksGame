@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
         }
 
         // Проверяем, если уровень активен и все блоки разрушены
-        if (isLevelActive && (remainingBlocks <= 0 || (attempts == maxAttempts && !IsProjectileInScene && !AreMovingBlocks)))
+        if (isLevelActive && (remainingBlocks <= 0 || (attempts == maxAttempts + GameManager.Instance.player.AmountOfRewardedHP && !IsProjectileInScene && !AreMovingBlocks)))
         {
             // Если попытки использованы и все снаряды выпущены
             if (ArmageddonEnded && allProjectilesShot && !GameManager.Instance.player.IsLevelEnding)
@@ -205,6 +205,8 @@ public class LevelManager : MonoBehaviour
         {
             levelList[level - 1] = progress;
         }
+
+        UIManager.Instance.IsLevelPassed = true;
     }
 
     public void AddAttempts(int amount)

@@ -1,5 +1,5 @@
 {
-  "idSave": 436,
+  "idSave": 552,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -11,8 +11,8 @@
   "explosiveDamage": 0.0,
   "projectileAmount": 1,
   "armageddonLevel": 0.0,
-  "totalCoins": 234,
-  "totalDiamonds": 3,
+  "totalCoins": 32964,
+  "totalDiamonds": 151,
   "shopMaterialsPurchased": [
     false,
     false,
@@ -31,15 +31,15 @@
     false,
     false
   ],
-  "maxLevelCompleted": 5,
+  "maxLevelCompleted": 6,
   "levelList": [
     100.0,
     100.0,
     100.0,
     73.3333359,
     66.6666641,
-    33.3333321,
-    0.0,
+    53.3333321,
+    13.333333,
     0.0,
     0.0,
     0.0,
@@ -115,5 +115,6 @@
     100
   ],
   "isExplosionPurchased": false,
+  "AmountOfRewardedHP": 0,
   "indexOfGround": 0
 }

@@ -34,6 +34,8 @@ namespace YG
 
         public bool isExplosionPurchased;
 
+        public int AmountOfRewardedHP;
+
         public int indexOfGround;
 
         // Вы можете выполнить какие то действия при загрузке сохранений

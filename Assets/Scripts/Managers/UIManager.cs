@@ -77,6 +77,8 @@ public class UIManager : MonoBehaviour
     // Предположим, у вас есть переменная для отслеживания покупки взрыва:
     public bool isExplosionPurchased = false;
 
+    public bool IsLevelPassed = true;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -134,6 +136,7 @@ public class UIManager : MonoBehaviour
         UpdateLevel();
         UpdateAttempts();
         UpdateArmageddonButton();
+        UpdateRewardedText();
     }
 
     private void UpdateArmageddonButton()
@@ -530,19 +533,19 @@ public class UIManager : MonoBehaviour
         {
             percentageText.text = $"Прогресс: {progress:F0}%";
             coinsEarnedText.text = $"Монет получено: {FormatNumber(LevelManager.Instance.coinsEarnedOnLevel)}";
-            attemptsUsedText.text = $"Попыток использовано: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+            attemptsUsedText.text = $"Попыток использовано: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts + GameManager.Instance.player.AmountOfRewardedHP}";
         }
         else if (YandexGame.EnvironmentData.language == "en")
         {
             percentageText.text = $"Progress: {progress:F0}%";
             coinsEarnedText.text = $"Coins earned: {FormatNumber(LevelManager.Instance.coinsEarnedOnLevel)}";
-            attemptsUsedText.text = $"Attempts used: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+            attemptsUsedText.text = $"Attempts used: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts + GameManager.Instance.player.AmountOfRewardedHP}";
         }
         else if (YandexGame.EnvironmentData.language == "tr")
         {
             percentageText.text = $"Yüzde: {progress:F0}%";
             coinsEarnedText.text = $"Kazanılan paralar: {FormatNumber(LevelManager.Instance.coinsEarnedOnLevel)}";
-            attemptsUsedText.text = $"Kullanılan denemeler: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+            attemptsUsedText.text = $"Kullanılan denemeler: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts + GameManager.Instance.player.AmountOfRewardedHP}";
         }
 
         // Определяем медаль на основе количества звезд
@@ -596,6 +599,41 @@ public class UIManager : MonoBehaviour
 
     private void UpdateRewardedButtons()
     {
+
+        if (IsLevelPassed)
+        {
+            rewardedCoinsButton.gameObject.SetActive(true);
+            rewardedDiamondsButton.gameObject.SetActive(true);
+            rewardedAttemptButton.gameObject.SetActive(true);
+        }
+
+        rewardedCoinsButton.onClick.RemoveAllListeners();
+        rewardedDiamondsButton.onClick.RemoveAllListeners();
+        rewardedAttemptButton.onClick.RemoveAllListeners();
+
+        rewardedCoinsButton.onClick.AddListener(() => {
+            GameManager.Instance.WatchRewardedAd(1);
+            rewardedCoinsButton.gameObject.SetActive(false);
+            IsLevelPassed = false;
+        });
+
+        rewardedDiamondsButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.WatchRewardedAd(2);
+            rewardedDiamondsButton.gameObject.SetActive(false);
+            IsLevelPassed = false;
+        }
+        );
+
+        rewardedAttemptButton.onClick.AddListener(() => {
+            GameManager.Instance.WatchRewardedAd(3);
+            rewardedAttemptButton.gameObject.SetActive(false);
+            IsLevelPassed = false;
+        });
+    }
+
+    private void UpdateRewardedText()
+    {
         int rewardCoinsAd = (GameManager.Instance.player.totalCoins / 10 > 100) ? (int)(GameManager.Instance.player.totalCoins / 10) : 100;
         int rewardDiamondsAd = (GameManager.Instance.player.totalDiamonds / 5 > 15) ? (int)(GameManager.Instance.player.totalDiamonds / 5) : 15;
 
@@ -604,23 +642,7 @@ public class UIManager : MonoBehaviour
 
         rewardedCoinsButton.transform.Find("Text/AmountText").GetComponent<TextMeshProUGUI>().text = FormatNumber(rewardCoinsAd);
         rewardedDiamondsButton.transform.Find("Text/AmountText").GetComponent<TextMeshProUGUI>().text = FormatNumber(rewardDiamondsAd);
-
-        rewardedCoinsButton.onClick.RemoveAllListeners();
-        rewardedDiamondsButton.onClick.RemoveAllListeners();
-
-        rewardedCoinsButton.onClick.AddListener(() => {
-            GameManager.Instance.WatchRewardedAd(1);
-        }
-        );
-        rewardedDiamondsButton.onClick.AddListener(() => {
-            GameManager.Instance.WatchRewardedAd(2);
-        }
-        );
-        //rewardedAttemptButton;
-        //private int rewardForRewardCoins = 100;
-        //private int rewardForRewardDiamonds = 15;
     }
-
     // Закрытие панели уровней
     public void HideShopPanel()
     {
@@ -690,15 +712,15 @@ public class UIManager : MonoBehaviour
     {
         if (YandexGame.EnvironmentData.language == "ru")
         {
-            attemptsText.text = $"Попытки: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+            attemptsText.text = $"Попытки: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts + GameManager.Instance.player.AmountOfRewardedHP}";
         }
         else if (YandexGame.EnvironmentData.language == "en")
         {
-            attemptsText.text = $"Attempts: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+            attemptsText.text = $"Attempts: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts + GameManager.Instance.player.AmountOfRewardedHP}";
         }
         else if (YandexGame.EnvironmentData.language == "tr")
         {
-            attemptsText.text = $"Denemeler: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts}";
+            attemptsText.text = $"Denemeler: {LevelManager.Instance.attempts}/{LevelManager.Instance.maxAttempts + GameManager.Instance.player.AmountOfRewardedHP}";
         }
     }
     string FormatNumber(int number)
@@ -835,8 +857,6 @@ public class UIManager : MonoBehaviour
 
             // Обновляем цвет блока после покупки
             SpawnManager.Instance.UpdateShopBlockColor(j);
-            Debug.Log("Updating color for block " + j);
-
 
             PrepareProjectileShopPanel(projectile);
         }
