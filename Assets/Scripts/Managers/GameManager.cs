@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        //ResetData();
+        //SaveData();
     }
 
     // Start is called before the first frame update
@@ -51,11 +54,6 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel(int level = 0)
     {
-        if(level == LevelManager.Instance.levelsAmount)
-        {
-            level--;
-        }
-
         LevelManager.Instance.StartLevel(level);
         UIManager.Instance.SetUpUI();
         UIManager.Instance.UpdateUI();
@@ -99,6 +97,8 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.SaveData();
         UIManager.Instance.SaveData();
         SpawnManager.Instance.SaveData();
+
+        YandexGame.SaveProgress();
     }
 
     // Сохранение данных при выходе из игры
@@ -165,5 +165,15 @@ public class GameManager : MonoBehaviour
     public void PlaySoundOnce(AudioClip clip)
     {
         audioManager.PlaySoundOnce(clip);
+    }
+
+    public void ResetData()
+    {
+        player.ResetData();
+        LevelManager.Instance.ResetData();
+        UIManager.Instance.ResetData();
+        SpawnManager.Instance.ResetData();
+
+        YandexGame.SaveProgress();
     }
 }

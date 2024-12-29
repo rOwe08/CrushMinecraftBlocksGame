@@ -52,6 +52,9 @@ public class SpawnManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+        //ResetData();
+        //SaveData();
+
         LoadData();
 
         SpawnGround();
@@ -113,7 +116,6 @@ public class SpawnManager : MonoBehaviour
                             // Устанавливаем новый материал для заспавненного объекта
                             projectileRenderer.material = shopMaterials[i];
 
-                            Debug.Log("Adding block " + i + " to shopBlocks");
                             shopBlocks.Add(i, block);
 
                         }
@@ -133,11 +135,6 @@ public class SpawnManager : MonoBehaviour
             if (blockRenderer != null)
             {
                 blockRenderer.material.color = Color.green;
-                Debug.Log("Block color updated for block " + materialIndex);
-            }
-            else
-            {
-                Debug.Log("Renderer not found for block " + materialIndex);
             }
 
         }
@@ -516,5 +513,10 @@ public class SpawnManager : MonoBehaviour
     public void SaveData()
     {
         YandexGame.savesData.indexOfGround = indexOfGround;
+    }
+
+    public void ResetData()
+    {
+        indexOfGround = 0;
     }
 }

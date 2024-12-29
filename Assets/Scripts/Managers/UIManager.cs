@@ -88,6 +88,9 @@ public class UIManager : MonoBehaviour
             Instance = this;
         }
 
+        //ResetData();
+        //SaveData();
+
         levelsPanel.SetActive(false);  // Панель скрыта по умолчанию
         resultsPanel.SetActive(false);  // Панель скрыта по умолчанию
 
@@ -465,6 +468,8 @@ public class UIManager : MonoBehaviour
         Button nextLevelButton = nextLevelButtonTransform.GetComponent<Button>();
         Button restartButton = restartButtonTransform.GetComponent<Button>();
 
+        nextLevelButton.interactable = true;
+
         nextLevelButton.onClick.RemoveAllListeners();
         restartButton.onClick.RemoveAllListeners();
 
@@ -473,15 +478,27 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.StartLevel(LevelManager.Instance.level);
         });
 
-        if (earnedStars <= 0)
+        if (LevelManager.Instance.level < LevelManager.Instance.levelsAmount)
         {
-            if (LevelManager.Instance.level >= LevelManager.Instance.maxLevelCompleted)
+            if (earnedStars <= 0)
             {
-                nextLevelButton.interactable = false;
+                if (LevelManager.Instance.level >= LevelManager.Instance.maxLevelCompleted)
+                {
+                    nextLevelButton.interactable = false;
+                }
+                else
+                {
+                    nextLevelButton.interactable = true;
+                    nextLevelButton.onClick.AddListener(() =>
+                    {
+                        GameManager.Instance.StartLevel();
+                    });
+                }
             }
             else
             {
                 nextLevelButton.interactable = true;
+
                 nextLevelButton.onClick.AddListener(() =>
                 {
                     GameManager.Instance.StartLevel();
@@ -490,12 +507,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            nextLevelButton.interactable = true;
-
-            nextLevelButton.onClick.AddListener(() =>
-            {
-                GameManager.Instance.StartLevel();
-            });
+            nextLevelButton.interactable= false;
         }
 
         // Плавное появление панели
@@ -818,7 +830,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
     public void SaveData()
     {
         YandexGame.savesData.upgradeLevels = upgradeLevels;
@@ -847,6 +858,14 @@ public class UIManager : MonoBehaviour
         }
         upgradeCostsDiamonds = YandexGame.savesData.upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
         isExplosionPurchased = YandexGame.savesData.isExplosionPurchased;
+    }
+
+    public void ResetData()
+    {
+        upgradeLevels = new int[8] { 0, 0, 0, 1, 3, 0, 1 ,0 };
+        upgradeCostsCoins = new int[8] { 50, 500, 500, 1000, 0, 0, 0, 0 };// Цены на апгрейды в монетах для всех кнопок
+        upgradeCostsDiamonds = new int[8] { 0, 0, 0, 0, 50, 50, 50, 100 }; ; // Цены на апгрейды в кристаллах для всех кнопок
+        isExplosionPurchased = false;
     }
 
     public void HideProjectileBuyPanel()

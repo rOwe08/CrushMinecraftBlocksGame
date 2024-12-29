@@ -43,6 +43,9 @@ public class LevelManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        //ResetData();
+        //SaveData();
     }
 
     private void Update()
@@ -230,11 +233,24 @@ public class LevelManager : MonoBehaviour
     {
         YandexGame.savesData.maxLevelCompleted = maxLevelCompleted;
         YandexGame.savesData.levelList = levelList; // Преобразуем List в массив для сохранения
+        YandexGame.savesData.maxAttempts = maxAttempts;
     }
 
     public void LoadData()
     {
         maxLevelCompleted = YandexGame.savesData.maxLevelCompleted;
+
+        if (YandexGame.savesData.maxAttempts < 3)
+        {
+            YandexGame.savesData.maxAttempts = 3;
+            maxAttempts = 3;
+
+            YandexGame.SaveProgress();
+        }
+        else
+        {
+            maxAttempts = YandexGame.savesData.maxAttempts;
+        }
 
         if (YandexGame.savesData.levelList.Count <= 0)
         {
@@ -250,4 +266,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void ResetData()
+    {
+        maxLevelCompleted = 0;
+        levelList = new List<float>();
+        maxAttempts = 3;
+    }
 }

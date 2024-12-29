@@ -46,6 +46,12 @@ public class Player : MonoBehaviour
     private AudioSource audioSource;   // Источник звука
     public AudioClip shootSound;      // Звук выстрела
 
+    //void Awake()
+    //{
+    //    ResetData();
+    //    SaveData();
+    //}
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -238,5 +244,22 @@ public class Player : MonoBehaviour
     public void AddDiamonds(int amount)
     {
         totalDiamonds += amount;
+    }
+
+    public void ResetData() 
+    {
+        cannonPower = 50f;
+        cannonSize = 0.6f;
+        cannonMass = 25;
+        floorLevel = 0;
+        maxAttempts = 0;
+        explosiveDamage = 0;
+        projectileAmount = 0;
+        armageddonLevel = 0;
+
+        totalCoins = 0;
+        totalDiamonds = 0;
+
+        shopMaterialsPurchased = new bool[16];
     }
 }
