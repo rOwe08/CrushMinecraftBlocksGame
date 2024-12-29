@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         LoadData();
 
         UIManager.Instance.ShowLevelsPanel();
+        SpawnManager.Instance.ColorPurchasedBlocksOnStart();
     }
 
     public void StartLevel(int level = 0)

@@ -38,42 +38,7 @@ public class SpawnManager : MonoBehaviour
     private float blockSize = 1f;  // Размер блока (размер одного блока в юнитах)
     private Vector3 shopPosition = new Vector3(50f, 0f, -20f);  // Позиция магазина справа от основной локации
 
-    // Метод для спавна магазина
-    void SpawnShop()
-    {
-        int i = 0;
-        for (int x = 0; x < gridWidth; x++)
-        {
-            for (int z = 0; z < gridHeight; z++)
-            {
-                // Позиция для каждого блока в сетке
-                Vector3 blockPosition = new Vector3(x * blockSize, 0f, z * blockSize) + shopPosition;
-
-                // Спавним блок пола
-                GameObject block = Instantiate(blockPrefab, blockPosition, Quaternion.identity);
-
-                if (x % 3 == 0 && z % 3 == 0)
-                {
-                    // Спавним объект магазина на блоке (чуть выше, чтобы не пересекался с полом)
-                    GameObject spawnedPrefab = Instantiate(shopPrefab, blockPosition + Vector3.up, Quaternion.identity);
-
-                    // Находим "Projectile" в заспавненном префабе
-                    Transform projectileTransform = spawnedPrefab.transform.Find("Projectile");
-                    if (projectileTransform != null)
-                    {
-                        Renderer projectileRenderer = projectileTransform.GetComponent<Renderer>();
-                        if (projectileRenderer != null && i < shopMaterials.Length)
-                        {
-                            // Устанавливаем новый материал для заспавненного объекта
-                            projectileRenderer.material = shopMaterials[i];
-                        }
-                        i++;
-                    }
-                }
-            }
-        }
-    }
-
+    private Dictionary<int, GameObject> shopBlocks = new Dictionary<int, GameObject>(); // Связь между индексом и блоком
 
     private void Awake()
     {
@@ -120,6 +85,63 @@ public class SpawnManager : MonoBehaviour
 
     }
 
+    void SpawnShop()
+    {
+        int i = 0;
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int z = 0; z < gridHeight; z++)
+            {
+                // Позиция для каждого блока в сетке
+                Vector3 blockPosition = new Vector3(x * blockSize, 0f, z * blockSize) + shopPosition;
+
+                // Спавним блок пола
+                GameObject block = Instantiate(blockPrefab, blockPosition, Quaternion.identity);
+
+                if (x % 3 == 0 && z % 3 == 0)
+                {
+                    // Спавним объект магазина на блоке (чуть выше, чтобы не пересекался с полом)
+                    GameObject spawnedPrefab = Instantiate(shopPrefab, blockPosition + Vector3.up, Quaternion.identity);
+
+                    // Находим "Projectile" в заспавненном префабе
+                    Transform projectileTransform = spawnedPrefab.transform.Find("Projectile");
+                    if (projectileTransform != null)
+                    {
+                        Renderer projectileRenderer = projectileTransform.GetComponent<Renderer>();
+                        if (projectileRenderer != null && i < shopMaterials.Length)
+                        {
+                            // Устанавливаем новый материал для заспавненного объекта
+                            projectileRenderer.material = shopMaterials[i];
+
+                            Debug.Log("Adding block " + i + " to shopBlocks");
+                            shopBlocks.Add(i, block);
+
+                        }
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+
+    public void UpdateShopBlockColor(int materialIndex)
+    {
+        if (shopBlocks.ContainsKey(materialIndex) && GameManager.Instance.player.shopMaterialsPurchased[materialIndex])
+        {
+            // Меняем цвет/материал блока, чтобы показать, что объект куплен
+            Renderer blockRenderer = shopBlocks[materialIndex].GetComponent<Renderer>();
+            if (blockRenderer != null)
+            {
+                blockRenderer.material.color = Color.green;
+                Debug.Log("Block color updated for block " + materialIndex);
+            }
+            else
+            {
+                Debug.Log("Renderer not found for block " + materialIndex);
+            }
+
+        }
+    }
     private IEnumerator ArmageddonCoroutine()
     {
         float elapsedTime = 0f;
@@ -430,6 +452,55 @@ public class SpawnManager : MonoBehaviour
             // Присваиваем обратно изменённый массив материалов
             spawnedGroundObject.GetComponent<MeshRenderer>().materials = materials;
         }
+    }
+
+    public void ColorPurchasedBlocksOnStart()
+    {
+        int i = 0; // Индекс для материалов магазина
+
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int z = 0; z < gridHeight; z++)
+            {
+                // Если это магазинный блок (например, каждый третий блок по X и Z)
+                if (x % 3 == 0 && z % 3 == 0 && i < shopMaterials.Length)
+                {
+                    // Если объект с этим материалом был куплен
+                    if (GameManager.Instance.player.shopMaterialsPurchased[i])
+                    {
+                        // Найдите блок в магазине и его рендерер
+                        Transform shopBlock = FindShopBlockAtPosition(x, z); // Нужно реализовать этот метод
+                        if (shopBlock != null)
+                        {
+                            Renderer blockRenderer = shopBlock.GetComponent<Renderer>();
+                            if (blockRenderer != null)
+                            {
+                                // Окрасьте блок в зеленый цвет (или любой другой цвет)
+                                blockRenderer.material.color = Color.green;
+                            }
+                        }
+                    }
+                    i++;
+                }
+            }
+        }
+    }
+
+    private Transform FindShopBlockAtPosition(int x, int z)
+    {
+        // Находим объект магазина в заданной позиции (x, z)
+        Vector3 blockPosition = new Vector3(x * blockSize, 0f, z * blockSize) + shopPosition;
+        Collider[] colliders = Physics.OverlapSphere(blockPosition, 0.1f); // Поиск объектов рядом с блоком
+
+        foreach (Collider col in colliders)
+        {
+            if (col.CompareTag("ShopBlock")) // Убедитесь, что ваши блоки имеют тег "ShopBlock"
+            {
+                return col.transform;
+            }
+        }
+
+        return null;
     }
 
     public int GetSpawnedGroundIndex()

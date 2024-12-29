@@ -54,9 +54,6 @@ public class Player : MonoBehaviour
         // Замораживаем ненужные оси, чтобы пушка не двигалась хаотично
         rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        int amountOfMaterials = SpawnManager.Instance.shopMaterials.Length;
-        shopMaterialsPurchased = new bool[amountOfMaterials];
-
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -212,6 +209,7 @@ public class Player : MonoBehaviour
 
         YandexGame.savesData.totalCoins = totalCoins;
         YandexGame.savesData.totalDiamonds = totalDiamonds;
+
         YandexGame.savesData.shopMaterialsPurchased = shopMaterialsPurchased;
 
         YandexGame.SaveProgress();

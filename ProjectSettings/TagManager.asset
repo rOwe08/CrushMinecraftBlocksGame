@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Projectile
   - Ground
+  - ShopBlock
   layers:
   - Default
   - TransparentFX

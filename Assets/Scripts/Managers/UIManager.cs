@@ -693,60 +693,119 @@ public class UIManager : MonoBehaviour
 
     internal void PrepareProjectileShopPanel(GameObject projectile)
     {
-        int j = -1;
+        int j = GetShopMaterialIndex(projectile);
+        if (j == -1)
+        {
+            Debug.Log("Material isn't here");
+            return;
+        }
 
         Button useButton = buyProjectilePanel.transform.Find("UseButton").GetComponent<Button>();
         Button buyButton = buyProjectilePanel.transform.Find("BuyButton").GetComponent<Button>();
 
+        UpdateShopPanelUI(j, useButton, buyButton);
+
+        useButton.onClick.RemoveAllListeners();
+        buyButton.onClick.RemoveAllListeners();
+
+        useButton.onClick.AddListener(() =>
+        {
+            UseShopItem(j, useButton, buyButton);
+        });
+
+        buyButton.onClick.AddListener(() =>
+        {
+            PurchaseShopItem(j, projectile, useButton, buyButton);
+        });
+    }
+
+    private int GetShopMaterialIndex(GameObject projectile)
+    {
         for (int i = 0; i < SpawnManager.Instance.shopMaterials.Length; i++)
         {
             if (projectile.GetComponent<MeshRenderer>().material.name.Contains(SpawnManager.Instance.shopMaterials[i].name))
             {
-                j = i;
-                break;
+                return i;
             }
         }
+        return -1;
+    }
 
-        if (j != -1)
+    private void UpdateShopPanelUI(int j, Button useButton, Button buyButton)
+    {
+        if (GameManager.Instance.player.shopMaterialsPurchased[j])
         {
-            if (GameManager.Instance.player.shopMaterialsPurchased[j])
-            {
-                buyProjectilePanel.transform.Find("ResourcePanel").gameObject.SetActive(false);
-                useButton.interactable = true;
-                buyButton.interactable = false;
-            }
-            else
-            {
-                buyProjectilePanel.transform.Find("ResourcePanel").gameObject.SetActive(true);
-                useButton.interactable = false;
-                buyButton.interactable = true;
-            }
-
-            useButton.onClick.RemoveAllListeners();
-            buyButton.onClick.RemoveAllListeners();
-
-            useButton.onClick.AddListener(() =>
-            {
-                SpawnManager.Instance.projectilePrefab.GetComponent<MeshRenderer>().sharedMaterial = SpawnManager.Instance.shopMaterials[j];
-            });
-
-            buyButton.onClick.AddListener(() =>
-            {
-                if (GameManager.Instance.player.totalDiamonds >= 50)
-                {
-                    ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds - 50, true);
-                    GameManager.Instance.AddDiamonds(-50);
-                    GameManager.Instance.player.shopMaterialsPurchased[j] = true;
-
-                    PrepareProjectileShopPanel(projectile);
-                }
-            });
+            buyProjectilePanel.transform.Find("ResourcePanel").gameObject.SetActive(false);
+            SetUseButtonState(useButton, j);
+            buyButton.interactable = false;
         }
         else
         {
-            Debug.Log("Material isnt here");
+            buyProjectilePanel.transform.Find("ResourcePanel").gameObject.SetActive(true);
+            useButton.interactable = false;
+            buyButton.interactable = true;
         }
     }
+
+    private void SetUseButtonState(Button useButton, int j)
+    {
+        if (SpawnManager.Instance.projectilePrefab.GetComponent<MeshRenderer>().sharedMaterial.name == SpawnManager.Instance.shopMaterials[j].name)
+        {
+            SetUseButtonText(useButton, "Используется", "Is Used", "Kullanılır");
+            useButton.interactable = false;
+        }
+        else
+        {
+            SetUseButtonText(useButton, "Использовать", "Use", "Kullanmak için");
+            useButton.interactable = true;
+        }
+    }
+
+    private void SetUseButtonText(Button button, string ruText, string enText, string trText)
+    {
+        TextMeshProUGUI buttonText = button.transform.GetComponentInChildren<TextMeshProUGUI>();
+        string language = YandexGame.EnvironmentData.language;
+
+        if (language == "ru")
+        {
+            buttonText.text = ruText;
+        }
+        else if (language == "en")
+        {
+            buttonText.text = enText;
+        }
+        else if (language == "tr")
+        {
+            buttonText.text = trText;
+        }
+    }
+
+    private void UseShopItem(int j, Button useButton, Button buyButton)
+    {
+        SpawnManager.Instance.projectilePrefab.GetComponent<MeshRenderer>().sharedMaterial = SpawnManager.Instance.shopMaterials[j];
+        if (GameManager.Instance.player.shopMaterialsPurchased[j])
+        {
+            UpdateShopPanelUI(j, useButton, buyButton);
+        }
+    }
+
+    private void PurchaseShopItem(int j, GameObject projectile, Button useButton, Button buyButton)
+    {
+        if (GameManager.Instance.player.totalDiamonds >= 50)
+        {
+            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds - 50, true);
+            GameManager.Instance.AddDiamonds(-50);
+            GameManager.Instance.player.shopMaterialsPurchased[j] = true;
+
+            // Обновляем цвет блока после покупки
+            SpawnManager.Instance.UpdateShopBlockColor(j);
+            Debug.Log("Updating color for block " + j);
+
+
+            PrepareProjectileShopPanel(projectile);
+        }
+    }
+
 
     public void SaveData()
     {
