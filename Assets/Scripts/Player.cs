@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
 
     private Rigidbody rb;
 
-
     [Header("Sound Settings")]
     private AudioSource audioSource;   // Источник звука
     public AudioClip shootSound;      // Звук выстрела

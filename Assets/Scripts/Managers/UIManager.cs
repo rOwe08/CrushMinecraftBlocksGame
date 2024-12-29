@@ -74,6 +74,9 @@ public class UIManager : MonoBehaviour
     private int rewardForRewardCoins = 100;
     private int rewardForRewardDiamonds = 15;
 
+    // Предположим, у вас есть переменная для отслеживания покупки взрыва:
+    public bool isExplosionPurchased = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -382,7 +385,7 @@ public class UIManager : MonoBehaviour
             break;
             case 5:
             // Применяем изменения для Explosive
-            GameManager.Instance.player.explosiveDamage += 10;
+            PurchaseExplosion();
             break;
             case 6:
             // Применяем изменения для Projectiles Amount
@@ -399,6 +402,15 @@ public class UIManager : MonoBehaviour
             break;
         }
     }
+
+    // Это метод будет вызываться, когда игрок покупает взрыв
+    public void PurchaseExplosion()
+    {
+        isExplosionPurchased = true;
+        YandexGame.savesData.isExplosionPurchased = true;
+        YandexGame.SaveProgress();
+    }
+
 
     public void ShowResults()
     {
@@ -812,7 +824,8 @@ public class UIManager : MonoBehaviour
         YandexGame.savesData.upgradeLevels = upgradeLevels;
         YandexGame.savesData.upgradeCostsCoins = upgradeCostsCoins; // Цены на апгрейды в монетах для всех кнопок
         YandexGame.savesData.upgradeCostsDiamonds = upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
-}
+        YandexGame.savesData.isExplosionPurchased = isExplosionPurchased;
+    }
 
     public void LoadData()
     {
@@ -833,6 +846,7 @@ public class UIManager : MonoBehaviour
             SaveData();
         }
         upgradeCostsDiamonds = YandexGame.savesData.upgradeCostsDiamonds; // Цены на апгрейды в кристаллах для всех кнопок
+        isExplosionPurchased = YandexGame.savesData.isExplosionPurchased;
     }
 
     public void HideProjectileBuyPanel()

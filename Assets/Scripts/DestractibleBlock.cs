@@ -20,32 +20,27 @@ public class DestructibleBlock : MonoBehaviour
 
     void Awake()
     {
-        // Попытка найти Rigidbody
         rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody>();
         }
 
-        // Получаем компонент Renderer
         blockRenderer = GetComponent<Renderer>();
 
-        // Проверяем, установлен ли BlockType, и устанавливаем здоровье
         if (blockType != null)
         {
             hp = blockType.health;
         }
 
-        Invoke(nameof(EnableFallDamage), fallDamageActivationDelay);  // Задержка перед активацией урона от падений
+        Invoke(nameof(EnableFallDamage), fallDamageActivationDelay);
 
-        // Инициализация компонента AudioSource
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        // Проверяем, если звуковые клипы загружены
         if (destructionSound == null || hitSound == null)
         {
             Debug.LogWarning("Audio clips are missing in GameManager.");
@@ -54,13 +49,11 @@ public class DestructibleBlock : MonoBehaviour
 
     private void Update()
     {
-        // Проверяем здоровье блока
         if (hp < 0)
         {
             HandleBlockDestruction();
         }
 
-        // Проверяем, если блок вылетел за пределы карты (по оси Y)
         if (transform.position.y < -10)
         {
             HandleBlockDestruction();
@@ -72,7 +65,6 @@ public class DestructibleBlock : MonoBehaviour
         hitSound = GameManager.Instance.hitSound;
         destructionSound = GameManager.Instance.destructionSound;
 
-        // Проигрываем звук разрушения с помощью временного объекта
         if (destructionSound != null)
         {
             PlayDestructionSound(transform.position, destructionSound);
@@ -102,29 +94,22 @@ public class DestructibleBlock : MonoBehaviour
         }
 
         LevelManager.Instance.RemoveBlock();
-        Destroy(gameObject);  // Уничтожаем блок
+        Destroy(gameObject);
     }
 
     void PlayDestructionSound(Vector3 position, AudioClip clip)
     {
-        // Создаем временный объект
         GameObject tempAudioObject = new GameObject("TempAudio");
         tempAudioObject.transform.position = position;
 
-        // Добавляем компонент AudioSource
         AudioSource tempAudioSource = tempAudioObject.AddComponent<AudioSource>();
         tempAudioSource.clip = clip;
         tempAudioSource.volume = 0.1f;
 
-        // Проигрываем звук
         tempAudioSource.Play();
-
-        // Уничтожаем объект после завершения воспроизведения звука
         Destroy(tempAudioObject, clip.length);
     }
 
-
-    // Активируем возможность получать урон от падения через задержку
     void EnableFallDamage()
     {
         canTakeFallDamage = true;
@@ -135,16 +120,12 @@ public class DestructibleBlock : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") && canTakeFallDamage)
         {
             TakeDamage(SpawnManager.Instance.GetSpawnedGroundIndex() * 100f);
-            Debug.Log($"{(SpawnManager.Instance.GetSpawnedGroundIndex() * 100f / hp) * 100} % от падения");
         }
         else if (collision.gameObject.CompareTag("Projectile"))
         {
             float projectileDamage = GameManager.Instance.player.cannonPower * 10;
-            Debug.Log($"{(projectileDamage / hp) * 100} %");
-
             TakeDamage(projectileDamage);
 
-            // Проигрываем звук попадания снаряда
             if (hitSound != null)
             {
                 audioSource.PlayOneShot(hitSound);
@@ -156,27 +137,18 @@ public class DestructibleBlock : MonoBehaviour
         }
     }
 
-    // Метод для получения урона
     public void TakeDamage(float damage)
     {
-        float initialHealth = hp;
         hp -= damage;
-
-        // Изменяем цвет в зависимости от оставшегося здоровья
         UpdateBlockColor();
     }
 
-    // Метод для изменения цвета блока в зависимости от его здоровья
     private void UpdateBlockColor()
     {
         if (blockRenderer != null && blockType != null)
         {
-            // Вычисляем процент оставшегося здоровья (от 0 до 1)
             float healthPercentage = hp / blockType.health;
-
-            // Чем меньше здоровье, тем больше красный, уменьшаем синий и зеленый
             blockRenderer.material.color = new Color(1f, healthPercentage, healthPercentage);
         }
     }
-
 }
