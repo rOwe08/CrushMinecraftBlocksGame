@@ -254,7 +254,7 @@ public class Player : MonoBehaviour
         floorLevel = 0;
         maxAttempts = 0;
         explosiveDamage = 0;
-        projectileAmount = 0;
+        projectileAmount = 1;
         armageddonLevel = 0;
 
         totalCoins = 0;

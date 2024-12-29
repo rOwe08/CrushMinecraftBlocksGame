@@ -258,44 +258,84 @@ public class UIManager : MonoBehaviour
 
     private void UpdateUpgradeButton(int index)
     {
-        // Находим нужную кнопку по индексу (например, через массив кнопок)
         GameObject upgradeButton = upgradeButtons[index];
-
-        // Находим текстовые компоненты внутри кнопки
         Transform parentTransform = upgradeButton.transform.parent;
 
         TextMeshProUGUI priceText = upgradeButton.transform.Find("Text/PriceText").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI levelText = parentTransform.Find("LevelText").GetComponent<TextMeshProUGUI>();
 
-        // Получаем текущие значения уровня и стоимости
         int currentLevel = upgradeLevels[index];
         int currentCoinsCost = upgradeCostsCoins[index];
         int currentDiamondsCost = upgradeCostsDiamonds[index];
 
-        if (currentCoinsCost > currentDiamondsCost)
+        // Проверяем, достигнут ли максимальный уровень
+        if (IsMaxLevel(index))
         {
-            priceText.text = $"{FormatNumber(currentCoinsCost)}";
+            SetMaxLevelState(upgradeButton, levelText);
         }
         else
         {
-            priceText.text = $"{FormatNumber(currentDiamondsCost)}";
-        }
+            // Обновляем цену
+            if (currentCoinsCost > currentDiamondsCost)
+            {
+                priceText.text = $"{FormatNumber(currentCoinsCost)}";
+            }
+            else
+            {
+                priceText.text = $"{FormatNumber(currentDiamondsCost)}";
+            }
 
-        // Обновляем текст уровня
-        levelText.text = currentLevel.ToString();
+            // Обновляем текст уровня
+            levelText.text = currentLevel.ToString();
+        }
+    }
+
+    // Метод для проверки, достигнут ли максимальный уровень
+    private bool IsMaxLevel(int index)
+    {
+        return upgradeLevels[index] == upgradeMaxLevels[index];
+    }
+
+    // Метод для установки состояния кнопки при максимальном уровне
+    private void SetMaxLevelState(GameObject upgradeButton, TextMeshProUGUI levelText)
+    {
+        GameObject priceObj = upgradeButton.transform.Find("Text").gameObject;
+        priceObj.SetActive(false);
+
+        string maxLevelText = GetMaxLevelTextByLanguage();
+        levelText.text = maxLevelText;
+
+        upgradeButton.GetComponent<Button>().interactable = false;
+    }
+
+    // Метод для получения текста в зависимости от языка
+    private string GetMaxLevelTextByLanguage()
+    {
+        switch (YandexGame.EnvironmentData.language)
+        {
+            case "ru":
+            return "MAКС.";
+            case "en":
+            return "MAX.";
+            case "tr":
+            return "MAX.";
+            default:
+            return "MAX."; // По умолчанию, если язык неизвестен
+        }
     }
 
     private void Upgrade(int index)
     {
-        int currentLevel = upgradeLevels[index]; // Текущий уровень апгрейда
-        int coinsCost = upgradeCostsCoins[index]; // Текущая цена в монетах
-        int diamondsCost = upgradeCostsDiamonds[index]; // Текущая цена в кристаллах
+        int currentLevel = upgradeLevels[index];
+        int coinsCost = upgradeCostsCoins[index];
+        int diamondsCost = upgradeCostsDiamonds[index];
 
         // Проверка, хватает ли ресурсов для апгрейда
         if (GameManager.Instance.player.totalCoins >= coinsCost && GameManager.Instance.player.totalDiamonds >= diamondsCost)
         {
-            if (upgradeMaxLevels[index] > upgradeLevels[index])
+            if (!IsMaxLevel(index))
             {
+                // Анимация изменения ресурсов
                 ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalCoins, GameManager.Instance.player.totalCoins - coinsCost, true);
                 ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds - diamondsCost, false);
 
@@ -310,41 +350,8 @@ public class UIManager : MonoBehaviour
                 upgradeCostsCoins[index] += upgradeCostsCoins[index] / 10;
                 upgradeCostsDiamonds[index] += upgradeCostsDiamonds[index] / 10;
 
-                if (upgradeLevels[index] == upgradeMaxLevels[index])
-                {
-                    // Находим нужную кнопку по индексу (например, через массив кнопок)
-                    GameObject upgradeButton = upgradeButtons[index];
-
-                    // Находим текстовые компоненты внутри кнопки
-                    Transform parentTransform = upgradeButton.transform.parent;
-
-                    GameObject priceObj = upgradeButton.transform.Find("Text").gameObject;
-                    TextMeshProUGUI levelText = parentTransform.Find("LevelText").GetComponent<TextMeshProUGUI>();
-
-                    priceObj.SetActive(false);
-
-                    if (YandexGame.EnvironmentData.language == "ru")
-                    {
-                        // Обновляем текст уровня
-                        levelText.text = "MAКС.";
-                    }
-                    else if (YandexGame.EnvironmentData.language == "en")
-                    {
-                        // Обновляем текст уровня
-                        levelText.text = "MAX.";
-                    }
-                    else if (YandexGame.EnvironmentData.language == "tr")
-                    {
-                        // Обновляем текст уровня
-                        levelText.text = "MAX.";
-                    }
-
-                    upgradeButton.GetComponent<Button>().interactable = false;
-                }
-                else
-                {
-                    UpdateUpgradeButton(index); // Обновляем текст кнопки после апгрейда
-                }
+                // Обновляем кнопку
+                UpdateUpgradeButton(index);
 
                 // Обновляем UI
                 UpdateCoins();
@@ -353,7 +360,12 @@ public class UIManager : MonoBehaviour
                 // Применяем изменения (например, апгрейд статов)
                 ApplyUpgrade(index);
 
+                // Сохраняем данные
                 SaveData();
+            }
+            else
+            {
+                Debug.Log("Уже достигнут максимальный уровень!");
             }
         }
         else
