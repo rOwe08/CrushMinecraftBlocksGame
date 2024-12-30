@@ -1,5 +1,5 @@
 {
-  "idSave": 552,
+  "idSave": 576,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -11,8 +11,8 @@
   "explosiveDamage": 0.0,
   "projectileAmount": 1,
   "armageddonLevel": 0.0,
-  "totalCoins": 32964,
-  "totalDiamonds": 151,
+  "totalCoins": 40964,
+  "totalDiamonds": 160,
   "shopMaterialsPurchased": [
     false,
     false,
@@ -39,7 +39,7 @@
     73.3333359,
     66.6666641,
     53.3333321,
-    13.333333,
+    20.0,
     0.0,
     0.0,
     0.0,

@@ -89,6 +89,7 @@ MonoBehaviour:
   launchPoint: {fileID: 6786664278579801664}
   IsLevelEnding: 0
   IsArmageddonActivated: 0
+  AmountOfRewardedHP: 0
   lineRenderer: {fileID: 5681397186110832337}
   linePoints: 175
   timeIntervalPoints: 0.01

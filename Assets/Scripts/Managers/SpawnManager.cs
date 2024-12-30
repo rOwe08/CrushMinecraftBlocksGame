@@ -40,6 +40,8 @@ public class SpawnManager : MonoBehaviour
 
     private Dictionary<int, GameObject> shopBlocks = new Dictionary<int, GameObject>(); // Связь между индексом и блоком
 
+    public GameObject backgroundColliderPrefab; // Префаб фона с коллайдером
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
