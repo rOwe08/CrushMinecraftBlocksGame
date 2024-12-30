@@ -38,6 +38,8 @@ namespace YG
 
         public int indexOfGround;
 
+        public bool IsTutorialPassed;
+
         // Вы можете выполнить какие то действия при загрузке сохранений
         public SavesYG()
         {

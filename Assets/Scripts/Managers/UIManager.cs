@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using YG;
 using Unity.VisualScripting;
 using System;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
@@ -79,6 +80,16 @@ public class UIManager : MonoBehaviour
 
     public bool IsLevelPassed = true;
 
+
+    [Header("Tutorial")]
+    public GameObject tutorialPanel;
+    public List<GameObject> tutorialHints;
+
+    [HideInInspector]
+    public bool WasStartedFirstLevel = false;
+    public bool WasOpenedShop = false;
+    public bool WasClosedShop = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -121,6 +132,7 @@ public class UIManager : MonoBehaviour
         {
             UpdateUpgradeButton(i);
         }
+
     }
 
     private void Update()
@@ -350,8 +362,8 @@ public class UIManager : MonoBehaviour
                 upgradeLevels[index]++;
 
                 // Повышаем цену для следующего уровня
-                upgradeCostsCoins[index] += upgradeCostsCoins[index] / 10;
-                upgradeCostsDiamonds[index] += upgradeCostsDiamonds[index] / 10;
+                upgradeCostsCoins[index] *= 2;
+                upgradeCostsDiamonds[index] *= 2;
 
                 // Обновляем кнопку
                 UpdateUpgradeButton(index);
@@ -426,6 +438,8 @@ public class UIManager : MonoBehaviour
     {
         isExplosionPurchased = true;
         YandexGame.savesData.isExplosionPurchased = true;
+        GameManager.Instance.player.explosiveDamage += 10f;   
+
         YandexGame.SaveProgress();
     }
 
@@ -647,6 +661,14 @@ public class UIManager : MonoBehaviour
     public void HideShopPanel()
     {
         shopPanel.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() => shopPanel.SetActive(false));
+
+        if (TutorialManager.Instance != null) 
+        {
+            if (TutorialManager.Instance.tutorialIndex >= 4) 
+            {
+                WasClosedShop = true;
+            }
+        }
     }
 
     // Метод для обновления количества монет
@@ -903,5 +925,19 @@ public class UIManager : MonoBehaviour
     public void HideProjectileBuyPanel()
     {
         buyProjectilePanel.SetActive(false);
+    }
+
+    internal void ShowHint(int tutorialIndex)
+    {
+        for(int i = 0; i < tutorialHints.Count; i++)
+        {
+            if (i != tutorialIndex)
+            {
+                tutorialHints[i].SetActive(false);
+            }
+        }
+        tutorialHints[tutorialIndex].SetActive(true);
+
+        tutorialPanel.transform.Find("AmountText").GetComponent<TextMeshProUGUI>().text = $"{tutorialIndex + 1}/5";
     }
 }

@@ -56,7 +56,7 @@ public class ProjectileScript : MonoBehaviour
             DestructibleBlock destructibleBlock = hit.GetComponent<DestructibleBlock>();
             if (destructibleBlock != null)
             {
-                float explosionDamage = GameManager.Instance.player.cannonPower * 2f; // Урон от взрыва
+                float explosionDamage = GameManager.Instance.player.explosiveDamage; // Урон от взрыва
                 destructibleBlock.TakeDamage(explosionDamage);
             }
         }

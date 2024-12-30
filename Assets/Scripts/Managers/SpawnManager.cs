@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 using YG;
 
 public class SpawnManager : MonoBehaviour
@@ -41,6 +42,8 @@ public class SpawnManager : MonoBehaviour
     private Dictionary<int, GameObject> shopBlocks = new Dictionary<int, GameObject>(); // Связь между индексом и блоком
 
     public GameObject backgroundColliderPrefab; // Префаб фона с коллайдером
+
+    public List<GameObject> spawnedProjectilesList = new List<GameObject>();
 
     private void Awake()
     {
@@ -154,6 +157,13 @@ public class SpawnManager : MonoBehaviour
         }
 
         LevelManager.Instance.ArmageddonEnded = true;
+
+        foreach(GameObject gO in spawnedProjectilesList)
+        {
+            Destroy(gO);
+        }
+
+        spawnedProjectilesList.Clear();
     }
 
     private void SpawnArmageddonProjectile()
@@ -183,6 +193,8 @@ public class SpawnManager : MonoBehaviour
         // Применяем скорость с учетом направления
         projectileObject.GetComponent<Rigidbody>().velocity = 50f * finalDirection;
         projectileObject.GetComponent<Rigidbody>().mass = GameManager.Instance.player.cannonMass;
+
+        spawnedProjectilesList.Add(projectileObject);
     }
 
 

@@ -89,6 +89,7 @@ public class LevelManager : MonoBehaviour
 
     public void StartLevel(int levelToStart = 0)
     {
+        UIManager.Instance.WasStartedFirstLevel = true;
         DespawnAllBuildings();
 
         attempts = 0;

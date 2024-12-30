@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     private bool isRewardedSubscribed = false;
     private bool rewardClaimed = false;
 
+    public bool IsTutorialPassed = false;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
+        ResetData();
         //ResetData();
         //SaveData();
     }
@@ -82,6 +85,11 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.ShowLevelsPanel();
         SpawnManager.Instance.ColorPurchasedBlocksOnStart();
+
+        if (!IsTutorialPassed)
+        {
+            TutorialManager.Instance.StartTutorial();
+        }
     }
 
     public void StartLevel(int level = 0)
@@ -123,6 +131,9 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.LoadData();
         UIManager.Instance.LoadData();
         SpawnManager.Instance.LoadData();
+
+        IsTutorialPassed = YandexGame.savesData.IsTutorialPassed;
+
     }
 
     private void SaveData()
@@ -207,11 +218,17 @@ public class GameManager : MonoBehaviour
 
     public void ResetData()
     {
-        player.ResetData();
-        LevelManager.Instance.ResetData();
-        UIManager.Instance.ResetData();
-        SpawnManager.Instance.ResetData();
 
-        YandexGame.SaveProgress();
+        YandexGame.ResetSaveProgress();
+
+        //player.ResetData();
+        //LevelManager.Instance.ResetData();
+        //UIManager.Instance.ResetData();
+        //SpawnManager.Instance.ResetData();
+
+        //IsTutorialPassed = false;
+        //YandexGame.savesData.IsTutorialPassed = false;
+
+        //YandexGame.SaveProgress();
     }
 }
