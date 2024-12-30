@@ -361,9 +361,18 @@ public class UIManager : MonoBehaviour
                 // Повышаем уровень апгрейда
                 upgradeLevels[index]++;
 
-                // Повышаем цену для следующего уровня
-                upgradeCostsCoins[index] *= 2;
-                upgradeCostsDiamonds[index] *= 2;
+                if(index != 0)
+                {
+                    // Повышаем цену для следующего уровня
+                    upgradeCostsCoins[index] *= 2;
+                    upgradeCostsDiamonds[index] *= 2;
+                }
+                else
+                {
+                    // Повышаем цену для следующего уровня
+                    upgradeCostsCoins[index] += (int)(upgradeCostsCoins[index] / 10);
+                    upgradeCostsDiamonds[index] += (int)(upgradeCostsDiamonds[index] / 10);
+                }
 
                 // Обновляем кнопку
                 UpdateUpgradeButton(index);

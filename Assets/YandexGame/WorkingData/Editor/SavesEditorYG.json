@@ -1,9 +1,9 @@
 {
-  "idSave": 764,
+  "idSave": 784,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
-  "cannonPower": 50.0,
+  "cannonPower": 52.0,
   "cannonSize": 0.6,
   "cannonMass": 25.0,
   "floorLevel": 0,
@@ -11,8 +11,8 @@
   "explosiveDamage": 0.0,
   "projectileAmount": 1,
   "armageddonLevel": 0.0,
-  "totalCoins": 0,
-  "totalDiamonds": 0,
+  "totalCoins": 345,
+  "totalDiamonds": 18,
   "shopMaterialsPurchased": [
     false,
     false,
@@ -31,12 +31,12 @@
     false,
     false
   ],
-  "maxLevelCompleted": 1,
+  "maxLevelCompleted": 4,
   "levelList": [
     100.0,
-    0.0,
-    0.0,
-    0.0,
+    100.0,
+    60.0,
+    100.0,
     0.0,
     0.0,
     0.0,
@@ -85,7 +85,7 @@
     0.0
   ],
   "upgradeLevels": [
-    0,
+    2,
     0,
     0,
     1,
@@ -95,7 +95,7 @@
     0
   ],
   "upgradeCostsCoins": [
-    50,
+    60,
     500,
     500,
     1000,
@@ -115,7 +115,7 @@
     100
   ],
   "isExplosionPurchased": false,
-  "AmountOfRewardedHP": 0,
+  "AmountOfRewardedHP": 1,
   "indexOfGround": 0,
   "IsTutorialPassed": true
 }

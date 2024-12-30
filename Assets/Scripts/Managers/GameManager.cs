@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        ResetData();
+        //ResetData();
         //ResetData();
         //SaveData();
     }
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ResetRewardFlag()
     {
-        yield return new WaitForSeconds(2);  // или любое другое время
+        yield return new WaitForSeconds(0.1f);  // или любое другое время
         rewardClaimed = false;
     }
 
