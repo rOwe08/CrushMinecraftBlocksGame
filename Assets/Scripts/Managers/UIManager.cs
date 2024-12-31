@@ -882,7 +882,7 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.Instance.player.totalDiamonds >= 50)
         {
-            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds - 50, true);
+            ResourceAnimator.Instance.AnimateResourceChange(GameManager.Instance.player.totalDiamonds, GameManager.Instance.player.totalDiamonds - 50, false);
             GameManager.Instance.AddDiamonds(-50);
             GameManager.Instance.player.shopMaterialsPurchased[j] = true;
 

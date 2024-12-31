@@ -168,10 +168,14 @@ public class GameManager : MonoBehaviour
 
         if (id == 1)
         {
+            ResourceAnimator.Instance.AnimateResourceChange
+                (player.totalCoins, player.totalCoins + rewardCoinsAd, true);
             player.AddCoins(rewardCoinsAd);
         }
         else if (id == 2)
         {
+            ResourceAnimator.Instance.AnimateResourceChange
+                (player.totalDiamonds, player.totalDiamonds + rewardDiamondsAd, false);
             player.AddDiamonds(rewardDiamondsAd);
         }
         else if (id == 3)
@@ -218,9 +222,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetData()
     {
-
         YandexGame.ResetSaveProgress();
-
+        LoadData();
         //player.ResetData();
         //LevelManager.Instance.ResetData();
         //UIManager.Instance.ResetData();
